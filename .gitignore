@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.env
+.venv/
+venv/
+.pytest_cache/
+
+# Training artifacts
+checkpoints/
+data/
+analytics_output/
+*.onnx
+*.pt
+*.pth
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+training_history.json

@@ -1,0 +1,35 @@
+[project]
+name = "ai-chess-model"
+version = "0.1.0"
+description = "Self-play trained chess engine with ONNX inference API"
+requires-python = ">=3.10"
+
+dependencies = [
+    "torch>=2.0",
+    "python-chess>=1.9",
+    "onnxruntime>=1.15",
+    "onnx>=1.14",
+    "onnxscript>=0.1",
+    "fastapi>=0.100",
+    "uvicorn[standard]>=0.23",
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+    "plotly>=5.15",
+    "pydantic>=2.0",
+    "stockfish>=3.28",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "httpx>=0.24",
+    "pytest-asyncio>=0.21",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]

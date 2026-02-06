@@ -1,0 +1,9 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PATH=chess_model.onnx
+    volumes:
+      - ./chess_model.onnx:/app/chess_model.onnx
