@@ -1,14 +1,70 @@
+import os
 import time
+import json
 import queue
 import threading
 import numpy as np
 import chess
 import torch
 import torch.multiprocessing as mp
+from tqdm import tqdm
 
 from src.model.network import ChessNet, encode_board, POLICY_SIZE
 from src.model.mcts import MCTS
 from src.training.config import TrainingConfig
+
+
+# shared state for live game broadcasting
+_live_games_path = None
+_live_lock = threading.Lock()
+_active_games = {}
+_completed_count = 0
+
+# global stop flag for clean shutdown
+_stop_requested = False
+
+
+def request_stop():
+    global _stop_requested
+    _stop_requested = True
+
+
+def reset_stop():
+    global _stop_requested
+    _stop_requested = False
+
+
+def set_live_broadcast_path(path):
+    global _live_games_path
+    _live_games_path = path
+
+
+def _broadcast_game_state(game_id, board, move_num, result=None):
+    """Write current game state to the live broadcast file."""
+    if _live_games_path is None:
+        return
+    global _completed_count
+    with _live_lock:
+        if result is not None:
+            _active_games.pop(str(game_id), None)
+            _completed_count += 1
+        else:
+            _active_games[str(game_id)] = {
+                'fen': board.fen(),
+                'move_num': move_num,
+                'last_move': board.peek().uci() if board.move_stack else None,
+                'turn': 'white' if board.turn == chess.WHITE else 'black',
+            }
+        snapshot = {
+            'timestamp': time.time(),
+            'active_games': dict(_active_games),
+            'completed': _completed_count,
+        }
+        try:
+            with open(_live_games_path, 'w') as f:
+                json.dump(snapshot, f)
+        except:
+            pass
 
 
 class GameRecord:
@@ -61,7 +117,7 @@ def make_eval_fn(model, device):
     return eval_fn
 
 
-def play_single_game(model, device, config: TrainingConfig) -> GameRecord:
+def play_single_game(model, device, config: TrainingConfig, game_id=0) -> GameRecord:
     """Play one self-play game and return the game record."""
     eval_fn = make_eval_fn(model, device)
     mcts = MCTS(
@@ -78,6 +134,10 @@ def play_single_game(model, device, config: TrainingConfig) -> GameRecord:
     move_num = 0
 
     while not board.is_game_over(claim_draw=True):
+        if _stop_requested:
+            record.set_result('1/2-1/2')
+            return record
+
         # temperature schedule
         if move_num < config.temperature_moves:
             temp = 1.0
@@ -113,10 +173,12 @@ def play_single_game(model, device, config: TrainingConfig) -> GameRecord:
             else:
                 record.set_result('1-0')
             board.push(move)
+            _broadcast_game_state(game_id, board, move_num, result=record.result)
             break
 
         board.push(move)
         move_num += 1
+        _broadcast_game_state(game_id, board, move_num)
 
         # safety cap at 512 moves
         if move_num >= 512:
@@ -126,6 +188,7 @@ def play_single_game(model, device, config: TrainingConfig) -> GameRecord:
         result = board.result(claim_draw=True)
         record.set_result(result)
 
+    _broadcast_game_state(game_id, board, move_num, result=record.result)
     return record
 
 
@@ -190,50 +253,64 @@ class BatchEvaluator:
         self.thread.join(timeout=2)
 
 
-def _game_worker(game_id, model, device, config, results_list, lock):
+def _game_worker(game_id, model, device, config, results_list, lock, pbar=None):
     """Worker that plays a single game (for threading-based parallelism)."""
-    record = play_single_game(model, device, config)
+    record = play_single_game(model, device, config, game_id=game_id)
     with lock:
         results_list.append(record)
+        if pbar is not None:
+            pbar.update(1)
 
 
 def run_self_play(model, device, config: TrainingConfig, num_games=None):
     """Run self-play games. Uses threading for parallel games on GPU."""
+    global _completed_count, _active_games
+    _completed_count = 0
+    _active_games = {}
+
     if num_games is None:
         num_games = config.games_per_iter
 
     model.eval()
     records = []
 
-    # for GPU: use threading (shared model, GIL released during torch ops)
-    # for CPU: just run sequentially
+    pbar = tqdm(total=num_games, desc='  Self-play', unit='game',
+                bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]')
+
     if device == "cpu" or config.parallel_games <= 1:
         for i in range(num_games):
-            record = play_single_game(model, device, config)
+            if _stop_requested:
+                break
+            record = play_single_game(model, device, config, game_id=i)
             records.append(record)
-            if (i + 1) % 10 == 0:
-                print(f"  Self-play: {i + 1}/{num_games} games done")
+            pbar.update(1)
     else:
-        # threaded parallel self-play
         lock = threading.Lock()
         remaining = num_games
+        game_counter = 0
         while remaining > 0:
+            if _stop_requested:
+                break
             batch = min(remaining, config.parallel_games)
             threads = []
             for g in range(batch):
                 t = threading.Thread(
                     target=_game_worker,
-                    args=(g, model, device, config, records, lock)
+                    args=(game_counter + g, model, device, config, records, lock, pbar)
                 )
                 threads.append(t)
                 t.start()
 
             for t in threads:
-                t.join()
+                while t.is_alive():
+                    t.join(timeout=0.5)
+                    if _stop_requested:
+                        break
 
             remaining -= batch
-            done = num_games - remaining
-            print(f"  Self-play: {done}/{num_games} games done")
+            game_counter += batch
+
+    pbar.close()
 
     # compute some stats
     total_moves = sum(len(r.moves) for r in records)

@@ -17,6 +17,7 @@ dependencies = [
     "plotly>=5.15",
     "pydantic>=2.0",
     "stockfish>=3.28",
+    "tqdm>=4.60",
 ]
 
 [project.optional-dependencies]

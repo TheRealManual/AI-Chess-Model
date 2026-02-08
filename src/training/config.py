@@ -50,19 +50,22 @@ class TrainingConfig:
     analytics_dir: str = "analytics_output"
 
     def __post_init__(self):
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+
         if self.parallel_games <= 0:
-            self.parallel_games = max(1, os.cpu_count() - 1)
+            if self.device == "cuda":
+                self.parallel_games = max(1, os.cpu_count() - 1)
+            else:
+                self.parallel_games = 1
 
         if not self.stockfish_path:
             self.stockfish_path = os.environ.get("STOCKFISH_PATH", "stockfish")
-
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
     def print_summary(self):
         print(f"Device: {self.device}")
         if self.device == "cuda":
             print(f"GPU: {torch.cuda.get_device_name(0)}")
-            mem = torch.cuda.get_device_properties(0).total_mem / 1024**3
+            mem = torch.cuda.get_device_properties(0).total_memory / 1024**3
             print(f"VRAM: {mem:.1f} GB")
         print(f"CPU cores: {os.cpu_count()}")
         print(f"Parallel self-play games: {self.parallel_games}")

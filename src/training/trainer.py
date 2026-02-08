@@ -6,11 +6,12 @@ import torch
 import torch.nn as nn
 import numpy as np
 from datetime import datetime
+from tqdm import tqdm
 
 from src.model.network import ChessNet
 from src.training.config import TrainingConfig
 from src.training.replay_buffer import ReplayBuffer
-from src.training.self_play import run_self_play
+from src.training.self_play import run_self_play, set_live_broadcast_path
 
 
 class Trainer:
@@ -51,6 +52,10 @@ class Trainer:
 
         os.makedirs(config.checkpoint_dir, exist_ok=True)
         os.makedirs(config.analytics_dir, exist_ok=True)
+
+        # enable live game broadcasting
+        live_path = os.path.join(config.analytics_dir, 'live_games.json')
+        set_live_broadcast_path(live_path)
 
     def save_checkpoint(self):
         path = os.path.join(self.config.checkpoint_dir, f'gen_{self.generation:04d}.pt')
@@ -123,7 +128,10 @@ class Trainer:
         total_value_loss = 0.0
         num_steps = self.config.training_steps_per_iter
 
-        for step in range(num_steps):
+        pbar = tqdm(range(num_steps), desc='  Training', unit='step',
+                    bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}] loss={postfix}')
+
+        for step in pbar:
             boards, policies, values = self.buffer.sample(self.config.batch_size)
 
             boards_t = torch.tensor(boards).to(self.device)
@@ -159,6 +167,11 @@ class Trainer:
             total_policy_loss += policy_loss.item()
             total_value_loss += value_loss.item()
             self.total_training_steps += 1
+
+            if step % 10 == 0:
+                pbar.set_postfix_str(f'{(total_policy_loss + total_value_loss) / (step + 1):.4f}')
+
+        pbar.close()
 
         avg_policy = total_policy_loss / num_steps
         avg_value = total_value_loss / num_steps
