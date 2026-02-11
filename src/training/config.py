@@ -40,7 +40,7 @@ class TrainingConfig:
 
     # checkpoints
     checkpoint_dir: str = "checkpoints"
-    keep_checkpoints: int = 5
+    keep_checkpoints: int = 20
 
     # stockfish benchmarking
     benchmark_games: int = 50

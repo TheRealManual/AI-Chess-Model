@@ -1,0 +1,578 @@
+[
+  {
+    "generation": 2,
+    "timestamp": "2026-02-10T13:49:47.944668",
+    "model": {
+      "num_blocks": 6,
+      "channels": 128,
+      "checkpoint": "checkpoints\\gen_0002.pt"
+    },
+    "settings": {
+      "num_sims": 100,
+      "num_games_per_depth": 5,
+      "cpuct": 2.0,
+      "sf_depths": [
+        1,
+        3
+      ],
+      "device": "cuda"
+    },
+    "depths": {
+      "1": {
+        "sf_depth": 1,
+        "sf_estimated_elo": 800,
+        "wins": 0,
+        "losses": 2,
+        "draws": 3,
+        "win_rate": 0.3,
+        "estimated_elo": 652.8092858821622,
+        "time_s": 52.1,
+        "games": [
+          {
+            "model_white": true,
+            "result": "1/2-1/2",
+            "moves": 48
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 29
+          },
+          {
+            "model_white": true,
+            "result": "1/2-1/2",
+            "moves": 47
+          },
+          {
+            "model_white": false,
+            "result": "1/2-1/2",
+            "moves": 119
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 26
+          }
+        ]
+      },
+      "3": {
+        "sf_depth": 3,
+        "sf_estimated_elo": 1200,
+        "wins": 0,
+        "losses": 4,
+        "draws": 1,
+        "win_rate": 0.1,
+        "estimated_elo": 818.30299622427,
+        "time_s": 31.1,
+        "games": [
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 14
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 11
+          },
+          {
+            "model_white": true,
+            "result": "1/2-1/2",
+            "moves": 43
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 55
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 48
+          }
+        ]
+      }
+    },
+    "total_time_s": 83.7,
+    "summary": {
+      "total_wins": 0,
+      "total_losses": 6,
+      "total_draws": 4,
+      "total_games": 10,
+      "overall_win_rate": 0.2,
+      "avg_estimated_elo": 735.5561410532162,
+      "min_estimated_elo": 652.8092858821622,
+      "max_estimated_elo": 818.30299622427
+    }
+  },
+  {
+    "generation": 12,
+    "timestamp": "2026-02-10T21:30:04.169632",
+    "model": {
+      "num_blocks": 6,
+      "channels": 128,
+      "checkpoint": "checkpoints\\gen_0012.pt"
+    },
+    "settings": {
+      "num_sims": 200,
+      "num_games_per_depth": 50,
+      "cpuct": 2.0,
+      "sf_depths": [
+        1,
+        3,
+        5
+      ],
+      "device": "cuda"
+    },
+    "depths": {},
+    "total_time_s": 0.0,
+    "summary": {
+      "total_wins": 0,
+      "total_losses": 0,
+      "total_draws": 0,
+      "total_games": 0,
+      "overall_win_rate": 0.0,
+      "avg_estimated_elo": 0.0,
+      "min_estimated_elo": 0,
+      "max_estimated_elo": 0
+    }
+  },
+  {
+    "generation": 12,
+    "timestamp": "2026-02-10T23:22:11.166005",
+    "model": {
+      "num_blocks": 6,
+      "channels": 128,
+      "checkpoint": "checkpoints\\gen_0012.pt"
+    },
+    "settings": {
+      "num_sims": 200,
+      "num_games_per_depth": 10,
+      "cpuct": 2.0,
+      "sf_depths": [
+        1,
+        3,
+        5
+      ],
+      "device": "cuda"
+    },
+    "depths": {
+      "1": {
+        "sf_depth": 1,
+        "sf_estimated_elo": 800,
+        "wins": 0,
+        "losses": 8,
+        "draws": 2,
+        "win_rate": 0.1,
+        "estimated_elo": 418.30299622427003,
+        "time_s": 196.8,
+        "games": [
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 76
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 47
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 54
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 23
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 62
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 39
+          },
+          {
+            "model_white": true,
+            "result": "1/2-1/2",
+            "moves": 45
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 39
+          },
+          {
+            "model_white": true,
+            "result": "1/2-1/2",
+            "moves": 52
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 11
+          }
+        ]
+      },
+      "3": {
+        "sf_depth": 3,
+        "sf_estimated_elo": 1200,
+        "wins": 0,
+        "losses": 9,
+        "draws": 1,
+        "win_rate": 0.05,
+        "estimated_elo": 688.4985596188685,
+        "time_s": 183.8,
+        "games": [
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 40
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 71
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 42
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 67
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 36
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 19
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 36
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 27
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 46
+          },
+          {
+            "model_white": false,
+            "result": "1/2-1/2",
+            "moves": 44
+          }
+        ]
+      },
+      "5": {
+        "sf_depth": 5,
+        "sf_estimated_elo": 1600,
+        "wins": 0,
+        "losses": 9,
+        "draws": 1,
+        "win_rate": 0.05,
+        "estimated_elo": 1088.4985596188685,
+        "time_s": 233.0,
+        "games": [
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 84
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 23
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 88
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 19
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 32
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 69
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 56
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 53
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 86
+          },
+          {
+            "model_white": false,
+            "result": "1/2-1/2",
+            "moves": 36
+          }
+        ]
+      }
+    },
+    "total_time_s": 614.2,
+    "summary": {
+      "total_wins": 0,
+      "total_losses": 26,
+      "total_draws": 4,
+      "total_games": 30,
+      "overall_win_rate": 0.06666666666666667,
+      "avg_estimated_elo": 731.7667051540024,
+      "min_estimated_elo": 418.30299622427003,
+      "max_estimated_elo": 1088.4985596188685
+    }
+  },
+  {
+    "generation": 7,
+    "timestamp": "2026-02-10T23:44:48.972027",
+    "model": {
+      "num_blocks": 6,
+      "channels": 128,
+      "checkpoint": "checkpoints/gen_0007.pt"
+    },
+    "settings": {
+      "num_sims": 200,
+      "num_games_per_depth": 10,
+      "cpuct": 2.0,
+      "sf_depths": [
+        1,
+        3,
+        5
+      ],
+      "device": "cuda"
+    },
+    "depths": {
+      "1": {
+        "sf_depth": 1,
+        "sf_estimated_elo": 800,
+        "wins": 0,
+        "losses": 9,
+        "draws": 1,
+        "win_rate": 0.05,
+        "estimated_elo": 288.49855961886846,
+        "time_s": 160.0,
+        "games": [
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 12
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 39
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 34
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 41
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 86
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 17
+          },
+          {
+            "model_white": true,
+            "result": "1/2-1/2",
+            "moves": 85
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 47
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 42
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 15
+          }
+        ]
+      },
+      "3": {
+        "sf_depth": 3,
+        "sf_estimated_elo": 1200,
+        "wins": 0,
+        "losses": 9,
+        "draws": 1,
+        "win_rate": 0.05,
+        "estimated_elo": 688.4985596188685,
+        "time_s": 216.1,
+        "games": [
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 54
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 87
+          },
+          {
+            "model_white": true,
+            "result": "1/2-1/2",
+            "moves": 54
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 23
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 56
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 15
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 58
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 101
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 32
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 55
+          }
+        ]
+      },
+      "5": {
+        "sf_depth": 5,
+        "sf_estimated_elo": 1600,
+        "wins": 0,
+        "losses": 8,
+        "draws": 2,
+        "win_rate": 0.1,
+        "estimated_elo": 1218.30299622427,
+        "time_s": 122.6,
+        "games": [
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 24
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 53
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 30
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 35
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 18
+          },
+          {
+            "model_white": false,
+            "result": "1/2-1/2",
+            "moves": 36
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 28
+          },
+          {
+            "model_white": false,
+            "result": "1/2-1/2",
+            "moves": 54
+          },
+          {
+            "model_white": true,
+            "result": "0-1",
+            "moves": 58
+          },
+          {
+            "model_white": false,
+            "result": "1-0",
+            "moves": 19
+          }
+        ]
+      }
+    },
+    "total_time_s": 499.2,
+    "summary": {
+      "total_wins": 0,
+      "total_losses": 26,
+      "total_draws": 4,
+      "total_games": 30,
+      "overall_win_rate": 0.06666666666666667,
+      "avg_estimated_elo": 731.7667051540024,
+      "min_estimated_elo": 288.49855961886846,
+      "max_estimated_elo": 1218.30299622427
+    }
+  }
+]
