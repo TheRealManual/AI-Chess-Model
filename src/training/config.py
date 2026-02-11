@@ -23,6 +23,7 @@ class TrainingConfig:
     resign_threshold: float = -0.95
     resign_count: int = 5  # resign if value stays below threshold for this many moves
     gpu_batch_size: int = 16  # batched NN eval during self-play
+    use_opening_book: bool = True  # start games from random book openings for diversity
 
     # training
     training_steps_per_iter: int = 1000

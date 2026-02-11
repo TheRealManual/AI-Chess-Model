@@ -56,6 +56,7 @@ def main():
     parser.add_argument("--benchmark-games", type=int, default=50)
     parser.add_argument("--checkpoint-dir", type=str, default="checkpoints")
     parser.add_argument("--analytics-dir", type=str, default="analytics_output")
+    parser.add_argument("--no-opening-book", action="store_true", help="Disable random opening book")
     parser.add_argument("--watch", action="store_true", help="Open a live game viewer in a new terminal")
     args = parser.parse_args()
 
@@ -68,6 +69,7 @@ def main():
         training_steps_per_iter=args.training_steps,
         buffer_capacity=args.buffer_size,
         use_amp=args.use_amp and not args.no_amp,
+        use_opening_book=not args.no_opening_book,
         benchmark_every=args.benchmark_every,
         benchmark_games=args.benchmark_games,
         checkpoint_dir=args.checkpoint_dir,

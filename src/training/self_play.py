@@ -12,6 +12,7 @@ from tqdm import tqdm
 from src.model.network import ChessNet, encode_board, POLICY_SIZE
 from src.model.mcts import MCTS
 from src.training.config import TrainingConfig
+from src.data.openings import get_random_opening, apply_opening
 
 
 # shared state for live game broadcasting
@@ -132,6 +133,15 @@ def play_single_game(model, device, config: TrainingConfig, game_id=0) -> GameRe
     record = GameRecord()
     resign_counter = 0
     move_num = 0
+
+    # apply a random opening from the book to diversify positions
+    if config.use_opening_book:
+        opening_name, opening_moves = get_random_opening()
+        applied = apply_opening(board, opening_moves)
+        # record the opening moves in the game record (but not as training data)
+        for m in board.move_stack:
+            record.moves.append(m.uci())
+        move_num = applied
 
     while not board.is_game_over(claim_draw=True):
         if _stop_requested:

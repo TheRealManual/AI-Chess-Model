@@ -9,13 +9,18 @@ build/
 venv/
 .pytest_cache/
 
-# Training artifacts
+# Training artifacts (working dirs — not committed)
 checkpoints/
 data/
 analytics_output/
 *.onnx
+*.onnx.data
 *.pt
 *.pth
+
+# Exported models ARE committed (snapshots/backups)
+!exported_models/
+!exported_models/**
 
 # IDE
 .vscode/
