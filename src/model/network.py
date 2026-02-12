@@ -8,7 +8,9 @@ import numpy as np
 # 18 input planes: 12 piece types (6 per color), 4 castling, 1 en passant, 1 side to move
 # Board is always flipped so the current player sees from their own perspective.
 
-NUM_PLANES = 18
+HISTORY_LENGTH = 8  # number of past board positions to include in the input
+NUM_PLANES = 12 * HISTORY_LENGTH + 6  # 12 piece planes per timestep + 6 meta planes = 102
+META_OFFSET = 12 * HISTORY_LENGTH  # index where meta planes begin
 POLICY_SIZE = 4672  # 8x8 source squares * 73 move types
 
 PIECE_INDICES = {
@@ -83,56 +85,74 @@ def _build_move_tables():
 _build_move_tables()
 
 
-def encode_board(board: chess.Board) -> np.ndarray:
-    """Convert a board position to an 18x8x8 float array from the current player's perspective."""
-    planes = np.zeros((NUM_PLANES, 8, 8), dtype=np.float32)
-    flip = board.turn == chess.BLACK
-
+def _encode_pieces(planes, offset, board, perspective, flip):
+    """Fill 12 piece planes starting at 'offset' for a given board state.
+    Pieces are classified as own/opponent relative to the perspective color."""
     for sq in range(64):
         piece = board.piece_at(sq)
         if piece is None:
             continue
-
         rank, file = divmod(sq, 8)
         if flip:
             rank = 7 - rank
-
-        if piece.color == board.turn:
-            plane_idx = PIECE_INDICES[piece.piece_type]
+        if piece.color == perspective:
+            plane_idx = PIECE_INDICES[piece.piece_type] + offset
         else:
-            plane_idx = PIECE_INDICES[piece.piece_type] + 6
-
+            plane_idx = PIECE_INDICES[piece.piece_type] + 6 + offset
         planes[plane_idx, rank, file] = 1.0
 
-    # castling rights
-    if board.turn == chess.WHITE:
+
+def encode_board(board: chess.Board) -> np.ndarray:
+    """Encode a board position with move history into a (NUM_PLANES x 8 x 8) tensor.
+
+    Layout: 12 piece planes x HISTORY_LENGTH timesteps, then 6 meta planes.
+    Timestep 0 = current position, higher timesteps = older positions.
+    All timesteps are encoded from the current player's perspective.
+    Positions without enough history get zero-filled planes.
+    """
+    planes = np.zeros((NUM_PLANES, 8, 8), dtype=np.float32)
+    perspective = board.turn
+    flip = perspective == chess.BLACK
+
+    # Timestep 0: current position pieces
+    _encode_pieces(planes, 0, board, perspective, flip)
+
+    # Timesteps 1..HISTORY_LENGTH-1: past positions
+    temp = board.copy()
+    for t in range(1, HISTORY_LENGTH):
+        if not temp.move_stack:
+            break  # no more history — remaining planes stay zero
+        temp.pop()
+        _encode_pieces(planes, t * 12, temp, perspective, flip)
+
+    # Meta planes: castling, en passant, side to move
+    if perspective == chess.WHITE:
         if board.has_kingside_castling_rights(chess.WHITE):
-            planes[12] = 1.0
+            planes[META_OFFSET] = 1.0
         if board.has_queenside_castling_rights(chess.WHITE):
-            planes[13] = 1.0
+            planes[META_OFFSET + 1] = 1.0
         if board.has_kingside_castling_rights(chess.BLACK):
-            planes[14] = 1.0
+            planes[META_OFFSET + 2] = 1.0
         if board.has_queenside_castling_rights(chess.BLACK):
-            planes[15] = 1.0
+            planes[META_OFFSET + 3] = 1.0
     else:
         if board.has_kingside_castling_rights(chess.BLACK):
-            planes[12] = 1.0
+            planes[META_OFFSET] = 1.0
         if board.has_queenside_castling_rights(chess.BLACK):
-            planes[13] = 1.0
+            planes[META_OFFSET + 1] = 1.0
         if board.has_kingside_castling_rights(chess.WHITE):
-            planes[14] = 1.0
+            planes[META_OFFSET + 2] = 1.0
         if board.has_queenside_castling_rights(chess.WHITE):
-            planes[15] = 1.0
+            planes[META_OFFSET + 3] = 1.0
 
-    # en passant
     if board.ep_square is not None:
         ep_rank, ep_file = divmod(board.ep_square, 8)
         if flip:
             ep_rank = 7 - ep_rank
-        planes[16, ep_rank, ep_file] = 1.0
+        planes[META_OFFSET + 4, ep_rank, ep_file] = 1.0
 
-    # side to move (always 1 since we flip the board)
-    planes[17] = 1.0
+    # side to move (always 1 since the board is perspective-flipped)
+    planes[META_OFFSET + 5] = 1.0
 
     return planes
 

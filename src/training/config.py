@@ -8,6 +8,7 @@ class TrainingConfig:
     # network
     num_blocks: int = 6
     channels: int = 128
+    history_length: int = 8  # number of past board positions encoded in the input
 
     # MCTS
     num_sims: int = 200
@@ -38,7 +39,7 @@ class TrainingConfig:
     value_loss_weight: float = 4.0  # upweight value head to prevent collapse
 
     # replay buffer
-    buffer_capacity: int = 200_000
+    buffer_capacity: int = 100_000  # reduced from 200K since history planes use more memory
 
     # checkpoints
     checkpoint_dir: str = "checkpoints"
@@ -72,7 +73,7 @@ class TrainingConfig:
             print(f"VRAM: {mem:.1f} GB")
         print(f"CPU cores: {os.cpu_count()}")
         print(f"Parallel self-play games: {self.parallel_games}")
-        print(f"Network: {self.num_blocks} blocks x {self.channels} channels")
+        print(f"Network: {self.num_blocks} blocks x {self.channels} channels, history={self.history_length}")
         print(f"MCTS simulations: {self.num_sims}")
         print(f"Mixed precision: {self.use_amp}")
         print(f"Replay buffer: {self.buffer_capacity} positions")

@@ -120,9 +120,20 @@ def make_eval_fn(model, device):
     return eval_fn
 
 
-def play_single_game(model, device, config: TrainingConfig, game_id=0) -> GameRecord:
+def make_batched_eval_fn(batch_evaluator):
+    """Create an eval function that routes through the batch evaluator for GPU efficiency."""
+    def eval_fn(board):
+        board_tensor = encode_board(board)
+        return batch_evaluator.evaluate(board_tensor)
+    return eval_fn
+
+
+def play_single_game(model, device, config: TrainingConfig, game_id=0, batch_evaluator=None) -> GameRecord:
     """Play one self-play game and return the game record."""
-    eval_fn = make_eval_fn(model, device)
+    if batch_evaluator is not None:
+        eval_fn = make_batched_eval_fn(batch_evaluator)
+    else:
+        eval_fn = make_eval_fn(model, device)
     mcts = MCTS(
         eval_fn=eval_fn,
         num_sims=config.num_sims,
@@ -265,9 +276,9 @@ class BatchEvaluator:
         self.thread.join(timeout=2)
 
 
-def _game_worker(game_id, model, device, config, results_list, lock, pbar=None):
+def _game_worker(game_id, model, device, config, results_list, lock, pbar=None, batch_evaluator=None):
     """Worker that plays a single game (for threading-based parallelism)."""
-    record = play_single_game(model, device, config, game_id=game_id)
+    record = play_single_game(model, device, config, game_id=game_id, batch_evaluator=batch_evaluator)
     with lock:
         results_list.append(record)
         if pbar is not None:
@@ -286,41 +297,50 @@ def run_self_play(model, device, config: TrainingConfig, num_games=None):
     model.eval()
     records = []
 
+    # batch evaluator for GPU-efficient inference across parallel games
+    batch_eval = None
+    if device != "cpu" and config.parallel_games > 1:
+        batch_eval = BatchEvaluator(model, device, batch_size=config.gpu_batch_size)
+
     pbar = tqdm(total=num_games, desc='  Self-play', unit='game',
                 bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]')
 
-    if device == "cpu" or config.parallel_games <= 1:
-        for i in range(num_games):
-            if _stop_requested:
-                break
-            record = play_single_game(model, device, config, game_id=i)
-            records.append(record)
-            pbar.update(1)
-    else:
-        lock = threading.Lock()
-        remaining = num_games
-        game_counter = 0
-        while remaining > 0:
-            if _stop_requested:
-                break
-            batch = min(remaining, config.parallel_games)
-            threads = []
-            for g in range(batch):
-                t = threading.Thread(
-                    target=_game_worker,
-                    args=(game_counter + g, model, device, config, records, lock, pbar)
-                )
-                threads.append(t)
-                t.start()
+    try:
+        if device == "cpu" or config.parallel_games <= 1:
+            for i in range(num_games):
+                if _stop_requested:
+                    break
+                record = play_single_game(model, device, config, game_id=i, batch_evaluator=batch_eval)
+                records.append(record)
+                pbar.update(1)
+        else:
+            lock = threading.Lock()
+            remaining = num_games
+            game_counter = 0
+            while remaining > 0:
+                if _stop_requested:
+                    break
+                batch = min(remaining, config.parallel_games)
+                threads = []
+                for g in range(batch):
+                    t = threading.Thread(
+                        target=_game_worker,
+                        args=(game_counter + g, model, device, config, records, lock, pbar, batch_eval)
+                    )
+                    threads.append(t)
+                    t.start()
 
-            for t in threads:
-                while t.is_alive():
-                    t.join(timeout=0.5)
-                    if _stop_requested:
-                        break
+                for t in threads:
+                    while t.is_alive():
+                        t.join(timeout=0.5)
+                        if _stop_requested:
+                            break
 
-            remaining -= batch
-            game_counter += batch
+                remaining -= batch
+                game_counter += batch
+    finally:
+        if batch_eval is not None:
+            batch_eval.stop()
 
     pbar.close()
 

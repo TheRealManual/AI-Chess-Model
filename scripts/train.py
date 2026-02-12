@@ -51,7 +51,7 @@ def main():
     parser.add_argument("--no-amp", action="store_true")
     parser.add_argument("--lr", type=float, default=0.01)
     parser.add_argument("--training-steps", type=int, default=1000)
-    parser.add_argument("--buffer-size", type=int, default=200_000)
+    parser.add_argument("--buffer-size", type=int, default=100_000)
     parser.add_argument("--benchmark-every", type=int, default=10)
     parser.add_argument("--benchmark-games", type=int, default=50)
     parser.add_argument("--checkpoint-dir", type=str, default="checkpoints")

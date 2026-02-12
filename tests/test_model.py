@@ -21,8 +21,8 @@ def test_encode_starting_position():
     pawn_plane = tensor[0]  # own pawns
     assert pawn_plane.sum() == 8  # 8 pawns
 
-    # side to move plane should be all 1s
-    assert tensor[17].sum() == 64
+    # side to move plane should be all 1s (last plane)
+    assert tensor[NUM_PLANES - 1].sum() == 64
 
 
 def test_encode_flips_for_black():

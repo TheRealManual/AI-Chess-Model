@@ -74,6 +74,12 @@ class ReplayBuffer:
         policies = np.load(os.path.join(dir_path, 'policies.npy'))
         values = np.load(os.path.join(dir_path, 'values.npy'))
 
+        # check for architecture mismatch (e.g. old 18-plane vs new 102-plane model)
+        if boards.shape[1] != self.boards.shape[1]:
+            print(f"  Warning: buffer shape mismatch ({boards.shape[1]} planes vs "
+                  f"{self.boards.shape[1]} expected). Starting with empty buffer.")
+            return False
+
         n = len(boards)
         self.boards[:n] = boards
         self.policies[:n] = policies

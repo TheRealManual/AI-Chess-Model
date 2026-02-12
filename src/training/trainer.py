@@ -102,7 +102,15 @@ class Trainer:
         print(f"Loading checkpoint: {path}")
         ckpt = torch.load(path, map_location=self.device, weights_only=False)
 
-        self.model.load_state_dict(ckpt['model_state'])
+        try:
+            self.model.load_state_dict(ckpt['model_state'])
+        except RuntimeError as e:
+            if 'size mismatch' in str(e):
+                print(f"  Architecture mismatch — checkpoint uses different input size.")
+                print(f"  Starting with fresh weights. Pre-train first for best results.")
+                return False
+            raise
+
         self.optimizer.load_state_dict(ckpt['optimizer_state'])
         self.generation = ckpt['generation']
         self.total_training_steps = ckpt['total_training_steps']
@@ -217,6 +225,7 @@ class Trainer:
         return {
             'num_blocks': c.num_blocks,
             'channels': c.channels,
+            'history_length': c.history_length,
             'num_sims': c.num_sims,
             'cpuct': c.cpuct,
             'dirichlet_alpha': c.dirichlet_alpha,
