@@ -148,7 +148,7 @@ class Trainer:
                     policy_logits, value_pred = self.model(boards_t)
                     policy_loss = self._policy_loss(policy_logits, policies_t)
                     value_loss = nn.functional.mse_loss(value_pred, values_t)
-                    loss = policy_loss + value_loss
+                    loss = policy_loss + self.config.value_loss_weight * value_loss
 
                 self.optimizer.zero_grad()
                 self.scaler.scale(loss).backward()
@@ -158,7 +158,7 @@ class Trainer:
                 policy_logits, value_pred = self.model(boards_t)
                 policy_loss = self._policy_loss(policy_logits, policies_t)
                 value_loss = nn.functional.mse_loss(value_pred, values_t)
-                loss = policy_loss + value_loss
+                loss = policy_loss + self.config.value_loss_weight * value_loss
 
                 self.optimizer.zero_grad()
                 loss.backward()
@@ -225,11 +225,14 @@ class Trainer:
             'parallel_games': c.parallel_games,
             'temperature_moves': c.temperature_moves,
             'temperature_final': c.temperature_final,
+            'resign_threshold': c.resign_threshold,
+            'draw_penalty': c.draw_penalty,
             'training_steps_per_iter': c.training_steps_per_iter,
             'batch_size': c.batch_size,
             'lr': c.lr,
             'momentum': c.momentum,
             'weight_decay': c.weight_decay,
+            'value_loss_weight': c.value_loss_weight,
             'lr_schedule': c.lr_schedule,
             'warmup_steps': c.warmup_steps,
             'use_amp': c.use_amp,

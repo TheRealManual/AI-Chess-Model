@@ -82,13 +82,15 @@ class GameRecord:
         self.policies.append(policy_target)
         self.turns.append(turn)
 
-    def set_result(self, result_str):
+    def set_result(self, result_str, draw_penalty=0.0):
         if result_str == '1-0':
             self.result = 1.0
         elif result_str == '0-1':
             self.result = -1.0
         else:
-            self.result = 0.0
+            # penalize draws so the model doesn't learn to play safe
+            # a small negative value for both sides incentivizes winning
+            self.result = -abs(draw_penalty)
 
     def get_training_samples(self):
         """Return (boards, policies, values) arrays with values from each player's perspective."""
@@ -145,7 +147,7 @@ def play_single_game(model, device, config: TrainingConfig, game_id=0) -> GameRe
 
     while not board.is_game_over(claim_draw=True):
         if _stop_requested:
-            record.set_result('1/2-1/2')
+            record.set_result('1/2-1/2', draw_penalty=config.draw_penalty)
             return record
 
         # temperature schedule
@@ -196,7 +198,7 @@ def play_single_game(model, device, config: TrainingConfig, game_id=0) -> GameRe
 
     if record.result is None:
         result = board.result(claim_draw=True)
-        record.set_result(result)
+        record.set_result(result, draw_penalty=config.draw_penalty)
 
     _broadcast_game_state(game_id, board, move_num, result=record.result)
     return record
@@ -326,7 +328,7 @@ def run_self_play(model, device, config: TrainingConfig, num_games=None):
     total_moves = sum(len(r.moves) for r in records)
     wins = sum(1 for r in records if r.result == 1.0)
     losses = sum(1 for r in records if r.result == -1.0)
-    draws = sum(1 for r in records if r.result == 0.0)
+    draws = sum(1 for r in records if r.result != 1.0 and r.result != -1.0)
     avg_length = total_moves / max(1, len(records))
     game_lengths = [len(r.moves) for r in records]
 
@@ -337,7 +339,7 @@ def run_self_play(model, device, config: TrainingConfig, num_games=None):
         elif r.result == -1.0:
             outcome = 'black_win'
         else:
-            outcome = 'draw'
+            outcome = 'draw'  # includes draw penalty values like -0.1
         game_details.append({
             'result': outcome,
             'length': len(r.moves),

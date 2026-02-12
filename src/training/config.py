@@ -18,12 +18,13 @@ class TrainingConfig:
     # self-play
     games_per_iter: int = 500
     parallel_games: int = 0  # 0 = auto-detect from cpu count
-    temperature_moves: int = 30  # use temp=1.0 for this many moves, then drop
-    temperature_final: float = 0.1
-    resign_threshold: float = -0.95
+    temperature_moves: int = 60  # use temp=1.0 for this many moves, then drop
+    temperature_final: float = 0.3  # higher final temp keeps some exploration
+    resign_threshold: float = -0.80  # resign earlier to avoid wasting data on lost positions
     resign_count: int = 5  # resign if value stays below threshold for this many moves
     gpu_batch_size: int = 16  # batched NN eval during self-play
     use_opening_book: bool = True  # start games from random book openings for diversity
+    draw_penalty: float = 0.1  # draws score as -0.1 for both sides to discourage draw-seeking
 
     # training
     training_steps_per_iter: int = 1000
@@ -34,6 +35,7 @@ class TrainingConfig:
     lr_schedule: str = "cosine"
     warmup_steps: int = 500
     use_amp: bool = True
+    value_loss_weight: float = 4.0  # upweight value head to prevent collapse
 
     # replay buffer
     buffer_capacity: int = 200_000
