@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from src.api.engine import ChessEngine
 from src.api.schemas import (
@@ -37,6 +38,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# serve the playground web app if the folder exists
+playground_dir = os.path.join(os.getcwd(), "playground")
+if os.path.isdir(playground_dir):
+    app.mount("/playground", StaticFiles(directory=playground_dir, html=True), name="playground")
 
 
 @app.get("/api/health")

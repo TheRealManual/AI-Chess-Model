@@ -33,3 +33,6 @@ Thumbs.db
 # Logs
 *.log
 training_history.json
+
+# Test playground (local only)
+playground/
