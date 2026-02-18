@@ -11,16 +11,28 @@ venv/
 
 # Training artifacts (working dirs — not committed)
 checkpoints/
+checkpoints_pretrained/
 data/
 analytics_output/
+
+# Large binary files
 *.onnx
 *.onnx.data
 *.pt
 *.pth
+*.npy
 
-# Exported models ARE committed (snapshots/backups)
+# Third-party tools (download separately)
+stockfish/
+
+# Exported models ARE committed (ONNX + analytics only, no checkpoints)
 !exported_models/
-!exported_models/**
+!exported_models/**/
+!exported_models/**/*.onnx
+!exported_models/**/*.json
+!exported_models/**/*.png
+!exported_models/**/*.html
+exported_models/*/checkpoints/
 
 # IDE
 .vscode/
@@ -33,4 +45,5 @@ Thumbs.db
 # Logs
 *.log
 training_history.json
+!exported_models/**/training_history.json
 

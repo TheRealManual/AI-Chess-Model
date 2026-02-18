@@ -1,0 +1,6926 @@
+{
+  "session_start": "2026-02-11T00:18:03.801083",
+  "last_updated": "2026-02-12T01:48:49.154280",
+  "config": {
+    "num_blocks": 6,
+    "channels": 128,
+    "num_sims": 200,
+    "cpuct": 2.0,
+    "dirichlet_alpha": 0.3,
+    "dirichlet_weight": 0.25,
+    "games_per_iter": 30,
+    "parallel_games": 23,
+    "temperature_moves": 60,
+    "temperature_final": 0.3,
+    "resign_threshold": -0.8,
+    "draw_penalty": 0.1,
+    "training_steps_per_iter": 1000,
+    "batch_size": 256,
+    "lr": 0.01,
+    "momentum": 0.9,
+    "weight_decay": 0.0001,
+    "value_loss_weight": 4.0,
+    "lr_schedule": "cosine",
+    "warmup_steps": 500,
+    "use_amp": true,
+    "buffer_capacity": 200000,
+    "device": "cuda"
+  },
+  "generations": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "policy_losses": [
+    5.60262002658844,
+    3.2701023008823396,
+    2.889534059047699,
+    2.729264469861984,
+    2.6545159022808074,
+    2.662554144859314,
+    2.6260324840545652,
+    2.6647596628665924,
+    2.5993894703388216,
+    2.558017540216446,
+    2.6010692446231842,
+    2.6202809760570527,
+    2.6774310619831083,
+    2.6397853786945342,
+    2.6369275720119476,
+    2.6211014947891234,
+    2.5832572009563446,
+    2.6965046181678773,
+    2.630501344203949,
+    2.6297688241004944
+  ],
+  "value_losses": [
+    0.027079645495367004,
+    0.015792601750872562,
+    0.015918365956575146,
+    0.013548314861865947,
+    0.01185646362847183,
+    0.014629237983957865,
+    0.01431688151753042,
+    0.017658709729788825,
+    0.013790690210997127,
+    0.010577580273267813,
+    0.014155092173372396,
+    0.015009626454208046,
+    0.02194577032001689,
+    0.016551956049515867,
+    0.017553767629899086,
+    0.01755851442052517,
+    0.013251459253602662,
+    0.023131828206474893,
+    0.016395571906585246,
+    0.017037988101597876
+  ],
+  "total_losses": [
+    5.629699672083807,
+    3.285894902633212,
+    2.9054524250042744,
+    2.74281278472385,
+    2.6663723659092793,
+    2.6771833828432716,
+    2.6403493655720958,
+    2.682418372596381,
+    2.6131801605498186,
+    2.5685951204897135,
+    2.6152243367965564,
+    2.635290602511261,
+    2.699376832303125,
+    2.65633733474405,
+    2.6544813396418467,
+    2.6386600092096484,
+    2.596508660209947,
+    2.719636446374352,
+    2.6468969161105345,
+    2.6468068122020925
+  ],
+  "self_play_stats": [
+    {
+      "games": 30,
+      "white_wins": 12,
+      "black_wins": 11,
+      "draws": 7,
+      "avg_game_length": 177.4,
+      "min_game_length": 7,
+      "max_game_length": 477,
+      "total_positions": 5161,
+      "game_details": [
+        {
+          "result": "white_win",
+          "length": 7,
+          "positions": 4
+        },
+        {
+          "result": "white_win",
+          "length": 23,
+          "positions": 20
+        },
+        {
+          "result": "white_win",
+          "length": 39,
+          "positions": 36
+        },
+        {
+          "result": "white_win",
+          "length": 53,
+          "positions": 47
+        },
+        {
+          "result": "black_win",
+          "length": 54,
+          "positions": 48
+        },
+        {
+          "result": "black_win",
+          "length": 58,
+          "positions": 52
+        },
+        {
+          "result": "black_win",
+          "length": 68,
+          "positions": 63
+        },
+        {
+          "result": "black_win",
+          "length": 74,
+          "positions": 70
+        },
+        {
+          "result": "black_win",
+          "length": 106,
+          "positions": 96
+        },
+        {
+          "result": "white_win",
+          "length": 113,
+          "positions": 110
+        },
+        {
+          "result": "black_win",
+          "length": 124,
+          "positions": 114
+        },
+        {
+          "result": "black_win",
+          "length": 124,
+          "positions": 118
+        },
+        {
+          "result": "white_win",
+          "length": 139,
+          "positions": 134
+        },
+        {
+          "result": "black_win",
+          "length": 168,
+          "positions": 160
+        },
+        {
+          "result": "white_win",
+          "length": 175,
+          "positions": 168
+        },
+        {
+          "result": "black_win",
+          "length": 242,
+          "positions": 236
+        },
+        {
+          "result": "white_win",
+          "length": 261,
+          "positions": 251
+        },
+        {
+          "result": "draw",
+          "length": 346,
+          "positions": 340
+        },
+        {
+          "result": "draw",
+          "length": 397,
+          "positions": 390
+        },
+        {
+          "result": "draw",
+          "length": 407,
+          "positions": 404
+        },
+        {
+          "result": "draw",
+          "length": 459,
+          "positions": 452
+        },
+        {
+          "result": "draw",
+          "length": 466,
+          "positions": 460
+        },
+        {
+          "result": "white_win",
+          "length": 477,
+          "positions": 475
+        },
+        {
+          "result": "black_win",
+          "length": 24,
+          "positions": 19
+        },
+        {
+          "result": "black_win",
+          "length": 26,
+          "positions": 20
+        },
+        {
+          "result": "white_win",
+          "length": 47,
+          "positions": 41
+        },
+        {
+          "result": "white_win",
+          "length": 73,
+          "positions": 70
+        },
+        {
+          "result": "white_win",
+          "length": 131,
+          "positions": 127
+        },
+        {
+          "result": "draw",
+          "length": 291,
+          "positions": 290
+        },
+        {
+          "result": "draw",
+          "length": 350,
+          "positions": 346
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 6,
+      "black_wins": 11,
+      "draws": 13,
+      "avg_game_length": 107.3,
+      "min_game_length": 6,
+      "max_game_length": 229,
+      "total_positions": 3083,
+      "game_details": [
+        {
+          "result": "black_win",
+          "length": 6,
+          "positions": 5
+        },
+        {
+          "result": "black_win",
+          "length": 38,
+          "positions": 34
+        },
+        {
+          "result": "black_win",
+          "length": 72,
+          "positions": 65
+        },
+        {
+          "result": "draw",
+          "length": 73,
+          "positions": 68
+        },
+        {
+          "result": "black_win",
+          "length": 79,
+          "positions": 75
+        },
+        {
+          "result": "black_win",
+          "length": 90,
+          "positions": 88
+        },
+        {
+          "result": "draw",
+          "length": 96,
+          "positions": 90
+        },
+        {
+          "result": "black_win",
+          "length": 96,
+          "positions": 95
+        },
+        {
+          "result": "black_win",
+          "length": 102,
+          "positions": 94
+        },
+        {
+          "result": "white_win",
+          "length": 103,
+          "positions": 98
+        },
+        {
+          "result": "draw",
+          "length": 103,
+          "positions": 102
+        },
+        {
+          "result": "white_win",
+          "length": 119,
+          "positions": 112
+        },
+        {
+          "result": "draw",
+          "length": 116,
+          "positions": 111
+        },
+        {
+          "result": "white_win",
+          "length": 115,
+          "positions": 112
+        },
+        {
+          "result": "draw",
+          "length": 125,
+          "positions": 118
+        },
+        {
+          "result": "draw",
+          "length": 120,
+          "positions": 116
+        },
+        {
+          "result": "draw",
+          "length": 122,
+          "positions": 121
+        },
+        {
+          "result": "draw",
+          "length": 133,
+          "positions": 129
+        },
+        {
+          "result": "draw",
+          "length": 142,
+          "positions": 137
+        },
+        {
+          "result": "draw",
+          "length": 161,
+          "positions": 157
+        },
+        {
+          "result": "draw",
+          "length": 168,
+          "positions": 162
+        },
+        {
+          "result": "white_win",
+          "length": 195,
+          "positions": 187
+        },
+        {
+          "result": "draw",
+          "length": 229,
+          "positions": 222
+        },
+        {
+          "result": "black_win",
+          "length": 68,
+          "positions": 62
+        },
+        {
+          "result": "black_win",
+          "length": 78,
+          "positions": 73
+        },
+        {
+          "result": "white_win",
+          "length": 83,
+          "positions": 78
+        },
+        {
+          "result": "white_win",
+          "length": 85,
+          "positions": 78
+        },
+        {
+          "result": "black_win",
+          "length": 92,
+          "positions": 90
+        },
+        {
+          "result": "black_win",
+          "length": 92,
+          "positions": 89
+        },
+        {
+          "result": "draw",
+          "length": 118,
+          "positions": 115
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 5,
+      "black_wins": 11,
+      "draws": 14,
+      "avg_game_length": 130.8,
+      "min_game_length": 38,
+      "max_game_length": 298,
+      "total_positions": 3783,
+      "game_details": [
+        {
+          "result": "black_win",
+          "length": 44,
+          "positions": 37
+        },
+        {
+          "result": "black_win",
+          "length": 44,
+          "positions": 39
+        },
+        {
+          "result": "black_win",
+          "length": 56,
+          "positions": 52
+        },
+        {
+          "result": "white_win",
+          "length": 77,
+          "positions": 71
+        },
+        {
+          "result": "white_win",
+          "length": 83,
+          "positions": 81
+        },
+        {
+          "result": "draw",
+          "length": 95,
+          "positions": 91
+        },
+        {
+          "result": "black_win",
+          "length": 104,
+          "positions": 98
+        },
+        {
+          "result": "draw",
+          "length": 106,
+          "positions": 99
+        },
+        {
+          "result": "white_win",
+          "length": 109,
+          "positions": 106
+        },
+        {
+          "result": "black_win",
+          "length": 114,
+          "positions": 109
+        },
+        {
+          "result": "black_win",
+          "length": 124,
+          "positions": 120
+        },
+        {
+          "result": "black_win",
+          "length": 132,
+          "positions": 129
+        },
+        {
+          "result": "draw",
+          "length": 132,
+          "positions": 129
+        },
+        {
+          "result": "white_win",
+          "length": 141,
+          "positions": 137
+        },
+        {
+          "result": "black_win",
+          "length": 144,
+          "positions": 141
+        },
+        {
+          "result": "white_win",
+          "length": 157,
+          "positions": 147
+        },
+        {
+          "result": "draw",
+          "length": 150,
+          "positions": 149
+        },
+        {
+          "result": "draw",
+          "length": 167,
+          "positions": 163
+        },
+        {
+          "result": "draw",
+          "length": 166,
+          "positions": 159
+        },
+        {
+          "result": "draw",
+          "length": 167,
+          "positions": 159
+        },
+        {
+          "result": "draw",
+          "length": 181,
+          "positions": 176
+        },
+        {
+          "result": "draw",
+          "length": 228,
+          "positions": 224
+        },
+        {
+          "result": "draw",
+          "length": 298,
+          "positions": 288
+        },
+        {
+          "result": "black_win",
+          "length": 38,
+          "positions": 33
+        },
+        {
+          "result": "black_win",
+          "length": 52,
+          "positions": 48
+        },
+        {
+          "result": "black_win",
+          "length": 104,
+          "positions": 103
+        },
+        {
+          "result": "draw",
+          "length": 129,
+          "positions": 128
+        },
+        {
+          "result": "draw",
+          "length": 166,
+          "positions": 162
+        },
+        {
+          "result": "draw",
+          "length": 205,
+          "positions": 198
+        },
+        {
+          "result": "draw",
+          "length": 211,
+          "positions": 207
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 8,
+      "black_wins": 4,
+      "draws": 18,
+      "avg_game_length": 148.8,
+      "min_game_length": 35,
+      "max_game_length": 363,
+      "total_positions": 4315,
+      "game_details": [
+        {
+          "result": "white_win",
+          "length": 35,
+          "positions": 30
+        },
+        {
+          "result": "white_win",
+          "length": 75,
+          "positions": 71
+        },
+        {
+          "result": "draw",
+          "length": 79,
+          "positions": 74
+        },
+        {
+          "result": "draw",
+          "length": 97,
+          "positions": 87
+        },
+        {
+          "result": "white_win",
+          "length": 89,
+          "positions": 88
+        },
+        {
+          "result": "black_win",
+          "length": 96,
+          "positions": 91
+        },
+        {
+          "result": "white_win",
+          "length": 101,
+          "positions": 93
+        },
+        {
+          "result": "black_win",
+          "length": 116,
+          "positions": 110
+        },
+        {
+          "result": "white_win",
+          "length": 117,
+          "positions": 112
+        },
+        {
+          "result": "draw",
+          "length": 118,
+          "positions": 113
+        },
+        {
+          "result": "draw",
+          "length": 124,
+          "positions": 117
+        },
+        {
+          "result": "white_win",
+          "length": 129,
+          "positions": 125
+        },
+        {
+          "result": "white_win",
+          "length": 133,
+          "positions": 131
+        },
+        {
+          "result": "white_win",
+          "length": 139,
+          "positions": 136
+        },
+        {
+          "result": "draw",
+          "length": 147,
+          "positions": 143
+        },
+        {
+          "result": "draw",
+          "length": 153,
+          "positions": 151
+        },
+        {
+          "result": "draw",
+          "length": 165,
+          "positions": 159
+        },
+        {
+          "result": "black_win",
+          "length": 164,
+          "positions": 160
+        },
+        {
+          "result": "draw",
+          "length": 167,
+          "positions": 162
+        },
+        {
+          "result": "draw",
+          "length": 167,
+          "positions": 164
+        },
+        {
+          "result": "draw",
+          "length": 190,
+          "positions": 187
+        },
+        {
+          "result": "draw",
+          "length": 225,
+          "positions": 215
+        },
+        {
+          "result": "draw",
+          "length": 363,
+          "positions": 357
+        },
+        {
+          "result": "black_win",
+          "length": 92,
+          "positions": 90
+        },
+        {
+          "result": "draw",
+          "length": 105,
+          "positions": 97
+        },
+        {
+          "result": "draw",
+          "length": 142,
+          "positions": 132
+        },
+        {
+          "result": "draw",
+          "length": 185,
+          "positions": 181
+        },
+        {
+          "result": "draw",
+          "length": 185,
+          "positions": 183
+        },
+        {
+          "result": "draw",
+          "length": 233,
+          "positions": 229
+        },
+        {
+          "result": "draw",
+          "length": 333,
+          "positions": 327
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 8,
+      "black_wins": 4,
+      "draws": 18,
+      "avg_game_length": 142.13333333333333,
+      "min_game_length": 37,
+      "max_game_length": 347,
+      "total_positions": 4141,
+      "game_details": [
+        {
+          "result": "black_win",
+          "length": 52,
+          "positions": 49
+        },
+        {
+          "result": "white_win",
+          "length": 59,
+          "positions": 51
+        },
+        {
+          "result": "black_win",
+          "length": 76,
+          "positions": 73
+        },
+        {
+          "result": "white_win",
+          "length": 79,
+          "positions": 75
+        },
+        {
+          "result": "draw",
+          "length": 90,
+          "positions": 89
+        },
+        {
+          "result": "white_win",
+          "length": 93,
+          "positions": 92
+        },
+        {
+          "result": "black_win",
+          "length": 112,
+          "positions": 106
+        },
+        {
+          "result": "white_win",
+          "length": 115,
+          "positions": 111
+        },
+        {
+          "result": "draw",
+          "length": 114,
+          "positions": 111
+        },
+        {
+          "result": "white_win",
+          "length": 135,
+          "positions": 132
+        },
+        {
+          "result": "draw",
+          "length": 140,
+          "positions": 134
+        },
+        {
+          "result": "draw",
+          "length": 143,
+          "positions": 139
+        },
+        {
+          "result": "draw",
+          "length": 142,
+          "positions": 140
+        },
+        {
+          "result": "draw",
+          "length": 147,
+          "positions": 142
+        },
+        {
+          "result": "white_win",
+          "length": 147,
+          "positions": 143
+        },
+        {
+          "result": "draw",
+          "length": 152,
+          "positions": 149
+        },
+        {
+          "result": "draw",
+          "length": 160,
+          "positions": 156
+        },
+        {
+          "result": "black_win",
+          "length": 180,
+          "positions": 178
+        },
+        {
+          "result": "draw",
+          "length": 219,
+          "positions": 216
+        },
+        {
+          "result": "draw",
+          "length": 235,
+          "positions": 230
+        },
+        {
+          "result": "draw",
+          "length": 233,
+          "positions": 231
+        },
+        {
+          "result": "draw",
+          "length": 244,
+          "positions": 241
+        },
+        {
+          "result": "draw",
+          "length": 347,
+          "positions": 345
+        },
+        {
+          "result": "white_win",
+          "length": 37,
+          "positions": 33
+        },
+        {
+          "result": "draw",
+          "length": 86,
+          "positions": 84
+        },
+        {
+          "result": "draw",
+          "length": 88,
+          "positions": 83
+        },
+        {
+          "result": "white_win",
+          "length": 127,
+          "positions": 117
+        },
+        {
+          "result": "draw",
+          "length": 137,
+          "positions": 130
+        },
+        {
+          "result": "draw",
+          "length": 181,
+          "positions": 174
+        },
+        {
+          "result": "draw",
+          "length": 194,
+          "positions": 187
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 6,
+      "black_wins": 6,
+      "draws": 18,
+      "avg_game_length": 118.53333333333333,
+      "min_game_length": 50,
+      "max_game_length": 291,
+      "total_positions": 3417,
+      "game_details": [
+        {
+          "result": "draw",
+          "length": 86,
+          "positions": 78
+        },
+        {
+          "result": "draw",
+          "length": 81,
+          "positions": 77
+        },
+        {
+          "result": "white_win",
+          "length": 83,
+          "positions": 80
+        },
+        {
+          "result": "white_win",
+          "length": 87,
+          "positions": 82
+        },
+        {
+          "result": "draw",
+          "length": 87,
+          "positions": 86
+        },
+        {
+          "result": "draw",
+          "length": 93,
+          "positions": 89
+        },
+        {
+          "result": "draw",
+          "length": 99,
+          "positions": 89
+        },
+        {
+          "result": "white_win",
+          "length": 95,
+          "positions": 90
+        },
+        {
+          "result": "black_win",
+          "length": 96,
+          "positions": 94
+        },
+        {
+          "result": "white_win",
+          "length": 105,
+          "positions": 99
+        },
+        {
+          "result": "white_win",
+          "length": 107,
+          "positions": 102
+        },
+        {
+          "result": "draw",
+          "length": 114,
+          "positions": 106
+        },
+        {
+          "result": "draw",
+          "length": 118,
+          "positions": 113
+        },
+        {
+          "result": "black_win",
+          "length": 118,
+          "positions": 116
+        },
+        {
+          "result": "draw",
+          "length": 125,
+          "positions": 119
+        },
+        {
+          "result": "black_win",
+          "length": 120,
+          "positions": 117
+        },
+        {
+          "result": "black_win",
+          "length": 126,
+          "positions": 125
+        },
+        {
+          "result": "draw",
+          "length": 138,
+          "positions": 135
+        },
+        {
+          "result": "draw",
+          "length": 144,
+          "positions": 139
+        },
+        {
+          "result": "draw",
+          "length": 151,
+          "positions": 149
+        },
+        {
+          "result": "draw",
+          "length": 173,
+          "positions": 170
+        },
+        {
+          "result": "black_win",
+          "length": 182,
+          "positions": 177
+        },
+        {
+          "result": "draw",
+          "length": 291,
+          "positions": 288
+        },
+        {
+          "result": "black_win",
+          "length": 50,
+          "positions": 43
+        },
+        {
+          "result": "draw",
+          "length": 82,
+          "positions": 78
+        },
+        {
+          "result": "draw",
+          "length": 93,
+          "positions": 86
+        },
+        {
+          "result": "draw",
+          "length": 93,
+          "positions": 86
+        },
+        {
+          "result": "draw",
+          "length": 117,
+          "positions": 111
+        },
+        {
+          "result": "draw",
+          "length": 143,
+          "positions": 139
+        },
+        {
+          "result": "white_win",
+          "length": 159,
+          "positions": 154
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 6,
+      "black_wins": 7,
+      "draws": 17,
+      "avg_game_length": 108.6,
+      "min_game_length": 17,
+      "max_game_length": 230,
+      "total_positions": 3120,
+      "game_details": [
+        {
+          "result": "white_win",
+          "length": 17,
+          "positions": 14
+        },
+        {
+          "result": "black_win",
+          "length": 50,
+          "positions": 48
+        },
+        {
+          "result": "draw",
+          "length": 75,
+          "positions": 72
+        },
+        {
+          "result": "draw",
+          "length": 81,
+          "positions": 73
+        },
+        {
+          "result": "draw",
+          "length": 80,
+          "positions": 74
+        },
+        {
+          "result": "white_win",
+          "length": 87,
+          "positions": 82
+        },
+        {
+          "result": "white_win",
+          "length": 91,
+          "positions": 86
+        },
+        {
+          "result": "draw",
+          "length": 92,
+          "positions": 89
+        },
+        {
+          "result": "white_win",
+          "length": 95,
+          "positions": 91
+        },
+        {
+          "result": "draw",
+          "length": 101,
+          "positions": 96
+        },
+        {
+          "result": "draw",
+          "length": 105,
+          "positions": 100
+        },
+        {
+          "result": "draw",
+          "length": 113,
+          "positions": 109
+        },
+        {
+          "result": "draw",
+          "length": 116,
+          "positions": 113
+        },
+        {
+          "result": "draw",
+          "length": 116,
+          "positions": 114
+        },
+        {
+          "result": "draw",
+          "length": 127,
+          "positions": 121
+        },
+        {
+          "result": "draw",
+          "length": 132,
+          "positions": 128
+        },
+        {
+          "result": "white_win",
+          "length": 135,
+          "positions": 133
+        },
+        {
+          "result": "draw",
+          "length": 142,
+          "positions": 140
+        },
+        {
+          "result": "draw",
+          "length": 144,
+          "positions": 142
+        },
+        {
+          "result": "black_win",
+          "length": 152,
+          "positions": 149
+        },
+        {
+          "result": "draw",
+          "length": 152,
+          "positions": 146
+        },
+        {
+          "result": "draw",
+          "length": 155,
+          "positions": 151
+        },
+        {
+          "result": "draw",
+          "length": 171,
+          "positions": 163
+        },
+        {
+          "result": "black_win",
+          "length": 46,
+          "positions": 41
+        },
+        {
+          "result": "black_win",
+          "length": 68,
+          "positions": 66
+        },
+        {
+          "result": "black_win",
+          "length": 82,
+          "positions": 76
+        },
+        {
+          "result": "white_win",
+          "length": 93,
+          "positions": 87
+        },
+        {
+          "result": "black_win",
+          "length": 104,
+          "positions": 94
+        },
+        {
+          "result": "black_win",
+          "length": 106,
+          "positions": 102
+        },
+        {
+          "result": "draw",
+          "length": 230,
+          "positions": 220
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 3,
+      "black_wins": 7,
+      "draws": 20,
+      "avg_game_length": 114.03333333333333,
+      "min_game_length": 49,
+      "max_game_length": 234,
+      "total_positions": 3254,
+      "game_details": [
+        {
+          "result": "white_win",
+          "length": 49,
+          "positions": 43
+        },
+        {
+          "result": "white_win",
+          "length": 57,
+          "positions": 47
+        },
+        {
+          "result": "black_win",
+          "length": 54,
+          "positions": 48
+        },
+        {
+          "result": "black_win",
+          "length": 70,
+          "positions": 64
+        },
+        {
+          "result": "draw",
+          "length": 67,
+          "positions": 63
+        },
+        {
+          "result": "black_win",
+          "length": 70,
+          "positions": 65
+        },
+        {
+          "result": "draw",
+          "length": 70,
+          "positions": 65
+        },
+        {
+          "result": "black_win",
+          "length": 72,
+          "positions": 69
+        },
+        {
+          "result": "draw",
+          "length": 81,
+          "positions": 71
+        },
+        {
+          "result": "draw",
+          "length": 81,
+          "positions": 74
+        },
+        {
+          "result": "draw",
+          "length": 93,
+          "positions": 87
+        },
+        {
+          "result": "draw",
+          "length": 97,
+          "positions": 91
+        },
+        {
+          "result": "black_win",
+          "length": 102,
+          "positions": 97
+        },
+        {
+          "result": "draw",
+          "length": 109,
+          "positions": 101
+        },
+        {
+          "result": "draw",
+          "length": 110,
+          "positions": 104
+        },
+        {
+          "result": "draw",
+          "length": 129,
+          "positions": 128
+        },
+        {
+          "result": "black_win",
+          "length": 136,
+          "positions": 131
+        },
+        {
+          "result": "draw",
+          "length": 143,
+          "positions": 137
+        },
+        {
+          "result": "draw",
+          "length": 141,
+          "positions": 135
+        },
+        {
+          "result": "draw",
+          "length": 162,
+          "positions": 159
+        },
+        {
+          "result": "draw",
+          "length": 161,
+          "positions": 160
+        },
+        {
+          "result": "draw",
+          "length": 190,
+          "positions": 184
+        },
+        {
+          "result": "white_win",
+          "length": 233,
+          "positions": 226
+        },
+        {
+          "result": "draw",
+          "length": 83,
+          "positions": 81
+        },
+        {
+          "result": "draw",
+          "length": 90,
+          "positions": 88
+        },
+        {
+          "result": "draw",
+          "length": 123,
+          "positions": 113
+        },
+        {
+          "result": "draw",
+          "length": 132,
+          "positions": 125
+        },
+        {
+          "result": "draw",
+          "length": 139,
+          "positions": 135
+        },
+        {
+          "result": "draw",
+          "length": 143,
+          "positions": 139
+        },
+        {
+          "result": "black_win",
+          "length": 234,
+          "positions": 224
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 5,
+      "black_wins": 6,
+      "draws": 19,
+      "avg_game_length": 130.56666666666666,
+      "min_game_length": 63,
+      "max_game_length": 247,
+      "total_positions": 3750,
+      "game_details": [
+        {
+          "result": "white_win",
+          "length": 63,
+          "positions": 53
+        },
+        {
+          "result": "white_win",
+          "length": 65,
+          "positions": 59
+        },
+        {
+          "result": "white_win",
+          "length": 67,
+          "positions": 62
+        },
+        {
+          "result": "draw",
+          "length": 76,
+          "positions": 66
+        },
+        {
+          "result": "draw",
+          "length": 97,
+          "positions": 89
+        },
+        {
+          "result": "draw",
+          "length": 109,
+          "positions": 99
+        },
+        {
+          "result": "black_win",
+          "length": 112,
+          "positions": 107
+        },
+        {
+          "result": "draw",
+          "length": 116,
+          "positions": 111
+        },
+        {
+          "result": "black_win",
+          "length": 118,
+          "positions": 114
+        },
+        {
+          "result": "draw",
+          "length": 120,
+          "positions": 117
+        },
+        {
+          "result": "draw",
+          "length": 128,
+          "positions": 125
+        },
+        {
+          "result": "draw",
+          "length": 144,
+          "positions": 134
+        },
+        {
+          "result": "draw",
+          "length": 151,
+          "positions": 141
+        },
+        {
+          "result": "draw",
+          "length": 149,
+          "positions": 147
+        },
+        {
+          "result": "draw",
+          "length": 151,
+          "positions": 147
+        },
+        {
+          "result": "draw",
+          "length": 174,
+          "positions": 169
+        },
+        {
+          "result": "black_win",
+          "length": 184,
+          "positions": 179
+        },
+        {
+          "result": "white_win",
+          "length": 189,
+          "positions": 181
+        },
+        {
+          "result": "draw",
+          "length": 188,
+          "positions": 184
+        },
+        {
+          "result": "draw",
+          "length": 197,
+          "positions": 192
+        },
+        {
+          "result": "draw",
+          "length": 197,
+          "positions": 194
+        },
+        {
+          "result": "draw",
+          "length": 230,
+          "positions": 227
+        },
+        {
+          "result": "draw",
+          "length": 247,
+          "positions": 239
+        },
+        {
+          "result": "white_win",
+          "length": 75,
+          "positions": 69
+        },
+        {
+          "result": "black_win",
+          "length": 76,
+          "positions": 71
+        },
+        {
+          "result": "draw",
+          "length": 75,
+          "positions": 71
+        },
+        {
+          "result": "draw",
+          "length": 77,
+          "positions": 71
+        },
+        {
+          "result": "draw",
+          "length": 94,
+          "positions": 91
+        },
+        {
+          "result": "black_win",
+          "length": 120,
+          "positions": 116
+        },
+        {
+          "result": "black_win",
+          "length": 128,
+          "positions": 125
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 7,
+      "black_wins": 2,
+      "draws": 21,
+      "avg_game_length": 123.56666666666666,
+      "min_game_length": 25,
+      "max_game_length": 232,
+      "total_positions": 3557,
+      "game_details": [
+        {
+          "result": "white_win",
+          "length": 25,
+          "positions": 21
+        },
+        {
+          "result": "black_win",
+          "length": 34,
+          "positions": 30
+        },
+        {
+          "result": "white_win",
+          "length": 37,
+          "positions": 35
+        },
+        {
+          "result": "draw",
+          "length": 49,
+          "positions": 48
+        },
+        {
+          "result": "white_win",
+          "length": 101,
+          "positions": 93
+        },
+        {
+          "result": "draw",
+          "length": 113,
+          "positions": 108
+        },
+        {
+          "result": "draw",
+          "length": 118,
+          "positions": 113
+        },
+        {
+          "result": "draw",
+          "length": 118,
+          "positions": 115
+        },
+        {
+          "result": "draw",
+          "length": 124,
+          "positions": 118
+        },
+        {
+          "result": "draw",
+          "length": 125,
+          "positions": 122
+        },
+        {
+          "result": "draw",
+          "length": 134,
+          "positions": 129
+        },
+        {
+          "result": "draw",
+          "length": 142,
+          "positions": 137
+        },
+        {
+          "result": "draw",
+          "length": 142,
+          "positions": 134
+        },
+        {
+          "result": "draw",
+          "length": 136,
+          "positions": 134
+        },
+        {
+          "result": "draw",
+          "length": 149,
+          "positions": 139
+        },
+        {
+          "result": "draw",
+          "length": 147,
+          "positions": 141
+        },
+        {
+          "result": "white_win",
+          "length": 155,
+          "positions": 149
+        },
+        {
+          "result": "draw",
+          "length": 154,
+          "positions": 153
+        },
+        {
+          "result": "draw",
+          "length": 178,
+          "positions": 171
+        },
+        {
+          "result": "draw",
+          "length": 197,
+          "positions": 187
+        },
+        {
+          "result": "draw",
+          "length": 201,
+          "positions": 197
+        },
+        {
+          "result": "draw",
+          "length": 218,
+          "positions": 213
+        },
+        {
+          "result": "draw",
+          "length": 232,
+          "positions": 226
+        },
+        {
+          "result": "white_win",
+          "length": 27,
+          "positions": 23
+        },
+        {
+          "result": "white_win",
+          "length": 49,
+          "positions": 39
+        },
+        {
+          "result": "black_win",
+          "length": 74,
+          "positions": 69
+        },
+        {
+          "result": "draw",
+          "length": 90,
+          "positions": 83
+        },
+        {
+          "result": "white_win",
+          "length": 123,
+          "positions": 121
+        },
+        {
+          "result": "draw",
+          "length": 134,
+          "positions": 133
+        },
+        {
+          "result": "draw",
+          "length": 181,
+          "positions": 176
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 5,
+      "black_wins": 6,
+      "draws": 19,
+      "avg_game_length": 121.5,
+      "min_game_length": 14,
+      "max_game_length": 323,
+      "total_positions": 3476,
+      "game_details": [
+        {
+          "result": "black_win",
+          "length": 14,
+          "positions": 7
+        },
+        {
+          "result": "white_win",
+          "length": 47,
+          "positions": 46
+        },
+        {
+          "result": "draw",
+          "length": 69,
+          "positions": 65
+        },
+        {
+          "result": "draw",
+          "length": 75,
+          "positions": 71
+        },
+        {
+          "result": "white_win",
+          "length": 81,
+          "positions": 71
+        },
+        {
+          "result": "white_win",
+          "length": 77,
+          "positions": 71
+        },
+        {
+          "result": "draw",
+          "length": 84,
+          "positions": 78
+        },
+        {
+          "result": "black_win",
+          "length": 88,
+          "positions": 86
+        },
+        {
+          "result": "draw",
+          "length": 95,
+          "positions": 89
+        },
+        {
+          "result": "draw",
+          "length": 106,
+          "positions": 98
+        },
+        {
+          "result": "draw",
+          "length": 108,
+          "positions": 98
+        },
+        {
+          "result": "draw",
+          "length": 108,
+          "positions": 101
+        },
+        {
+          "result": "draw",
+          "length": 119,
+          "positions": 114
+        },
+        {
+          "result": "draw",
+          "length": 123,
+          "positions": 120
+        },
+        {
+          "result": "draw",
+          "length": 128,
+          "positions": 123
+        },
+        {
+          "result": "draw",
+          "length": 147,
+          "positions": 141
+        },
+        {
+          "result": "draw",
+          "length": 152,
+          "positions": 145
+        },
+        {
+          "result": "draw",
+          "length": 181,
+          "positions": 171
+        },
+        {
+          "result": "draw",
+          "length": 195,
+          "positions": 190
+        },
+        {
+          "result": "draw",
+          "length": 202,
+          "positions": 197
+        },
+        {
+          "result": "draw",
+          "length": 213,
+          "positions": 207
+        },
+        {
+          "result": "white_win",
+          "length": 213,
+          "positions": 209
+        },
+        {
+          "result": "draw",
+          "length": 323,
+          "positions": 320
+        },
+        {
+          "result": "black_win",
+          "length": 46,
+          "positions": 41
+        },
+        {
+          "result": "black_win",
+          "length": 60,
+          "positions": 54
+        },
+        {
+          "result": "draw",
+          "length": 73,
+          "positions": 63
+        },
+        {
+          "result": "black_win",
+          "length": 94,
+          "positions": 91
+        },
+        {
+          "result": "draw",
+          "length": 123,
+          "positions": 119
+        },
+        {
+          "result": "black_win",
+          "length": 150,
+          "positions": 145
+        },
+        {
+          "result": "white_win",
+          "length": 151,
+          "positions": 145
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 7,
+      "black_wins": 4,
+      "draws": 19,
+      "avg_game_length": 139.2,
+      "min_game_length": 33,
+      "max_game_length": 248,
+      "total_positions": 4014,
+      "game_details": [
+        {
+          "result": "white_win",
+          "length": 33,
+          "positions": 30
+        },
+        {
+          "result": "white_win",
+          "length": 53,
+          "positions": 43
+        },
+        {
+          "result": "white_win",
+          "length": 61,
+          "positions": 53
+        },
+        {
+          "result": "white_win",
+          "length": 77,
+          "positions": 71
+        },
+        {
+          "result": "draw",
+          "length": 78,
+          "positions": 76
+        },
+        {
+          "result": "white_win",
+          "length": 89,
+          "positions": 86
+        },
+        {
+          "result": "draw",
+          "length": 101,
+          "positions": 95
+        },
+        {
+          "result": "draw",
+          "length": 130,
+          "positions": 127
+        },
+        {
+          "result": "draw",
+          "length": 137,
+          "positions": 135
+        },
+        {
+          "result": "draw",
+          "length": 145,
+          "positions": 139
+        },
+        {
+          "result": "white_win",
+          "length": 147,
+          "positions": 142
+        },
+        {
+          "result": "black_win",
+          "length": 148,
+          "positions": 147
+        },
+        {
+          "result": "draw",
+          "length": 154,
+          "positions": 148
+        },
+        {
+          "result": "draw",
+          "length": 154,
+          "positions": 148
+        },
+        {
+          "result": "draw",
+          "length": 158,
+          "positions": 156
+        },
+        {
+          "result": "draw",
+          "length": 166,
+          "positions": 162
+        },
+        {
+          "result": "draw",
+          "length": 164,
+          "positions": 159
+        },
+        {
+          "result": "draw",
+          "length": 179,
+          "positions": 173
+        },
+        {
+          "result": "draw",
+          "length": 176,
+          "positions": 175
+        },
+        {
+          "result": "draw",
+          "length": 203,
+          "positions": 193
+        },
+        {
+          "result": "draw",
+          "length": 203,
+          "positions": 195
+        },
+        {
+          "result": "black_win",
+          "length": 226,
+          "positions": 220
+        },
+        {
+          "result": "draw",
+          "length": 248,
+          "positions": 240
+        },
+        {
+          "result": "black_win",
+          "length": 66,
+          "positions": 61
+        },
+        {
+          "result": "white_win",
+          "length": 81,
+          "positions": 77
+        },
+        {
+          "result": "draw",
+          "length": 89,
+          "positions": 83
+        },
+        {
+          "result": "draw",
+          "length": 143,
+          "positions": 133
+        },
+        {
+          "result": "black_win",
+          "length": 144,
+          "positions": 141
+        },
+        {
+          "result": "draw",
+          "length": 209,
+          "positions": 202
+        },
+        {
+          "result": "draw",
+          "length": 214,
+          "positions": 204
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 4,
+      "black_wins": 11,
+      "draws": 15,
+      "avg_game_length": 125.9,
+      "min_game_length": 14,
+      "max_game_length": 317,
+      "total_positions": 3628,
+      "game_details": [
+        {
+          "result": "black_win",
+          "length": 14,
+          "positions": 12
+        },
+        {
+          "result": "white_win",
+          "length": 61,
+          "positions": 57
+        },
+        {
+          "result": "white_win",
+          "length": 63,
+          "positions": 57
+        },
+        {
+          "result": "black_win",
+          "length": 66,
+          "positions": 56
+        },
+        {
+          "result": "black_win",
+          "length": 74,
+          "positions": 68
+        },
+        {
+          "result": "draw",
+          "length": 71,
+          "positions": 66
+        },
+        {
+          "result": "black_win",
+          "length": 74,
+          "positions": 69
+        },
+        {
+          "result": "white_win",
+          "length": 83,
+          "positions": 77
+        },
+        {
+          "result": "draw",
+          "length": 81,
+          "positions": 79
+        },
+        {
+          "result": "black_win",
+          "length": 88,
+          "positions": 82
+        },
+        {
+          "result": "draw",
+          "length": 84,
+          "positions": 80
+        },
+        {
+          "result": "black_win",
+          "length": 96,
+          "positions": 92
+        },
+        {
+          "result": "draw",
+          "length": 116,
+          "positions": 113
+        },
+        {
+          "result": "draw",
+          "length": 116,
+          "positions": 112
+        },
+        {
+          "result": "draw",
+          "length": 121,
+          "positions": 115
+        },
+        {
+          "result": "black_win",
+          "length": 124,
+          "positions": 118
+        },
+        {
+          "result": "black_win",
+          "length": 162,
+          "positions": 154
+        },
+        {
+          "result": "black_win",
+          "length": 162,
+          "positions": 154
+        },
+        {
+          "result": "draw",
+          "length": 176,
+          "positions": 174
+        },
+        {
+          "result": "draw",
+          "length": 179,
+          "positions": 176
+        },
+        {
+          "result": "draw",
+          "length": 225,
+          "positions": 220
+        },
+        {
+          "result": "draw",
+          "length": 254,
+          "positions": 250
+        },
+        {
+          "result": "draw",
+          "length": 317,
+          "positions": 316
+        },
+        {
+          "result": "black_win",
+          "length": 68,
+          "positions": 58
+        },
+        {
+          "result": "draw",
+          "length": 79,
+          "positions": 69
+        },
+        {
+          "result": "draw",
+          "length": 83,
+          "positions": 79
+        },
+        {
+          "result": "white_win",
+          "length": 83,
+          "positions": 81
+        },
+        {
+          "result": "draw",
+          "length": 180,
+          "positions": 175
+        },
+        {
+          "result": "draw",
+          "length": 187,
+          "positions": 183
+        },
+        {
+          "result": "black_win",
+          "length": 290,
+          "positions": 286
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 9,
+      "black_wins": 5,
+      "draws": 16,
+      "avg_game_length": 125.8,
+      "min_game_length": 26,
+      "max_game_length": 250,
+      "total_positions": 3631,
+      "game_details": [
+        {
+          "result": "black_win",
+          "length": 26,
+          "positions": 21
+        },
+        {
+          "result": "white_win",
+          "length": 37,
+          "positions": 27
+        },
+        {
+          "result": "white_win",
+          "length": 39,
+          "positions": 36
+        },
+        {
+          "result": "white_win",
+          "length": 49,
+          "positions": 45
+        },
+        {
+          "result": "white_win",
+          "length": 59,
+          "positions": 57
+        },
+        {
+          "result": "white_win",
+          "length": 65,
+          "positions": 61
+        },
+        {
+          "result": "black_win",
+          "length": 86,
+          "positions": 80
+        },
+        {
+          "result": "white_win",
+          "length": 99,
+          "positions": 89
+        },
+        {
+          "result": "draw",
+          "length": 97,
+          "positions": 91
+        },
+        {
+          "result": "black_win",
+          "length": 96,
+          "positions": 95
+        },
+        {
+          "result": "white_win",
+          "length": 119,
+          "positions": 116
+        },
+        {
+          "result": "draw",
+          "length": 119,
+          "positions": 115
+        },
+        {
+          "result": "white_win",
+          "length": 143,
+          "positions": 136
+        },
+        {
+          "result": "draw",
+          "length": 130,
+          "positions": 128
+        },
+        {
+          "result": "draw",
+          "length": 147,
+          "positions": 142
+        },
+        {
+          "result": "draw",
+          "length": 152,
+          "positions": 149
+        },
+        {
+          "result": "draw",
+          "length": 158,
+          "positions": 153
+        },
+        {
+          "result": "draw",
+          "length": 168,
+          "positions": 165
+        },
+        {
+          "result": "draw",
+          "length": 185,
+          "positions": 177
+        },
+        {
+          "result": "draw",
+          "length": 184,
+          "positions": 178
+        },
+        {
+          "result": "draw",
+          "length": 200,
+          "positions": 193
+        },
+        {
+          "result": "draw",
+          "length": 204,
+          "positions": 198
+        },
+        {
+          "result": "draw",
+          "length": 211,
+          "positions": 207
+        },
+        {
+          "result": "black_win",
+          "length": 38,
+          "positions": 34
+        },
+        {
+          "result": "black_win",
+          "length": 56,
+          "positions": 52
+        },
+        {
+          "result": "white_win",
+          "length": 103,
+          "positions": 99
+        },
+        {
+          "result": "draw",
+          "length": 159,
+          "positions": 155
+        },
+        {
+          "result": "draw",
+          "length": 159,
+          "positions": 156
+        },
+        {
+          "result": "draw",
+          "length": 236,
+          "positions": 231
+        },
+        {
+          "result": "draw",
+          "length": 250,
+          "positions": 245
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 4,
+      "black_wins": 6,
+      "draws": 20,
+      "avg_game_length": 119.13333333333334,
+      "min_game_length": 38,
+      "max_game_length": 282,
+      "total_positions": 3442,
+      "game_details": [
+        {
+          "result": "black_win",
+          "length": 38,
+          "positions": 36
+        },
+        {
+          "result": "black_win",
+          "length": 44,
+          "positions": 43
+        },
+        {
+          "result": "white_win",
+          "length": 59,
+          "positions": 56
+        },
+        {
+          "result": "white_win",
+          "length": 73,
+          "positions": 69
+        },
+        {
+          "result": "black_win",
+          "length": 72,
+          "positions": 69
+        },
+        {
+          "result": "draw",
+          "length": 74,
+          "positions": 70
+        },
+        {
+          "result": "black_win",
+          "length": 84,
+          "positions": 74
+        },
+        {
+          "result": "draw",
+          "length": 78,
+          "positions": 74
+        },
+        {
+          "result": "draw",
+          "length": 78,
+          "positions": 76
+        },
+        {
+          "result": "draw",
+          "length": 80,
+          "positions": 77
+        },
+        {
+          "result": "draw",
+          "length": 83,
+          "positions": 81
+        },
+        {
+          "result": "draw",
+          "length": 94,
+          "positions": 84
+        },
+        {
+          "result": "black_win",
+          "length": 96,
+          "positions": 93
+        },
+        {
+          "result": "draw",
+          "length": 99,
+          "positions": 94
+        },
+        {
+          "result": "draw",
+          "length": 98,
+          "positions": 96
+        },
+        {
+          "result": "black_win",
+          "length": 104,
+          "positions": 101
+        },
+        {
+          "result": "draw",
+          "length": 122,
+          "positions": 116
+        },
+        {
+          "result": "draw",
+          "length": 135,
+          "positions": 131
+        },
+        {
+          "result": "draw",
+          "length": 157,
+          "positions": 151
+        },
+        {
+          "result": "draw",
+          "length": 175,
+          "positions": 169
+        },
+        {
+          "result": "draw",
+          "length": 189,
+          "positions": 186
+        },
+        {
+          "result": "draw",
+          "length": 272,
+          "positions": 265
+        },
+        {
+          "result": "draw",
+          "length": 272,
+          "positions": 268
+        },
+        {
+          "result": "white_win",
+          "length": 79,
+          "positions": 73
+        },
+        {
+          "result": "draw",
+          "length": 87,
+          "positions": 84
+        },
+        {
+          "result": "draw",
+          "length": 101,
+          "positions": 93
+        },
+        {
+          "result": "draw",
+          "length": 109,
+          "positions": 108
+        },
+        {
+          "result": "draw",
+          "length": 151,
+          "positions": 147
+        },
+        {
+          "result": "white_win",
+          "length": 189,
+          "positions": 181
+        },
+        {
+          "result": "draw",
+          "length": 282,
+          "positions": 277
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 5,
+      "black_wins": 7,
+      "draws": 18,
+      "avg_game_length": 122.26666666666667,
+      "min_game_length": 50,
+      "max_game_length": 272,
+      "total_positions": 3490,
+      "game_details": [
+        {
+          "result": "black_win",
+          "length": 50,
+          "positions": 43
+        },
+        {
+          "result": "white_win",
+          "length": 61,
+          "positions": 59
+        },
+        {
+          "result": "black_win",
+          "length": 76,
+          "positions": 68
+        },
+        {
+          "result": "white_win",
+          "length": 71,
+          "positions": 69
+        },
+        {
+          "result": "draw",
+          "length": 79,
+          "positions": 72
+        },
+        {
+          "result": "draw",
+          "length": 84,
+          "positions": 78
+        },
+        {
+          "result": "draw",
+          "length": 84,
+          "positions": 79
+        },
+        {
+          "result": "draw",
+          "length": 90,
+          "positions": 82
+        },
+        {
+          "result": "draw",
+          "length": 96,
+          "positions": 86
+        },
+        {
+          "result": "white_win",
+          "length": 97,
+          "positions": 92
+        },
+        {
+          "result": "black_win",
+          "length": 98,
+          "positions": 91
+        },
+        {
+          "result": "draw",
+          "length": 121,
+          "positions": 117
+        },
+        {
+          "result": "draw",
+          "length": 129,
+          "positions": 126
+        },
+        {
+          "result": "draw",
+          "length": 151,
+          "positions": 146
+        },
+        {
+          "result": "draw",
+          "length": 153,
+          "positions": 146
+        },
+        {
+          "result": "draw",
+          "length": 155,
+          "positions": 149
+        },
+        {
+          "result": "white_win",
+          "length": 155,
+          "positions": 148
+        },
+        {
+          "result": "draw",
+          "length": 158,
+          "positions": 153
+        },
+        {
+          "result": "draw",
+          "length": 163,
+          "positions": 157
+        },
+        {
+          "result": "draw",
+          "length": 174,
+          "positions": 164
+        },
+        {
+          "result": "draw",
+          "length": 186,
+          "positions": 183
+        },
+        {
+          "result": "draw",
+          "length": 225,
+          "positions": 220
+        },
+        {
+          "result": "draw",
+          "length": 272,
+          "positions": 264
+        },
+        {
+          "result": "black_win",
+          "length": 84,
+          "positions": 74
+        },
+        {
+          "result": "black_win",
+          "length": 86,
+          "positions": 80
+        },
+        {
+          "result": "black_win",
+          "length": 94,
+          "positions": 88
+        },
+        {
+          "result": "draw",
+          "length": 104,
+          "positions": 99
+        },
+        {
+          "result": "draw",
+          "length": 105,
+          "positions": 100
+        },
+        {
+          "result": "white_win",
+          "length": 119,
+          "positions": 113
+        },
+        {
+          "result": "black_win",
+          "length": 148,
+          "positions": 144
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 7,
+      "black_wins": 4,
+      "draws": 19,
+      "avg_game_length": 118.9,
+      "min_game_length": 25,
+      "max_game_length": 390,
+      "total_positions": 3420,
+      "game_details": [
+        {
+          "result": "black_win",
+          "length": 30,
+          "positions": 25
+        },
+        {
+          "result": "black_win",
+          "length": 46,
+          "positions": 41
+        },
+        {
+          "result": "white_win",
+          "length": 52,
+          "positions": 47
+        },
+        {
+          "result": "white_win",
+          "length": 53,
+          "positions": 52
+        },
+        {
+          "result": "white_win",
+          "length": 85,
+          "positions": 77
+        },
+        {
+          "result": "draw",
+          "length": 84,
+          "positions": 78
+        },
+        {
+          "result": "draw",
+          "length": 87,
+          "positions": 85
+        },
+        {
+          "result": "draw",
+          "length": 90,
+          "positions": 88
+        },
+        {
+          "result": "draw",
+          "length": 94,
+          "positions": 89
+        },
+        {
+          "result": "draw",
+          "length": 94,
+          "positions": 92
+        },
+        {
+          "result": "draw",
+          "length": 102,
+          "positions": 98
+        },
+        {
+          "result": "draw",
+          "length": 113,
+          "positions": 105
+        },
+        {
+          "result": "draw",
+          "length": 111,
+          "positions": 106
+        },
+        {
+          "result": "draw",
+          "length": 124,
+          "positions": 121
+        },
+        {
+          "result": "draw",
+          "length": 126,
+          "positions": 121
+        },
+        {
+          "result": "white_win",
+          "length": 135,
+          "positions": 127
+        },
+        {
+          "result": "draw",
+          "length": 130,
+          "positions": 127
+        },
+        {
+          "result": "draw",
+          "length": 142,
+          "positions": 137
+        },
+        {
+          "result": "draw",
+          "length": 148,
+          "positions": 143
+        },
+        {
+          "result": "draw",
+          "length": 165,
+          "positions": 160
+        },
+        {
+          "result": "black_win",
+          "length": 174,
+          "positions": 167
+        },
+        {
+          "result": "draw",
+          "length": 290,
+          "positions": 289
+        },
+        {
+          "result": "draw",
+          "length": 390,
+          "positions": 385
+        },
+        {
+          "result": "white_win",
+          "length": 25,
+          "positions": 20
+        },
+        {
+          "result": "black_win",
+          "length": 62,
+          "positions": 56
+        },
+        {
+          "result": "white_win",
+          "length": 73,
+          "positions": 65
+        },
+        {
+          "result": "white_win",
+          "length": 79,
+          "positions": 74
+        },
+        {
+          "result": "draw",
+          "length": 102,
+          "positions": 96
+        },
+        {
+          "result": "draw",
+          "length": 138,
+          "positions": 136
+        },
+        {
+          "result": "draw",
+          "length": 223,
+          "positions": 213
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 4,
+      "black_wins": 6,
+      "draws": 20,
+      "avg_game_length": 136.76666666666668,
+      "min_game_length": 9,
+      "max_game_length": 261,
+      "total_positions": 3976,
+      "game_details": [
+        {
+          "result": "white_win",
+          "length": 9,
+          "positions": 6
+        },
+        {
+          "result": "black_win",
+          "length": 54,
+          "positions": 51
+        },
+        {
+          "result": "draw",
+          "length": 63,
+          "positions": 60
+        },
+        {
+          "result": "draw",
+          "length": 85,
+          "positions": 82
+        },
+        {
+          "result": "white_win",
+          "length": 95,
+          "positions": 89
+        },
+        {
+          "result": "black_win",
+          "length": 96,
+          "positions": 92
+        },
+        {
+          "result": "draw",
+          "length": 97,
+          "positions": 93
+        },
+        {
+          "result": "draw",
+          "length": 101,
+          "positions": 97
+        },
+        {
+          "result": "draw",
+          "length": 100,
+          "positions": 99
+        },
+        {
+          "result": "draw",
+          "length": 112,
+          "positions": 109
+        },
+        {
+          "result": "draw",
+          "length": 120,
+          "positions": 117
+        },
+        {
+          "result": "draw",
+          "length": 127,
+          "positions": 121
+        },
+        {
+          "result": "draw",
+          "length": 125,
+          "positions": 124
+        },
+        {
+          "result": "draw",
+          "length": 137,
+          "positions": 130
+        },
+        {
+          "result": "draw",
+          "length": 143,
+          "positions": 139
+        },
+        {
+          "result": "draw",
+          "length": 164,
+          "positions": 157
+        },
+        {
+          "result": "draw",
+          "length": 178,
+          "positions": 175
+        },
+        {
+          "result": "draw",
+          "length": 190,
+          "positions": 184
+        },
+        {
+          "result": "draw",
+          "length": 188,
+          "positions": 186
+        },
+        {
+          "result": "draw",
+          "length": 225,
+          "positions": 218
+        },
+        {
+          "result": "black_win",
+          "length": 228,
+          "positions": 223
+        },
+        {
+          "result": "draw",
+          "length": 231,
+          "positions": 226
+        },
+        {
+          "result": "black_win",
+          "length": 234,
+          "positions": 231
+        },
+        {
+          "result": "white_win",
+          "length": 61,
+          "positions": 55
+        },
+        {
+          "result": "black_win",
+          "length": 62,
+          "positions": 59
+        },
+        {
+          "result": "draw",
+          "length": 94,
+          "positions": 88
+        },
+        {
+          "result": "draw",
+          "length": 135,
+          "positions": 132
+        },
+        {
+          "result": "black_win",
+          "length": 160,
+          "positions": 156
+        },
+        {
+          "result": "draw",
+          "length": 228,
+          "positions": 221
+        },
+        {
+          "result": "white_win",
+          "length": 261,
+          "positions": 256
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 7,
+      "black_wins": 6,
+      "draws": 17,
+      "avg_game_length": 144.33333333333334,
+      "min_game_length": 52,
+      "max_game_length": 289,
+      "total_positions": 4194,
+      "game_details": [
+        {
+          "result": "black_win",
+          "length": 54,
+          "positions": 47
+        },
+        {
+          "result": "black_win",
+          "length": 52,
+          "positions": 49
+        },
+        {
+          "result": "white_win",
+          "length": 65,
+          "positions": 63
+        },
+        {
+          "result": "black_win",
+          "length": 72,
+          "positions": 66
+        },
+        {
+          "result": "white_win",
+          "length": 77,
+          "positions": 70
+        },
+        {
+          "result": "black_win",
+          "length": 78,
+          "positions": 70
+        },
+        {
+          "result": "draw",
+          "length": 113,
+          "positions": 107
+        },
+        {
+          "result": "white_win",
+          "length": 115,
+          "positions": 109
+        },
+        {
+          "result": "draw",
+          "length": 112,
+          "positions": 109
+        },
+        {
+          "result": "draw",
+          "length": 116,
+          "positions": 110
+        },
+        {
+          "result": "draw",
+          "length": 118,
+          "positions": 114
+        },
+        {
+          "result": "black_win",
+          "length": 138,
+          "positions": 131
+        },
+        {
+          "result": "draw",
+          "length": 145,
+          "positions": 140
+        },
+        {
+          "result": "white_win",
+          "length": 155,
+          "positions": 147
+        },
+        {
+          "result": "draw",
+          "length": 168,
+          "positions": 164
+        },
+        {
+          "result": "draw",
+          "length": 176,
+          "positions": 175
+        },
+        {
+          "result": "draw",
+          "length": 178,
+          "positions": 173
+        },
+        {
+          "result": "draw",
+          "length": 180,
+          "positions": 175
+        },
+        {
+          "result": "draw",
+          "length": 199,
+          "positions": 197
+        },
+        {
+          "result": "draw",
+          "length": 223,
+          "positions": 220
+        },
+        {
+          "result": "draw",
+          "length": 236,
+          "positions": 232
+        },
+        {
+          "result": "draw",
+          "length": 253,
+          "positions": 249
+        },
+        {
+          "result": "draw",
+          "length": 284,
+          "positions": 282
+        },
+        {
+          "result": "white_win",
+          "length": 71,
+          "positions": 67
+        },
+        {
+          "result": "draw",
+          "length": 85,
+          "positions": 82
+        },
+        {
+          "result": "white_win",
+          "length": 97,
+          "positions": 89
+        },
+        {
+          "result": "draw",
+          "length": 122,
+          "positions": 120
+        },
+        {
+          "result": "black_win",
+          "length": 170,
+          "positions": 168
+        },
+        {
+          "result": "white_win",
+          "length": 189,
+          "positions": 185
+        },
+        {
+          "result": "draw",
+          "length": 289,
+          "positions": 284
+        }
+      ]
+    },
+    {
+      "games": 30,
+      "white_wins": 9,
+      "black_wins": 3,
+      "draws": 18,
+      "avg_game_length": 140.23333333333332,
+      "min_game_length": 19,
+      "max_game_length": 298,
+      "total_positions": 4090,
+      "game_details": [
+        {
+          "result": "white_win",
+          "length": 43,
+          "positions": 42
+        },
+        {
+          "result": "white_win",
+          "length": 63,
+          "positions": 59
+        },
+        {
+          "result": "white_win",
+          "length": 93,
+          "positions": 90
+        },
+        {
+          "result": "draw",
+          "length": 107,
+          "positions": 105
+        },
+        {
+          "result": "black_win",
+          "length": 114,
+          "positions": 112
+        },
+        {
+          "result": "draw",
+          "length": 119,
+          "positions": 116
+        },
+        {
+          "result": "white_win",
+          "length": 121,
+          "positions": 119
+        },
+        {
+          "result": "white_win",
+          "length": 121,
+          "positions": 120
+        },
+        {
+          "result": "draw",
+          "length": 124,
+          "positions": 119
+        },
+        {
+          "result": "draw",
+          "length": 131,
+          "positions": 124
+        },
+        {
+          "result": "black_win",
+          "length": 130,
+          "positions": 127
+        },
+        {
+          "result": "draw",
+          "length": 144,
+          "positions": 140
+        },
+        {
+          "result": "draw",
+          "length": 149,
+          "positions": 143
+        },
+        {
+          "result": "draw",
+          "length": 151,
+          "positions": 143
+        },
+        {
+          "result": "draw",
+          "length": 159,
+          "positions": 156
+        },
+        {
+          "result": "draw",
+          "length": 161,
+          "positions": 156
+        },
+        {
+          "result": "white_win",
+          "length": 175,
+          "positions": 173
+        },
+        {
+          "result": "draw",
+          "length": 180,
+          "positions": 177
+        },
+        {
+          "result": "draw",
+          "length": 189,
+          "positions": 183
+        },
+        {
+          "result": "draw",
+          "length": 199,
+          "positions": 197
+        },
+        {
+          "result": "draw",
+          "length": 225,
+          "positions": 219
+        },
+        {
+          "result": "draw",
+          "length": 256,
+          "positions": 254
+        },
+        {
+          "result": "draw",
+          "length": 298,
+          "positions": 288
+        },
+        {
+          "result": "white_win",
+          "length": 19,
+          "positions": 15
+        },
+        {
+          "result": "white_win",
+          "length": 69,
+          "positions": 65
+        },
+        {
+          "result": "black_win",
+          "length": 74,
+          "positions": 71
+        },
+        {
+          "result": "white_win",
+          "length": 101,
+          "positions": 95
+        },
+        {
+          "result": "draw",
+          "length": 152,
+          "positions": 148
+        },
+        {
+          "result": "draw",
+          "length": 166,
+          "positions": 163
+        },
+        {
+          "result": "draw",
+          "length": 174,
+          "positions": 171
+        }
+      ]
+    }
+  ],
+  "benchmark_results": [
+    10
+  ],
+  "policy_entropy": [
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN,
+    NaN
+  ],
+  "iterations": [
+    {
+      "generation": 1,
+      "timestamp": "2026-02-11T02:13:48.368302",
+      "self_play_time_s": 6932.8,
+      "training_time_s": 11.7,
+      "total_time_s": 6944.5,
+      "buffer_size": 5161,
+      "positions_added": 5161,
+      "total_training_steps": 1000,
+      "learning_rate": 0.00999938562724084,
+      "policy_loss": 5.60262002658844,
+      "value_loss": 0.027079645495367004,
+      "total_loss": 5.629699672083807,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 12,
+        "black_wins": 11,
+        "draws": 7,
+        "avg_game_length": 177.4,
+        "min_game_length": 7,
+        "max_game_length": 477,
+        "total_positions": 5161,
+        "game_details": [
+          {
+            "result": "white_win",
+            "length": 7,
+            "positions": 4
+          },
+          {
+            "result": "white_win",
+            "length": 23,
+            "positions": 20
+          },
+          {
+            "result": "white_win",
+            "length": 39,
+            "positions": 36
+          },
+          {
+            "result": "white_win",
+            "length": 53,
+            "positions": 47
+          },
+          {
+            "result": "black_win",
+            "length": 54,
+            "positions": 48
+          },
+          {
+            "result": "black_win",
+            "length": 58,
+            "positions": 52
+          },
+          {
+            "result": "black_win",
+            "length": 68,
+            "positions": 63
+          },
+          {
+            "result": "black_win",
+            "length": 74,
+            "positions": 70
+          },
+          {
+            "result": "black_win",
+            "length": 106,
+            "positions": 96
+          },
+          {
+            "result": "white_win",
+            "length": 113,
+            "positions": 110
+          },
+          {
+            "result": "black_win",
+            "length": 124,
+            "positions": 114
+          },
+          {
+            "result": "black_win",
+            "length": 124,
+            "positions": 118
+          },
+          {
+            "result": "white_win",
+            "length": 139,
+            "positions": 134
+          },
+          {
+            "result": "black_win",
+            "length": 168,
+            "positions": 160
+          },
+          {
+            "result": "white_win",
+            "length": 175,
+            "positions": 168
+          },
+          {
+            "result": "black_win",
+            "length": 242,
+            "positions": 236
+          },
+          {
+            "result": "white_win",
+            "length": 261,
+            "positions": 251
+          },
+          {
+            "result": "draw",
+            "length": 346,
+            "positions": 340
+          },
+          {
+            "result": "draw",
+            "length": 397,
+            "positions": 390
+          },
+          {
+            "result": "draw",
+            "length": 407,
+            "positions": 404
+          },
+          {
+            "result": "draw",
+            "length": 459,
+            "positions": 452
+          },
+          {
+            "result": "draw",
+            "length": 466,
+            "positions": 460
+          },
+          {
+            "result": "white_win",
+            "length": 477,
+            "positions": 475
+          },
+          {
+            "result": "black_win",
+            "length": 24,
+            "positions": 19
+          },
+          {
+            "result": "black_win",
+            "length": 26,
+            "positions": 20
+          },
+          {
+            "result": "white_win",
+            "length": 47,
+            "positions": 41
+          },
+          {
+            "result": "white_win",
+            "length": 73,
+            "positions": 70
+          },
+          {
+            "result": "white_win",
+            "length": 131,
+            "positions": 127
+          },
+          {
+            "result": "draw",
+            "length": 291,
+            "positions": 290
+          },
+          {
+            "result": "draw",
+            "length": 350,
+            "positions": 346
+          }
+        ]
+      }
+    },
+    {
+      "generation": 2,
+      "timestamp": "2026-02-11T03:10:44.598439",
+      "self_play_time_s": 3402.9,
+      "training_time_s": 12.5,
+      "total_time_s": 3415.5,
+      "buffer_size": 8244,
+      "positions_added": 3083,
+      "total_training_steps": 2000,
+      "learning_rate": 0.009994456771809162,
+      "policy_loss": 3.2701023008823396,
+      "value_loss": 0.015792601750872562,
+      "total_loss": 3.285894902633212,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 6,
+        "black_wins": 11,
+        "draws": 13,
+        "avg_game_length": 107.3,
+        "min_game_length": 6,
+        "max_game_length": 229,
+        "total_positions": 3083,
+        "game_details": [
+          {
+            "result": "black_win",
+            "length": 6,
+            "positions": 5
+          },
+          {
+            "result": "black_win",
+            "length": 38,
+            "positions": 34
+          },
+          {
+            "result": "black_win",
+            "length": 72,
+            "positions": 65
+          },
+          {
+            "result": "draw",
+            "length": 73,
+            "positions": 68
+          },
+          {
+            "result": "black_win",
+            "length": 79,
+            "positions": 75
+          },
+          {
+            "result": "black_win",
+            "length": 90,
+            "positions": 88
+          },
+          {
+            "result": "draw",
+            "length": 96,
+            "positions": 90
+          },
+          {
+            "result": "black_win",
+            "length": 96,
+            "positions": 95
+          },
+          {
+            "result": "black_win",
+            "length": 102,
+            "positions": 94
+          },
+          {
+            "result": "white_win",
+            "length": 103,
+            "positions": 98
+          },
+          {
+            "result": "draw",
+            "length": 103,
+            "positions": 102
+          },
+          {
+            "result": "white_win",
+            "length": 119,
+            "positions": 112
+          },
+          {
+            "result": "draw",
+            "length": 116,
+            "positions": 111
+          },
+          {
+            "result": "white_win",
+            "length": 115,
+            "positions": 112
+          },
+          {
+            "result": "draw",
+            "length": 125,
+            "positions": 118
+          },
+          {
+            "result": "draw",
+            "length": 120,
+            "positions": 116
+          },
+          {
+            "result": "draw",
+            "length": 122,
+            "positions": 121
+          },
+          {
+            "result": "draw",
+            "length": 133,
+            "positions": 129
+          },
+          {
+            "result": "draw",
+            "length": 142,
+            "positions": 137
+          },
+          {
+            "result": "draw",
+            "length": 161,
+            "positions": 157
+          },
+          {
+            "result": "draw",
+            "length": 168,
+            "positions": 162
+          },
+          {
+            "result": "white_win",
+            "length": 195,
+            "positions": 187
+          },
+          {
+            "result": "draw",
+            "length": 229,
+            "positions": 222
+          },
+          {
+            "result": "black_win",
+            "length": 68,
+            "positions": 62
+          },
+          {
+            "result": "black_win",
+            "length": 78,
+            "positions": 73
+          },
+          {
+            "result": "white_win",
+            "length": 83,
+            "positions": 78
+          },
+          {
+            "result": "white_win",
+            "length": 85,
+            "positions": 78
+          },
+          {
+            "result": "black_win",
+            "length": 92,
+            "positions": 90
+          },
+          {
+            "result": "black_win",
+            "length": 92,
+            "positions": 89
+          },
+          {
+            "result": "draw",
+            "length": 118,
+            "positions": 115
+          }
+        ]
+      }
+    },
+    {
+      "generation": 3,
+      "timestamp": "2026-02-11T04:20:01.012347",
+      "self_play_time_s": 4143.3,
+      "training_time_s": 11.9,
+      "total_time_s": 4155.3,
+      "buffer_size": 12027,
+      "positions_added": 3783,
+      "total_training_steps": 3000,
+      "learning_rate": 0.00998459899053178,
+      "policy_loss": 2.889534059047699,
+      "value_loss": 0.015918365956575146,
+      "total_loss": 2.9054524250042744,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 5,
+        "black_wins": 11,
+        "draws": 14,
+        "avg_game_length": 130.8,
+        "min_game_length": 38,
+        "max_game_length": 298,
+        "total_positions": 3783,
+        "game_details": [
+          {
+            "result": "black_win",
+            "length": 44,
+            "positions": 37
+          },
+          {
+            "result": "black_win",
+            "length": 44,
+            "positions": 39
+          },
+          {
+            "result": "black_win",
+            "length": 56,
+            "positions": 52
+          },
+          {
+            "result": "white_win",
+            "length": 77,
+            "positions": 71
+          },
+          {
+            "result": "white_win",
+            "length": 83,
+            "positions": 81
+          },
+          {
+            "result": "draw",
+            "length": 95,
+            "positions": 91
+          },
+          {
+            "result": "black_win",
+            "length": 104,
+            "positions": 98
+          },
+          {
+            "result": "draw",
+            "length": 106,
+            "positions": 99
+          },
+          {
+            "result": "white_win",
+            "length": 109,
+            "positions": 106
+          },
+          {
+            "result": "black_win",
+            "length": 114,
+            "positions": 109
+          },
+          {
+            "result": "black_win",
+            "length": 124,
+            "positions": 120
+          },
+          {
+            "result": "black_win",
+            "length": 132,
+            "positions": 129
+          },
+          {
+            "result": "draw",
+            "length": 132,
+            "positions": 129
+          },
+          {
+            "result": "white_win",
+            "length": 141,
+            "positions": 137
+          },
+          {
+            "result": "black_win",
+            "length": 144,
+            "positions": 141
+          },
+          {
+            "result": "white_win",
+            "length": 157,
+            "positions": 147
+          },
+          {
+            "result": "draw",
+            "length": 150,
+            "positions": 149
+          },
+          {
+            "result": "draw",
+            "length": 167,
+            "positions": 163
+          },
+          {
+            "result": "draw",
+            "length": 166,
+            "positions": 159
+          },
+          {
+            "result": "draw",
+            "length": 167,
+            "positions": 159
+          },
+          {
+            "result": "draw",
+            "length": 181,
+            "positions": 176
+          },
+          {
+            "result": "draw",
+            "length": 228,
+            "positions": 224
+          },
+          {
+            "result": "draw",
+            "length": 298,
+            "positions": 288
+          },
+          {
+            "result": "black_win",
+            "length": 38,
+            "positions": 33
+          },
+          {
+            "result": "black_win",
+            "length": 52,
+            "positions": 48
+          },
+          {
+            "result": "black_win",
+            "length": 104,
+            "positions": 103
+          },
+          {
+            "result": "draw",
+            "length": 129,
+            "positions": 128
+          },
+          {
+            "result": "draw",
+            "length": 166,
+            "positions": 162
+          },
+          {
+            "result": "draw",
+            "length": 205,
+            "positions": 198
+          },
+          {
+            "result": "draw",
+            "length": 211,
+            "positions": 207
+          }
+        ]
+      }
+    },
+    {
+      "generation": 4,
+      "timestamp": "2026-02-11T05:41:52.968572",
+      "self_play_time_s": 4899.2,
+      "training_time_s": 12.0,
+      "total_time_s": 4911.3,
+      "buffer_size": 16342,
+      "positions_added": 4315,
+      "total_training_steps": 4000,
+      "learning_rate": 0.009969822011848675,
+      "policy_loss": 2.729264469861984,
+      "value_loss": 0.013548314861865947,
+      "total_loss": 2.74281278472385,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 8,
+        "black_wins": 4,
+        "draws": 18,
+        "avg_game_length": 148.8,
+        "min_game_length": 35,
+        "max_game_length": 363,
+        "total_positions": 4315,
+        "game_details": [
+          {
+            "result": "white_win",
+            "length": 35,
+            "positions": 30
+          },
+          {
+            "result": "white_win",
+            "length": 75,
+            "positions": 71
+          },
+          {
+            "result": "draw",
+            "length": 79,
+            "positions": 74
+          },
+          {
+            "result": "draw",
+            "length": 97,
+            "positions": 87
+          },
+          {
+            "result": "white_win",
+            "length": 89,
+            "positions": 88
+          },
+          {
+            "result": "black_win",
+            "length": 96,
+            "positions": 91
+          },
+          {
+            "result": "white_win",
+            "length": 101,
+            "positions": 93
+          },
+          {
+            "result": "black_win",
+            "length": 116,
+            "positions": 110
+          },
+          {
+            "result": "white_win",
+            "length": 117,
+            "positions": 112
+          },
+          {
+            "result": "draw",
+            "length": 118,
+            "positions": 113
+          },
+          {
+            "result": "draw",
+            "length": 124,
+            "positions": 117
+          },
+          {
+            "result": "white_win",
+            "length": 129,
+            "positions": 125
+          },
+          {
+            "result": "white_win",
+            "length": 133,
+            "positions": 131
+          },
+          {
+            "result": "white_win",
+            "length": 139,
+            "positions": 136
+          },
+          {
+            "result": "draw",
+            "length": 147,
+            "positions": 143
+          },
+          {
+            "result": "draw",
+            "length": 153,
+            "positions": 151
+          },
+          {
+            "result": "draw",
+            "length": 165,
+            "positions": 159
+          },
+          {
+            "result": "black_win",
+            "length": 164,
+            "positions": 160
+          },
+          {
+            "result": "draw",
+            "length": 167,
+            "positions": 162
+          },
+          {
+            "result": "draw",
+            "length": 167,
+            "positions": 164
+          },
+          {
+            "result": "draw",
+            "length": 190,
+            "positions": 187
+          },
+          {
+            "result": "draw",
+            "length": 225,
+            "positions": 215
+          },
+          {
+            "result": "draw",
+            "length": 363,
+            "positions": 357
+          },
+          {
+            "result": "black_win",
+            "length": 92,
+            "positions": 90
+          },
+          {
+            "result": "draw",
+            "length": 105,
+            "positions": 97
+          },
+          {
+            "result": "draw",
+            "length": 142,
+            "positions": 132
+          },
+          {
+            "result": "draw",
+            "length": 185,
+            "positions": 181
+          },
+          {
+            "result": "draw",
+            "length": 185,
+            "positions": 183
+          },
+          {
+            "result": "draw",
+            "length": 233,
+            "positions": 229
+          },
+          {
+            "result": "draw",
+            "length": 333,
+            "positions": 327
+          }
+        ]
+      }
+    },
+    {
+      "generation": 5,
+      "timestamp": "2026-02-11T07:05:56.845049",
+      "self_play_time_s": 5031.5,
+      "training_time_s": 11.6,
+      "total_time_s": 5043.1,
+      "buffer_size": 20483,
+      "positions_added": 4141,
+      "total_training_steps": 5000,
+      "learning_rate": 0.009950140418853755,
+      "policy_loss": 2.6545159022808074,
+      "value_loss": 0.01185646362847183,
+      "total_loss": 2.6663723659092793,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 8,
+        "black_wins": 4,
+        "draws": 18,
+        "avg_game_length": 142.13333333333333,
+        "min_game_length": 37,
+        "max_game_length": 347,
+        "total_positions": 4141,
+        "game_details": [
+          {
+            "result": "black_win",
+            "length": 52,
+            "positions": 49
+          },
+          {
+            "result": "white_win",
+            "length": 59,
+            "positions": 51
+          },
+          {
+            "result": "black_win",
+            "length": 76,
+            "positions": 73
+          },
+          {
+            "result": "white_win",
+            "length": 79,
+            "positions": 75
+          },
+          {
+            "result": "draw",
+            "length": 90,
+            "positions": 89
+          },
+          {
+            "result": "white_win",
+            "length": 93,
+            "positions": 92
+          },
+          {
+            "result": "black_win",
+            "length": 112,
+            "positions": 106
+          },
+          {
+            "result": "white_win",
+            "length": 115,
+            "positions": 111
+          },
+          {
+            "result": "draw",
+            "length": 114,
+            "positions": 111
+          },
+          {
+            "result": "white_win",
+            "length": 135,
+            "positions": 132
+          },
+          {
+            "result": "draw",
+            "length": 140,
+            "positions": 134
+          },
+          {
+            "result": "draw",
+            "length": 143,
+            "positions": 139
+          },
+          {
+            "result": "draw",
+            "length": 142,
+            "positions": 140
+          },
+          {
+            "result": "draw",
+            "length": 147,
+            "positions": 142
+          },
+          {
+            "result": "white_win",
+            "length": 147,
+            "positions": 143
+          },
+          {
+            "result": "draw",
+            "length": 152,
+            "positions": 149
+          },
+          {
+            "result": "draw",
+            "length": 160,
+            "positions": 156
+          },
+          {
+            "result": "black_win",
+            "length": 180,
+            "positions": 178
+          },
+          {
+            "result": "draw",
+            "length": 219,
+            "positions": 216
+          },
+          {
+            "result": "draw",
+            "length": 235,
+            "positions": 230
+          },
+          {
+            "result": "draw",
+            "length": 233,
+            "positions": 231
+          },
+          {
+            "result": "draw",
+            "length": 244,
+            "positions": 241
+          },
+          {
+            "result": "draw",
+            "length": 347,
+            "positions": 345
+          },
+          {
+            "result": "white_win",
+            "length": 37,
+            "positions": 33
+          },
+          {
+            "result": "draw",
+            "length": 86,
+            "positions": 84
+          },
+          {
+            "result": "draw",
+            "length": 88,
+            "positions": 83
+          },
+          {
+            "result": "white_win",
+            "length": 127,
+            "positions": 117
+          },
+          {
+            "result": "draw",
+            "length": 137,
+            "positions": 130
+          },
+          {
+            "result": "draw",
+            "length": 181,
+            "positions": 174
+          },
+          {
+            "result": "draw",
+            "length": 194,
+            "positions": 187
+          }
+        ]
+      }
+    },
+    {
+      "generation": 6,
+      "timestamp": "2026-02-11T08:09:34.469567",
+      "self_play_time_s": 3804.9,
+      "training_time_s": 11.9,
+      "total_time_s": 3816.8,
+      "buffer_size": 23900,
+      "positions_added": 3417,
+      "total_training_steps": 6000,
+      "learning_rate": 0.009925573634903125,
+      "policy_loss": 2.662554144859314,
+      "value_loss": 0.014629237983957865,
+      "total_loss": 2.6771833828432716,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 6,
+        "black_wins": 6,
+        "draws": 18,
+        "avg_game_length": 118.53333333333333,
+        "min_game_length": 50,
+        "max_game_length": 291,
+        "total_positions": 3417,
+        "game_details": [
+          {
+            "result": "draw",
+            "length": 86,
+            "positions": 78
+          },
+          {
+            "result": "draw",
+            "length": 81,
+            "positions": 77
+          },
+          {
+            "result": "white_win",
+            "length": 83,
+            "positions": 80
+          },
+          {
+            "result": "white_win",
+            "length": 87,
+            "positions": 82
+          },
+          {
+            "result": "draw",
+            "length": 87,
+            "positions": 86
+          },
+          {
+            "result": "draw",
+            "length": 93,
+            "positions": 89
+          },
+          {
+            "result": "draw",
+            "length": 99,
+            "positions": 89
+          },
+          {
+            "result": "white_win",
+            "length": 95,
+            "positions": 90
+          },
+          {
+            "result": "black_win",
+            "length": 96,
+            "positions": 94
+          },
+          {
+            "result": "white_win",
+            "length": 105,
+            "positions": 99
+          },
+          {
+            "result": "white_win",
+            "length": 107,
+            "positions": 102
+          },
+          {
+            "result": "draw",
+            "length": 114,
+            "positions": 106
+          },
+          {
+            "result": "draw",
+            "length": 118,
+            "positions": 113
+          },
+          {
+            "result": "black_win",
+            "length": 118,
+            "positions": 116
+          },
+          {
+            "result": "draw",
+            "length": 125,
+            "positions": 119
+          },
+          {
+            "result": "black_win",
+            "length": 120,
+            "positions": 117
+          },
+          {
+            "result": "black_win",
+            "length": 126,
+            "positions": 125
+          },
+          {
+            "result": "draw",
+            "length": 138,
+            "positions": 135
+          },
+          {
+            "result": "draw",
+            "length": 144,
+            "positions": 139
+          },
+          {
+            "result": "draw",
+            "length": 151,
+            "positions": 149
+          },
+          {
+            "result": "draw",
+            "length": 173,
+            "positions": 170
+          },
+          {
+            "result": "black_win",
+            "length": 182,
+            "positions": 177
+          },
+          {
+            "result": "draw",
+            "length": 291,
+            "positions": 288
+          },
+          {
+            "result": "black_win",
+            "length": 50,
+            "positions": 43
+          },
+          {
+            "result": "draw",
+            "length": 82,
+            "positions": 78
+          },
+          {
+            "result": "draw",
+            "length": 93,
+            "positions": 86
+          },
+          {
+            "result": "draw",
+            "length": 93,
+            "positions": 86
+          },
+          {
+            "result": "draw",
+            "length": 117,
+            "positions": 111
+          },
+          {
+            "result": "draw",
+            "length": 143,
+            "positions": 139
+          },
+          {
+            "result": "white_win",
+            "length": 159,
+            "positions": 154
+          }
+        ]
+      }
+    },
+    {
+      "generation": 7,
+      "timestamp": "2026-02-11T09:07:17.475257",
+      "self_play_time_s": 3449.7,
+      "training_time_s": 12.5,
+      "total_time_s": 3462.2,
+      "buffer_size": 27020,
+      "positions_added": 3120,
+      "total_training_steps": 7000,
+      "learning_rate": 0.009896145904446554,
+      "policy_loss": 2.6260324840545652,
+      "value_loss": 0.01431688151753042,
+      "total_loss": 2.6403493655720958,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 6,
+        "black_wins": 7,
+        "draws": 17,
+        "avg_game_length": 108.6,
+        "min_game_length": 17,
+        "max_game_length": 230,
+        "total_positions": 3120,
+        "game_details": [
+          {
+            "result": "white_win",
+            "length": 17,
+            "positions": 14
+          },
+          {
+            "result": "black_win",
+            "length": 50,
+            "positions": 48
+          },
+          {
+            "result": "draw",
+            "length": 75,
+            "positions": 72
+          },
+          {
+            "result": "draw",
+            "length": 81,
+            "positions": 73
+          },
+          {
+            "result": "draw",
+            "length": 80,
+            "positions": 74
+          },
+          {
+            "result": "white_win",
+            "length": 87,
+            "positions": 82
+          },
+          {
+            "result": "white_win",
+            "length": 91,
+            "positions": 86
+          },
+          {
+            "result": "draw",
+            "length": 92,
+            "positions": 89
+          },
+          {
+            "result": "white_win",
+            "length": 95,
+            "positions": 91
+          },
+          {
+            "result": "draw",
+            "length": 101,
+            "positions": 96
+          },
+          {
+            "result": "draw",
+            "length": 105,
+            "positions": 100
+          },
+          {
+            "result": "draw",
+            "length": 113,
+            "positions": 109
+          },
+          {
+            "result": "draw",
+            "length": 116,
+            "positions": 113
+          },
+          {
+            "result": "draw",
+            "length": 116,
+            "positions": 114
+          },
+          {
+            "result": "draw",
+            "length": 127,
+            "positions": 121
+          },
+          {
+            "result": "draw",
+            "length": 132,
+            "positions": 128
+          },
+          {
+            "result": "white_win",
+            "length": 135,
+            "positions": 133
+          },
+          {
+            "result": "draw",
+            "length": 142,
+            "positions": 140
+          },
+          {
+            "result": "draw",
+            "length": 144,
+            "positions": 142
+          },
+          {
+            "result": "black_win",
+            "length": 152,
+            "positions": 149
+          },
+          {
+            "result": "draw",
+            "length": 152,
+            "positions": 146
+          },
+          {
+            "result": "draw",
+            "length": 155,
+            "positions": 151
+          },
+          {
+            "result": "draw",
+            "length": 171,
+            "positions": 163
+          },
+          {
+            "result": "black_win",
+            "length": 46,
+            "positions": 41
+          },
+          {
+            "result": "black_win",
+            "length": 68,
+            "positions": 66
+          },
+          {
+            "result": "black_win",
+            "length": 82,
+            "positions": 76
+          },
+          {
+            "result": "white_win",
+            "length": 93,
+            "positions": 87
+          },
+          {
+            "result": "black_win",
+            "length": 104,
+            "positions": 94
+          },
+          {
+            "result": "black_win",
+            "length": 106,
+            "positions": 102
+          },
+          {
+            "result": "draw",
+            "length": 230,
+            "positions": 220
+          }
+        ]
+      }
+    },
+    {
+      "generation": 8,
+      "timestamp": "2026-02-11T10:08:06.901015",
+      "self_play_time_s": 3636.9,
+      "training_time_s": 11.7,
+      "total_time_s": 3648.5,
+      "buffer_size": 30274,
+      "positions_added": 3254,
+      "total_training_steps": 8000,
+      "learning_rate": 0.009861886269101157,
+      "policy_loss": 2.6647596628665924,
+      "value_loss": 0.017658709729788825,
+      "total_loss": 2.682418372596381,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 3,
+        "black_wins": 7,
+        "draws": 20,
+        "avg_game_length": 114.03333333333333,
+        "min_game_length": 49,
+        "max_game_length": 234,
+        "total_positions": 3254,
+        "game_details": [
+          {
+            "result": "white_win",
+            "length": 49,
+            "positions": 43
+          },
+          {
+            "result": "white_win",
+            "length": 57,
+            "positions": 47
+          },
+          {
+            "result": "black_win",
+            "length": 54,
+            "positions": 48
+          },
+          {
+            "result": "black_win",
+            "length": 70,
+            "positions": 64
+          },
+          {
+            "result": "draw",
+            "length": 67,
+            "positions": 63
+          },
+          {
+            "result": "black_win",
+            "length": 70,
+            "positions": 65
+          },
+          {
+            "result": "draw",
+            "length": 70,
+            "positions": 65
+          },
+          {
+            "result": "black_win",
+            "length": 72,
+            "positions": 69
+          },
+          {
+            "result": "draw",
+            "length": 81,
+            "positions": 71
+          },
+          {
+            "result": "draw",
+            "length": 81,
+            "positions": 74
+          },
+          {
+            "result": "draw",
+            "length": 93,
+            "positions": 87
+          },
+          {
+            "result": "draw",
+            "length": 97,
+            "positions": 91
+          },
+          {
+            "result": "black_win",
+            "length": 102,
+            "positions": 97
+          },
+          {
+            "result": "draw",
+            "length": 109,
+            "positions": 101
+          },
+          {
+            "result": "draw",
+            "length": 110,
+            "positions": 104
+          },
+          {
+            "result": "draw",
+            "length": 129,
+            "positions": 128
+          },
+          {
+            "result": "black_win",
+            "length": 136,
+            "positions": 131
+          },
+          {
+            "result": "draw",
+            "length": 143,
+            "positions": 137
+          },
+          {
+            "result": "draw",
+            "length": 141,
+            "positions": 135
+          },
+          {
+            "result": "draw",
+            "length": 162,
+            "positions": 159
+          },
+          {
+            "result": "draw",
+            "length": 161,
+            "positions": 160
+          },
+          {
+            "result": "draw",
+            "length": 190,
+            "positions": 184
+          },
+          {
+            "result": "white_win",
+            "length": 233,
+            "positions": 226
+          },
+          {
+            "result": "draw",
+            "length": 83,
+            "positions": 81
+          },
+          {
+            "result": "draw",
+            "length": 90,
+            "positions": 88
+          },
+          {
+            "result": "draw",
+            "length": 123,
+            "positions": 113
+          },
+          {
+            "result": "draw",
+            "length": 132,
+            "positions": 125
+          },
+          {
+            "result": "draw",
+            "length": 139,
+            "positions": 135
+          },
+          {
+            "result": "draw",
+            "length": 143,
+            "positions": 139
+          },
+          {
+            "result": "black_win",
+            "length": 234,
+            "positions": 224
+          }
+        ]
+      }
+    },
+    {
+      "generation": 9,
+      "timestamp": "2026-02-11T11:18:49.820248",
+      "self_play_time_s": 4230.8,
+      "training_time_s": 11.2,
+      "total_time_s": 4241.9,
+      "buffer_size": 34024,
+      "positions_added": 3750,
+      "total_training_steps": 9000,
+      "learning_rate": 0.009822828538990795,
+      "policy_loss": 2.5993894703388216,
+      "value_loss": 0.013790690210997127,
+      "total_loss": 2.6131801605498186,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 5,
+        "black_wins": 6,
+        "draws": 19,
+        "avg_game_length": 130.56666666666666,
+        "min_game_length": 63,
+        "max_game_length": 247,
+        "total_positions": 3750,
+        "game_details": [
+          {
+            "result": "white_win",
+            "length": 63,
+            "positions": 53
+          },
+          {
+            "result": "white_win",
+            "length": 65,
+            "positions": 59
+          },
+          {
+            "result": "white_win",
+            "length": 67,
+            "positions": 62
+          },
+          {
+            "result": "draw",
+            "length": 76,
+            "positions": 66
+          },
+          {
+            "result": "draw",
+            "length": 97,
+            "positions": 89
+          },
+          {
+            "result": "draw",
+            "length": 109,
+            "positions": 99
+          },
+          {
+            "result": "black_win",
+            "length": 112,
+            "positions": 107
+          },
+          {
+            "result": "draw",
+            "length": 116,
+            "positions": 111
+          },
+          {
+            "result": "black_win",
+            "length": 118,
+            "positions": 114
+          },
+          {
+            "result": "draw",
+            "length": 120,
+            "positions": 117
+          },
+          {
+            "result": "draw",
+            "length": 128,
+            "positions": 125
+          },
+          {
+            "result": "draw",
+            "length": 144,
+            "positions": 134
+          },
+          {
+            "result": "draw",
+            "length": 151,
+            "positions": 141
+          },
+          {
+            "result": "draw",
+            "length": 149,
+            "positions": 147
+          },
+          {
+            "result": "draw",
+            "length": 151,
+            "positions": 147
+          },
+          {
+            "result": "draw",
+            "length": 174,
+            "positions": 169
+          },
+          {
+            "result": "black_win",
+            "length": 184,
+            "positions": 179
+          },
+          {
+            "result": "white_win",
+            "length": 189,
+            "positions": 181
+          },
+          {
+            "result": "draw",
+            "length": 188,
+            "positions": 184
+          },
+          {
+            "result": "draw",
+            "length": 197,
+            "positions": 192
+          },
+          {
+            "result": "draw",
+            "length": 197,
+            "positions": 194
+          },
+          {
+            "result": "draw",
+            "length": 230,
+            "positions": 227
+          },
+          {
+            "result": "draw",
+            "length": 247,
+            "positions": 239
+          },
+          {
+            "result": "white_win",
+            "length": 75,
+            "positions": 69
+          },
+          {
+            "result": "black_win",
+            "length": 76,
+            "positions": 71
+          },
+          {
+            "result": "draw",
+            "length": 75,
+            "positions": 71
+          },
+          {
+            "result": "draw",
+            "length": 77,
+            "positions": 71
+          },
+          {
+            "result": "draw",
+            "length": 94,
+            "positions": 91
+          },
+          {
+            "result": "black_win",
+            "length": 120,
+            "positions": 116
+          },
+          {
+            "result": "black_win",
+            "length": 128,
+            "positions": 125
+          }
+        ]
+      }
+    },
+    {
+      "generation": 10,
+      "timestamp": "2026-02-11T12:27:11.042216",
+      "self_play_time_s": 4088.0,
+      "training_time_s": 12.2,
+      "total_time_s": 4100.2,
+      "buffer_size": 37581,
+      "positions_added": 3557,
+      "total_training_steps": 10000,
+      "learning_rate": 0.009779011259379598,
+      "policy_loss": 2.558017540216446,
+      "value_loss": 0.010577580273267813,
+      "total_loss": 2.5685951204897135,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 7,
+        "black_wins": 2,
+        "draws": 21,
+        "avg_game_length": 123.56666666666666,
+        "min_game_length": 25,
+        "max_game_length": 232,
+        "total_positions": 3557,
+        "game_details": [
+          {
+            "result": "white_win",
+            "length": 25,
+            "positions": 21
+          },
+          {
+            "result": "black_win",
+            "length": 34,
+            "positions": 30
+          },
+          {
+            "result": "white_win",
+            "length": 37,
+            "positions": 35
+          },
+          {
+            "result": "draw",
+            "length": 49,
+            "positions": 48
+          },
+          {
+            "result": "white_win",
+            "length": 101,
+            "positions": 93
+          },
+          {
+            "result": "draw",
+            "length": 113,
+            "positions": 108
+          },
+          {
+            "result": "draw",
+            "length": 118,
+            "positions": 113
+          },
+          {
+            "result": "draw",
+            "length": 118,
+            "positions": 115
+          },
+          {
+            "result": "draw",
+            "length": 124,
+            "positions": 118
+          },
+          {
+            "result": "draw",
+            "length": 125,
+            "positions": 122
+          },
+          {
+            "result": "draw",
+            "length": 134,
+            "positions": 129
+          },
+          {
+            "result": "draw",
+            "length": 142,
+            "positions": 137
+          },
+          {
+            "result": "draw",
+            "length": 142,
+            "positions": 134
+          },
+          {
+            "result": "draw",
+            "length": 136,
+            "positions": 134
+          },
+          {
+            "result": "draw",
+            "length": 149,
+            "positions": 139
+          },
+          {
+            "result": "draw",
+            "length": 147,
+            "positions": 141
+          },
+          {
+            "result": "white_win",
+            "length": 155,
+            "positions": 149
+          },
+          {
+            "result": "draw",
+            "length": 154,
+            "positions": 153
+          },
+          {
+            "result": "draw",
+            "length": 178,
+            "positions": 171
+          },
+          {
+            "result": "draw",
+            "length": 197,
+            "positions": 187
+          },
+          {
+            "result": "draw",
+            "length": 201,
+            "positions": 197
+          },
+          {
+            "result": "draw",
+            "length": 218,
+            "positions": 213
+          },
+          {
+            "result": "draw",
+            "length": 232,
+            "positions": 226
+          },
+          {
+            "result": "white_win",
+            "length": 27,
+            "positions": 23
+          },
+          {
+            "result": "white_win",
+            "length": 49,
+            "positions": 39
+          },
+          {
+            "result": "black_win",
+            "length": 74,
+            "positions": 69
+          },
+          {
+            "result": "draw",
+            "length": 90,
+            "positions": 83
+          },
+          {
+            "result": "white_win",
+            "length": 123,
+            "positions": 121
+          },
+          {
+            "result": "draw",
+            "length": 134,
+            "positions": 133
+          },
+          {
+            "result": "draw",
+            "length": 181,
+            "positions": 176
+          }
+        ]
+      }
+    },
+    {
+      "generation": 11,
+      "timestamp": "2026-02-11T14:29:01.925486",
+      "self_play_time_s": 3973.0,
+      "training_time_s": 12.5,
+      "total_time_s": 3985.5,
+      "buffer_size": 41057,
+      "positions_added": 3476,
+      "total_training_steps": 11000,
+      "learning_rate": 0.009730477672632416,
+      "policy_loss": 2.6010692446231842,
+      "value_loss": 0.014155092173372396,
+      "total_loss": 2.6152243367965564,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 5,
+        "black_wins": 6,
+        "draws": 19,
+        "avg_game_length": 121.5,
+        "min_game_length": 14,
+        "max_game_length": 323,
+        "total_positions": 3476,
+        "game_details": [
+          {
+            "result": "black_win",
+            "length": 14,
+            "positions": 7
+          },
+          {
+            "result": "white_win",
+            "length": 47,
+            "positions": 46
+          },
+          {
+            "result": "draw",
+            "length": 69,
+            "positions": 65
+          },
+          {
+            "result": "draw",
+            "length": 75,
+            "positions": 71
+          },
+          {
+            "result": "white_win",
+            "length": 81,
+            "positions": 71
+          },
+          {
+            "result": "white_win",
+            "length": 77,
+            "positions": 71
+          },
+          {
+            "result": "draw",
+            "length": 84,
+            "positions": 78
+          },
+          {
+            "result": "black_win",
+            "length": 88,
+            "positions": 86
+          },
+          {
+            "result": "draw",
+            "length": 95,
+            "positions": 89
+          },
+          {
+            "result": "draw",
+            "length": 106,
+            "positions": 98
+          },
+          {
+            "result": "draw",
+            "length": 108,
+            "positions": 98
+          },
+          {
+            "result": "draw",
+            "length": 108,
+            "positions": 101
+          },
+          {
+            "result": "draw",
+            "length": 119,
+            "positions": 114
+          },
+          {
+            "result": "draw",
+            "length": 123,
+            "positions": 120
+          },
+          {
+            "result": "draw",
+            "length": 128,
+            "positions": 123
+          },
+          {
+            "result": "draw",
+            "length": 147,
+            "positions": 141
+          },
+          {
+            "result": "draw",
+            "length": 152,
+            "positions": 145
+          },
+          {
+            "result": "draw",
+            "length": 181,
+            "positions": 171
+          },
+          {
+            "result": "draw",
+            "length": 195,
+            "positions": 190
+          },
+          {
+            "result": "draw",
+            "length": 202,
+            "positions": 197
+          },
+          {
+            "result": "draw",
+            "length": 213,
+            "positions": 207
+          },
+          {
+            "result": "white_win",
+            "length": 213,
+            "positions": 209
+          },
+          {
+            "result": "draw",
+            "length": 323,
+            "positions": 320
+          },
+          {
+            "result": "black_win",
+            "length": 46,
+            "positions": 41
+          },
+          {
+            "result": "black_win",
+            "length": 60,
+            "positions": 54
+          },
+          {
+            "result": "draw",
+            "length": 73,
+            "positions": 63
+          },
+          {
+            "result": "black_win",
+            "length": 94,
+            "positions": 91
+          },
+          {
+            "result": "draw",
+            "length": 123,
+            "positions": 119
+          },
+          {
+            "result": "black_win",
+            "length": 150,
+            "positions": 145
+          },
+          {
+            "result": "white_win",
+            "length": 151,
+            "positions": 145
+          }
+        ]
+      }
+    },
+    {
+      "generation": 12,
+      "timestamp": "2026-02-11T15:47:21.854694",
+      "self_play_time_s": 4684.9,
+      "training_time_s": 13.3,
+      "total_time_s": 4698.2,
+      "buffer_size": 45071,
+      "positions_added": 4014,
+      "total_training_steps": 12000,
+      "learning_rate": 0.009677275675539833,
+      "policy_loss": 2.6202809760570527,
+      "value_loss": 0.015009626454208046,
+      "total_loss": 2.635290602511261,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 7,
+        "black_wins": 4,
+        "draws": 19,
+        "avg_game_length": 139.2,
+        "min_game_length": 33,
+        "max_game_length": 248,
+        "total_positions": 4014,
+        "game_details": [
+          {
+            "result": "white_win",
+            "length": 33,
+            "positions": 30
+          },
+          {
+            "result": "white_win",
+            "length": 53,
+            "positions": 43
+          },
+          {
+            "result": "white_win",
+            "length": 61,
+            "positions": 53
+          },
+          {
+            "result": "white_win",
+            "length": 77,
+            "positions": 71
+          },
+          {
+            "result": "draw",
+            "length": 78,
+            "positions": 76
+          },
+          {
+            "result": "white_win",
+            "length": 89,
+            "positions": 86
+          },
+          {
+            "result": "draw",
+            "length": 101,
+            "positions": 95
+          },
+          {
+            "result": "draw",
+            "length": 130,
+            "positions": 127
+          },
+          {
+            "result": "draw",
+            "length": 137,
+            "positions": 135
+          },
+          {
+            "result": "draw",
+            "length": 145,
+            "positions": 139
+          },
+          {
+            "result": "white_win",
+            "length": 147,
+            "positions": 142
+          },
+          {
+            "result": "black_win",
+            "length": 148,
+            "positions": 147
+          },
+          {
+            "result": "draw",
+            "length": 154,
+            "positions": 148
+          },
+          {
+            "result": "draw",
+            "length": 154,
+            "positions": 148
+          },
+          {
+            "result": "draw",
+            "length": 158,
+            "positions": 156
+          },
+          {
+            "result": "draw",
+            "length": 166,
+            "positions": 162
+          },
+          {
+            "result": "draw",
+            "length": 164,
+            "positions": 159
+          },
+          {
+            "result": "draw",
+            "length": 179,
+            "positions": 173
+          },
+          {
+            "result": "draw",
+            "length": 176,
+            "positions": 175
+          },
+          {
+            "result": "draw",
+            "length": 203,
+            "positions": 193
+          },
+          {
+            "result": "draw",
+            "length": 203,
+            "positions": 195
+          },
+          {
+            "result": "black_win",
+            "length": 226,
+            "positions": 220
+          },
+          {
+            "result": "draw",
+            "length": 248,
+            "positions": 240
+          },
+          {
+            "result": "black_win",
+            "length": 66,
+            "positions": 61
+          },
+          {
+            "result": "white_win",
+            "length": 81,
+            "positions": 77
+          },
+          {
+            "result": "draw",
+            "length": 89,
+            "positions": 83
+          },
+          {
+            "result": "draw",
+            "length": 143,
+            "positions": 133
+          },
+          {
+            "result": "black_win",
+            "length": 144,
+            "positions": 141
+          },
+          {
+            "result": "draw",
+            "length": 209,
+            "positions": 202
+          },
+          {
+            "result": "draw",
+            "length": 214,
+            "positions": 204
+          }
+        ]
+      }
+    },
+    {
+      "generation": 13,
+      "timestamp": "2026-02-11T17:00:17.036709",
+      "self_play_time_s": 4360.8,
+      "training_time_s": 12.5,
+      "total_time_s": 4373.4,
+      "buffer_size": 48699,
+      "positions_added": 3628,
+      "total_training_steps": 13000,
+      "learning_rate": 0.009619457772049832,
+      "policy_loss": 2.6774310619831083,
+      "value_loss": 0.02194577032001689,
+      "total_loss": 2.699376832303125,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 4,
+        "black_wins": 11,
+        "draws": 15,
+        "avg_game_length": 125.9,
+        "min_game_length": 14,
+        "max_game_length": 317,
+        "total_positions": 3628,
+        "game_details": [
+          {
+            "result": "black_win",
+            "length": 14,
+            "positions": 12
+          },
+          {
+            "result": "white_win",
+            "length": 61,
+            "positions": 57
+          },
+          {
+            "result": "white_win",
+            "length": 63,
+            "positions": 57
+          },
+          {
+            "result": "black_win",
+            "length": 66,
+            "positions": 56
+          },
+          {
+            "result": "black_win",
+            "length": 74,
+            "positions": 68
+          },
+          {
+            "result": "draw",
+            "length": 71,
+            "positions": 66
+          },
+          {
+            "result": "black_win",
+            "length": 74,
+            "positions": 69
+          },
+          {
+            "result": "white_win",
+            "length": 83,
+            "positions": 77
+          },
+          {
+            "result": "draw",
+            "length": 81,
+            "positions": 79
+          },
+          {
+            "result": "black_win",
+            "length": 88,
+            "positions": 82
+          },
+          {
+            "result": "draw",
+            "length": 84,
+            "positions": 80
+          },
+          {
+            "result": "black_win",
+            "length": 96,
+            "positions": 92
+          },
+          {
+            "result": "draw",
+            "length": 116,
+            "positions": 113
+          },
+          {
+            "result": "draw",
+            "length": 116,
+            "positions": 112
+          },
+          {
+            "result": "draw",
+            "length": 121,
+            "positions": 115
+          },
+          {
+            "result": "black_win",
+            "length": 124,
+            "positions": 118
+          },
+          {
+            "result": "black_win",
+            "length": 162,
+            "positions": 154
+          },
+          {
+            "result": "black_win",
+            "length": 162,
+            "positions": 154
+          },
+          {
+            "result": "draw",
+            "length": 176,
+            "positions": 174
+          },
+          {
+            "result": "draw",
+            "length": 179,
+            "positions": 176
+          },
+          {
+            "result": "draw",
+            "length": 225,
+            "positions": 220
+          },
+          {
+            "result": "draw",
+            "length": 254,
+            "positions": 250
+          },
+          {
+            "result": "draw",
+            "length": 317,
+            "positions": 316
+          },
+          {
+            "result": "black_win",
+            "length": 68,
+            "positions": 58
+          },
+          {
+            "result": "draw",
+            "length": 79,
+            "positions": 69
+          },
+          {
+            "result": "draw",
+            "length": 83,
+            "positions": 79
+          },
+          {
+            "result": "white_win",
+            "length": 83,
+            "positions": 81
+          },
+          {
+            "result": "draw",
+            "length": 180,
+            "positions": 175
+          },
+          {
+            "result": "draw",
+            "length": 187,
+            "positions": 183
+          },
+          {
+            "result": "black_win",
+            "length": 290,
+            "positions": 286
+          }
+        ]
+      }
+    },
+    {
+      "generation": 14,
+      "timestamp": "2026-02-11T18:08:06.164496",
+      "self_play_time_s": 4056.5,
+      "training_time_s": 11.3,
+      "total_time_s": 4067.7,
+      "buffer_size": 52330,
+      "positions_added": 3631,
+      "total_training_steps": 14000,
+      "learning_rate": 0.00955708102145271,
+      "policy_loss": 2.6397853786945342,
+      "value_loss": 0.016551956049515867,
+      "total_loss": 2.65633733474405,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 9,
+        "black_wins": 5,
+        "draws": 16,
+        "avg_game_length": 125.8,
+        "min_game_length": 26,
+        "max_game_length": 250,
+        "total_positions": 3631,
+        "game_details": [
+          {
+            "result": "black_win",
+            "length": 26,
+            "positions": 21
+          },
+          {
+            "result": "white_win",
+            "length": 37,
+            "positions": 27
+          },
+          {
+            "result": "white_win",
+            "length": 39,
+            "positions": 36
+          },
+          {
+            "result": "white_win",
+            "length": 49,
+            "positions": 45
+          },
+          {
+            "result": "white_win",
+            "length": 59,
+            "positions": 57
+          },
+          {
+            "result": "white_win",
+            "length": 65,
+            "positions": 61
+          },
+          {
+            "result": "black_win",
+            "length": 86,
+            "positions": 80
+          },
+          {
+            "result": "white_win",
+            "length": 99,
+            "positions": 89
+          },
+          {
+            "result": "draw",
+            "length": 97,
+            "positions": 91
+          },
+          {
+            "result": "black_win",
+            "length": 96,
+            "positions": 95
+          },
+          {
+            "result": "white_win",
+            "length": 119,
+            "positions": 116
+          },
+          {
+            "result": "draw",
+            "length": 119,
+            "positions": 115
+          },
+          {
+            "result": "white_win",
+            "length": 143,
+            "positions": 136
+          },
+          {
+            "result": "draw",
+            "length": 130,
+            "positions": 128
+          },
+          {
+            "result": "draw",
+            "length": 147,
+            "positions": 142
+          },
+          {
+            "result": "draw",
+            "length": 152,
+            "positions": 149
+          },
+          {
+            "result": "draw",
+            "length": 158,
+            "positions": 153
+          },
+          {
+            "result": "draw",
+            "length": 168,
+            "positions": 165
+          },
+          {
+            "result": "draw",
+            "length": 185,
+            "positions": 177
+          },
+          {
+            "result": "draw",
+            "length": 184,
+            "positions": 178
+          },
+          {
+            "result": "draw",
+            "length": 200,
+            "positions": 193
+          },
+          {
+            "result": "draw",
+            "length": 204,
+            "positions": 198
+          },
+          {
+            "result": "draw",
+            "length": 211,
+            "positions": 207
+          },
+          {
+            "result": "black_win",
+            "length": 38,
+            "positions": 34
+          },
+          {
+            "result": "black_win",
+            "length": 56,
+            "positions": 52
+          },
+          {
+            "result": "white_win",
+            "length": 103,
+            "positions": 99
+          },
+          {
+            "result": "draw",
+            "length": 159,
+            "positions": 155
+          },
+          {
+            "result": "draw",
+            "length": 159,
+            "positions": 156
+          },
+          {
+            "result": "draw",
+            "length": 236,
+            "positions": 231
+          },
+          {
+            "result": "draw",
+            "length": 250,
+            "positions": 245
+          }
+        ]
+      }
+    },
+    {
+      "generation": 15,
+      "timestamp": "2026-02-11T19:12:55.393341",
+      "self_play_time_s": 3876.3,
+      "training_time_s": 11.6,
+      "total_time_s": 3887.9,
+      "buffer_size": 55772,
+      "positions_added": 3442,
+      "total_training_steps": 15000,
+      "learning_rate": 0.009490206982070475,
+      "policy_loss": 2.6369275720119476,
+      "value_loss": 0.017553767629899086,
+      "total_loss": 2.6544813396418467,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 4,
+        "black_wins": 6,
+        "draws": 20,
+        "avg_game_length": 119.13333333333334,
+        "min_game_length": 38,
+        "max_game_length": 282,
+        "total_positions": 3442,
+        "game_details": [
+          {
+            "result": "black_win",
+            "length": 38,
+            "positions": 36
+          },
+          {
+            "result": "black_win",
+            "length": 44,
+            "positions": 43
+          },
+          {
+            "result": "white_win",
+            "length": 59,
+            "positions": 56
+          },
+          {
+            "result": "white_win",
+            "length": 73,
+            "positions": 69
+          },
+          {
+            "result": "black_win",
+            "length": 72,
+            "positions": 69
+          },
+          {
+            "result": "draw",
+            "length": 74,
+            "positions": 70
+          },
+          {
+            "result": "black_win",
+            "length": 84,
+            "positions": 74
+          },
+          {
+            "result": "draw",
+            "length": 78,
+            "positions": 74
+          },
+          {
+            "result": "draw",
+            "length": 78,
+            "positions": 76
+          },
+          {
+            "result": "draw",
+            "length": 80,
+            "positions": 77
+          },
+          {
+            "result": "draw",
+            "length": 83,
+            "positions": 81
+          },
+          {
+            "result": "draw",
+            "length": 94,
+            "positions": 84
+          },
+          {
+            "result": "black_win",
+            "length": 96,
+            "positions": 93
+          },
+          {
+            "result": "draw",
+            "length": 99,
+            "positions": 94
+          },
+          {
+            "result": "draw",
+            "length": 98,
+            "positions": 96
+          },
+          {
+            "result": "black_win",
+            "length": 104,
+            "positions": 101
+          },
+          {
+            "result": "draw",
+            "length": 122,
+            "positions": 116
+          },
+          {
+            "result": "draw",
+            "length": 135,
+            "positions": 131
+          },
+          {
+            "result": "draw",
+            "length": 157,
+            "positions": 151
+          },
+          {
+            "result": "draw",
+            "length": 175,
+            "positions": 169
+          },
+          {
+            "result": "draw",
+            "length": 189,
+            "positions": 186
+          },
+          {
+            "result": "draw",
+            "length": 272,
+            "positions": 265
+          },
+          {
+            "result": "draw",
+            "length": 272,
+            "positions": 268
+          },
+          {
+            "result": "white_win",
+            "length": 79,
+            "positions": 73
+          },
+          {
+            "result": "draw",
+            "length": 87,
+            "positions": 84
+          },
+          {
+            "result": "draw",
+            "length": 101,
+            "positions": 93
+          },
+          {
+            "result": "draw",
+            "length": 109,
+            "positions": 108
+          },
+          {
+            "result": "draw",
+            "length": 151,
+            "positions": 147
+          },
+          {
+            "result": "white_win",
+            "length": 189,
+            "positions": 181
+          },
+          {
+            "result": "draw",
+            "length": 282,
+            "positions": 277
+          }
+        ]
+      }
+    },
+    {
+      "generation": 16,
+      "timestamp": "2026-02-11T20:20:36.069463",
+      "self_play_time_s": 4045.7,
+      "training_time_s": 13.5,
+      "total_time_s": 4059.3,
+      "buffer_size": 59262,
+      "positions_added": 3490,
+      "total_training_steps": 16000,
+      "learning_rate": 0.009418901650506196,
+      "policy_loss": 2.6211014947891234,
+      "value_loss": 0.01755851442052517,
+      "total_loss": 2.6386600092096484,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 5,
+        "black_wins": 7,
+        "draws": 18,
+        "avg_game_length": 122.26666666666667,
+        "min_game_length": 50,
+        "max_game_length": 272,
+        "total_positions": 3490,
+        "game_details": [
+          {
+            "result": "black_win",
+            "length": 50,
+            "positions": 43
+          },
+          {
+            "result": "white_win",
+            "length": 61,
+            "positions": 59
+          },
+          {
+            "result": "black_win",
+            "length": 76,
+            "positions": 68
+          },
+          {
+            "result": "white_win",
+            "length": 71,
+            "positions": 69
+          },
+          {
+            "result": "draw",
+            "length": 79,
+            "positions": 72
+          },
+          {
+            "result": "draw",
+            "length": 84,
+            "positions": 78
+          },
+          {
+            "result": "draw",
+            "length": 84,
+            "positions": 79
+          },
+          {
+            "result": "draw",
+            "length": 90,
+            "positions": 82
+          },
+          {
+            "result": "draw",
+            "length": 96,
+            "positions": 86
+          },
+          {
+            "result": "white_win",
+            "length": 97,
+            "positions": 92
+          },
+          {
+            "result": "black_win",
+            "length": 98,
+            "positions": 91
+          },
+          {
+            "result": "draw",
+            "length": 121,
+            "positions": 117
+          },
+          {
+            "result": "draw",
+            "length": 129,
+            "positions": 126
+          },
+          {
+            "result": "draw",
+            "length": 151,
+            "positions": 146
+          },
+          {
+            "result": "draw",
+            "length": 153,
+            "positions": 146
+          },
+          {
+            "result": "draw",
+            "length": 155,
+            "positions": 149
+          },
+          {
+            "result": "white_win",
+            "length": 155,
+            "positions": 148
+          },
+          {
+            "result": "draw",
+            "length": 158,
+            "positions": 153
+          },
+          {
+            "result": "draw",
+            "length": 163,
+            "positions": 157
+          },
+          {
+            "result": "draw",
+            "length": 174,
+            "positions": 164
+          },
+          {
+            "result": "draw",
+            "length": 186,
+            "positions": 183
+          },
+          {
+            "result": "draw",
+            "length": 225,
+            "positions": 220
+          },
+          {
+            "result": "draw",
+            "length": 272,
+            "positions": 264
+          },
+          {
+            "result": "black_win",
+            "length": 84,
+            "positions": 74
+          },
+          {
+            "result": "black_win",
+            "length": 86,
+            "positions": 80
+          },
+          {
+            "result": "black_win",
+            "length": 94,
+            "positions": 88
+          },
+          {
+            "result": "draw",
+            "length": 104,
+            "positions": 99
+          },
+          {
+            "result": "draw",
+            "length": 105,
+            "positions": 100
+          },
+          {
+            "result": "white_win",
+            "length": 119,
+            "positions": 113
+          },
+          {
+            "result": "black_win",
+            "length": 148,
+            "positions": 144
+          }
+        ]
+      }
+    },
+    {
+      "generation": 17,
+      "timestamp": "2026-02-11T21:33:51.713974",
+      "self_play_time_s": 4378.7,
+      "training_time_s": 15.4,
+      "total_time_s": 4394.1,
+      "buffer_size": 62682,
+      "positions_added": 3420,
+      "total_training_steps": 17000,
+      "learning_rate": 0.009343235396513326,
+      "policy_loss": 2.5832572009563446,
+      "value_loss": 0.013251459253602662,
+      "total_loss": 2.596508660209947,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 7,
+        "black_wins": 4,
+        "draws": 19,
+        "avg_game_length": 118.9,
+        "min_game_length": 25,
+        "max_game_length": 390,
+        "total_positions": 3420,
+        "game_details": [
+          {
+            "result": "black_win",
+            "length": 30,
+            "positions": 25
+          },
+          {
+            "result": "black_win",
+            "length": 46,
+            "positions": 41
+          },
+          {
+            "result": "white_win",
+            "length": 52,
+            "positions": 47
+          },
+          {
+            "result": "white_win",
+            "length": 53,
+            "positions": 52
+          },
+          {
+            "result": "white_win",
+            "length": 85,
+            "positions": 77
+          },
+          {
+            "result": "draw",
+            "length": 84,
+            "positions": 78
+          },
+          {
+            "result": "draw",
+            "length": 87,
+            "positions": 85
+          },
+          {
+            "result": "draw",
+            "length": 90,
+            "positions": 88
+          },
+          {
+            "result": "draw",
+            "length": 94,
+            "positions": 89
+          },
+          {
+            "result": "draw",
+            "length": 94,
+            "positions": 92
+          },
+          {
+            "result": "draw",
+            "length": 102,
+            "positions": 98
+          },
+          {
+            "result": "draw",
+            "length": 113,
+            "positions": 105
+          },
+          {
+            "result": "draw",
+            "length": 111,
+            "positions": 106
+          },
+          {
+            "result": "draw",
+            "length": 124,
+            "positions": 121
+          },
+          {
+            "result": "draw",
+            "length": 126,
+            "positions": 121
+          },
+          {
+            "result": "white_win",
+            "length": 135,
+            "positions": 127
+          },
+          {
+            "result": "draw",
+            "length": 130,
+            "positions": 127
+          },
+          {
+            "result": "draw",
+            "length": 142,
+            "positions": 137
+          },
+          {
+            "result": "draw",
+            "length": 148,
+            "positions": 143
+          },
+          {
+            "result": "draw",
+            "length": 165,
+            "positions": 160
+          },
+          {
+            "result": "black_win",
+            "length": 174,
+            "positions": 167
+          },
+          {
+            "result": "draw",
+            "length": 290,
+            "positions": 289
+          },
+          {
+            "result": "draw",
+            "length": 390,
+            "positions": 385
+          },
+          {
+            "result": "white_win",
+            "length": 25,
+            "positions": 20
+          },
+          {
+            "result": "black_win",
+            "length": 62,
+            "positions": 56
+          },
+          {
+            "result": "white_win",
+            "length": 73,
+            "positions": 65
+          },
+          {
+            "result": "white_win",
+            "length": 79,
+            "positions": 74
+          },
+          {
+            "result": "draw",
+            "length": 102,
+            "positions": 96
+          },
+          {
+            "result": "draw",
+            "length": 138,
+            "positions": 136
+          },
+          {
+            "result": "draw",
+            "length": 223,
+            "positions": 213
+          }
+        ]
+      }
+    },
+    {
+      "generation": 18,
+      "timestamp": "2026-02-11T23:03:39.467114",
+      "self_play_time_s": 5373.9,
+      "training_time_s": 12.1,
+      "total_time_s": 5386.1,
+      "buffer_size": 66658,
+      "positions_added": 3976,
+      "total_training_steps": 18000,
+      "learning_rate": 0.009263282893549264,
+      "policy_loss": 2.6965046181678773,
+      "value_loss": 0.023131828206474893,
+      "total_loss": 2.719636446374352,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 4,
+        "black_wins": 6,
+        "draws": 20,
+        "avg_game_length": 136.76666666666668,
+        "min_game_length": 9,
+        "max_game_length": 261,
+        "total_positions": 3976,
+        "game_details": [
+          {
+            "result": "white_win",
+            "length": 9,
+            "positions": 6
+          },
+          {
+            "result": "black_win",
+            "length": 54,
+            "positions": 51
+          },
+          {
+            "result": "draw",
+            "length": 63,
+            "positions": 60
+          },
+          {
+            "result": "draw",
+            "length": 85,
+            "positions": 82
+          },
+          {
+            "result": "white_win",
+            "length": 95,
+            "positions": 89
+          },
+          {
+            "result": "black_win",
+            "length": 96,
+            "positions": 92
+          },
+          {
+            "result": "draw",
+            "length": 97,
+            "positions": 93
+          },
+          {
+            "result": "draw",
+            "length": 101,
+            "positions": 97
+          },
+          {
+            "result": "draw",
+            "length": 100,
+            "positions": 99
+          },
+          {
+            "result": "draw",
+            "length": 112,
+            "positions": 109
+          },
+          {
+            "result": "draw",
+            "length": 120,
+            "positions": 117
+          },
+          {
+            "result": "draw",
+            "length": 127,
+            "positions": 121
+          },
+          {
+            "result": "draw",
+            "length": 125,
+            "positions": 124
+          },
+          {
+            "result": "draw",
+            "length": 137,
+            "positions": 130
+          },
+          {
+            "result": "draw",
+            "length": 143,
+            "positions": 139
+          },
+          {
+            "result": "draw",
+            "length": 164,
+            "positions": 157
+          },
+          {
+            "result": "draw",
+            "length": 178,
+            "positions": 175
+          },
+          {
+            "result": "draw",
+            "length": 190,
+            "positions": 184
+          },
+          {
+            "result": "draw",
+            "length": 188,
+            "positions": 186
+          },
+          {
+            "result": "draw",
+            "length": 225,
+            "positions": 218
+          },
+          {
+            "result": "black_win",
+            "length": 228,
+            "positions": 223
+          },
+          {
+            "result": "draw",
+            "length": 231,
+            "positions": 226
+          },
+          {
+            "result": "black_win",
+            "length": 234,
+            "positions": 231
+          },
+          {
+            "result": "white_win",
+            "length": 61,
+            "positions": 55
+          },
+          {
+            "result": "black_win",
+            "length": 62,
+            "positions": 59
+          },
+          {
+            "result": "draw",
+            "length": 94,
+            "positions": 88
+          },
+          {
+            "result": "draw",
+            "length": 135,
+            "positions": 132
+          },
+          {
+            "result": "black_win",
+            "length": 160,
+            "positions": 156
+          },
+          {
+            "result": "draw",
+            "length": 228,
+            "positions": 221
+          },
+          {
+            "result": "white_win",
+            "length": 261,
+            "positions": 256
+          }
+        ]
+      }
+    },
+    {
+      "generation": 19,
+      "timestamp": "2026-02-12T00:26:34.063788",
+      "self_play_time_s": 4961.2,
+      "training_time_s": 11.8,
+      "total_time_s": 4973.1,
+      "buffer_size": 70852,
+      "positions_added": 4194,
+      "total_training_steps": 19000,
+      "learning_rate": 0.00917912304508165,
+      "policy_loss": 2.630501344203949,
+      "value_loss": 0.016395571906585246,
+      "total_loss": 2.6468969161105345,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 7,
+        "black_wins": 6,
+        "draws": 17,
+        "avg_game_length": 144.33333333333334,
+        "min_game_length": 52,
+        "max_game_length": 289,
+        "total_positions": 4194,
+        "game_details": [
+          {
+            "result": "black_win",
+            "length": 54,
+            "positions": 47
+          },
+          {
+            "result": "black_win",
+            "length": 52,
+            "positions": 49
+          },
+          {
+            "result": "white_win",
+            "length": 65,
+            "positions": 63
+          },
+          {
+            "result": "black_win",
+            "length": 72,
+            "positions": 66
+          },
+          {
+            "result": "white_win",
+            "length": 77,
+            "positions": 70
+          },
+          {
+            "result": "black_win",
+            "length": 78,
+            "positions": 70
+          },
+          {
+            "result": "draw",
+            "length": 113,
+            "positions": 107
+          },
+          {
+            "result": "white_win",
+            "length": 115,
+            "positions": 109
+          },
+          {
+            "result": "draw",
+            "length": 112,
+            "positions": 109
+          },
+          {
+            "result": "draw",
+            "length": 116,
+            "positions": 110
+          },
+          {
+            "result": "draw",
+            "length": 118,
+            "positions": 114
+          },
+          {
+            "result": "black_win",
+            "length": 138,
+            "positions": 131
+          },
+          {
+            "result": "draw",
+            "length": 145,
+            "positions": 140
+          },
+          {
+            "result": "white_win",
+            "length": 155,
+            "positions": 147
+          },
+          {
+            "result": "draw",
+            "length": 168,
+            "positions": 164
+          },
+          {
+            "result": "draw",
+            "length": 176,
+            "positions": 175
+          },
+          {
+            "result": "draw",
+            "length": 178,
+            "positions": 173
+          },
+          {
+            "result": "draw",
+            "length": 180,
+            "positions": 175
+          },
+          {
+            "result": "draw",
+            "length": 199,
+            "positions": 197
+          },
+          {
+            "result": "draw",
+            "length": 223,
+            "positions": 220
+          },
+          {
+            "result": "draw",
+            "length": 236,
+            "positions": 232
+          },
+          {
+            "result": "draw",
+            "length": 253,
+            "positions": 249
+          },
+          {
+            "result": "draw",
+            "length": 284,
+            "positions": 282
+          },
+          {
+            "result": "white_win",
+            "length": 71,
+            "positions": 67
+          },
+          {
+            "result": "draw",
+            "length": 85,
+            "positions": 82
+          },
+          {
+            "result": "white_win",
+            "length": 97,
+            "positions": 89
+          },
+          {
+            "result": "draw",
+            "length": 122,
+            "positions": 120
+          },
+          {
+            "result": "black_win",
+            "length": 170,
+            "positions": 168
+          },
+          {
+            "result": "white_win",
+            "length": 189,
+            "positions": 185
+          },
+          {
+            "result": "draw",
+            "length": 289,
+            "positions": 284
+          }
+        ]
+      }
+    },
+    {
+      "generation": 20,
+      "timestamp": "2026-02-12T01:48:48.044855",
+      "self_play_time_s": 4920.9,
+      "training_time_s": 11.5,
+      "total_time_s": 4932.4,
+      "buffer_size": 74942,
+      "positions_added": 4090,
+      "total_training_steps": 20000,
+      "learning_rate": 0.009090838906720178,
+      "policy_loss": 2.6297688241004944,
+      "value_loss": 0.017037988101597876,
+      "total_loss": 2.6468068122020925,
+      "policy_entropy": NaN,
+      "self_play": {
+        "games": 30,
+        "white_wins": 9,
+        "black_wins": 3,
+        "draws": 18,
+        "avg_game_length": 140.23333333333332,
+        "min_game_length": 19,
+        "max_game_length": 298,
+        "total_positions": 4090,
+        "game_details": [
+          {
+            "result": "white_win",
+            "length": 43,
+            "positions": 42
+          },
+          {
+            "result": "white_win",
+            "length": 63,
+            "positions": 59
+          },
+          {
+            "result": "white_win",
+            "length": 93,
+            "positions": 90
+          },
+          {
+            "result": "draw",
+            "length": 107,
+            "positions": 105
+          },
+          {
+            "result": "black_win",
+            "length": 114,
+            "positions": 112
+          },
+          {
+            "result": "draw",
+            "length": 119,
+            "positions": 116
+          },
+          {
+            "result": "white_win",
+            "length": 121,
+            "positions": 119
+          },
+          {
+            "result": "white_win",
+            "length": 121,
+            "positions": 120
+          },
+          {
+            "result": "draw",
+            "length": 124,
+            "positions": 119
+          },
+          {
+            "result": "draw",
+            "length": 131,
+            "positions": 124
+          },
+          {
+            "result": "black_win",
+            "length": 130,
+            "positions": 127
+          },
+          {
+            "result": "draw",
+            "length": 144,
+            "positions": 140
+          },
+          {
+            "result": "draw",
+            "length": 149,
+            "positions": 143
+          },
+          {
+            "result": "draw",
+            "length": 151,
+            "positions": 143
+          },
+          {
+            "result": "draw",
+            "length": 159,
+            "positions": 156
+          },
+          {
+            "result": "draw",
+            "length": 161,
+            "positions": 156
+          },
+          {
+            "result": "white_win",
+            "length": 175,
+            "positions": 173
+          },
+          {
+            "result": "draw",
+            "length": 180,
+            "positions": 177
+          },
+          {
+            "result": "draw",
+            "length": 189,
+            "positions": 183
+          },
+          {
+            "result": "draw",
+            "length": 199,
+            "positions": 197
+          },
+          {
+            "result": "draw",
+            "length": 225,
+            "positions": 219
+          },
+          {
+            "result": "draw",
+            "length": 256,
+            "positions": 254
+          },
+          {
+            "result": "draw",
+            "length": 298,
+            "positions": 288
+          },
+          {
+            "result": "white_win",
+            "length": 19,
+            "positions": 15
+          },
+          {
+            "result": "white_win",
+            "length": 69,
+            "positions": 65
+          },
+          {
+            "result": "black_win",
+            "length": 74,
+            "positions": 71
+          },
+          {
+            "result": "white_win",
+            "length": 101,
+            "positions": 95
+          },
+          {
+            "result": "draw",
+            "length": 152,
+            "positions": 148
+          },
+          {
+            "result": "draw",
+            "length": 166,
+            "positions": 163
+          },
+          {
+            "result": "draw",
+            "length": 174,
+            "positions": 171
+          }
+        ]
+      }
+    }
+  ]
+}
