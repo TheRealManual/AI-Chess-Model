@@ -177,8 +177,8 @@ async def serve_ui():
 
 
 def _write_index_html(out_dir):
-    """Copy the playground HTML, but update the API_BASE to always use localhost."""
-    src = os.path.join(PROJECT_ROOT, "playground", "index.html")
+    """Copy the chess UI HTML template into the package."""
+    src = os.path.join(PROJECT_ROOT, "scripts", "chess_ui.html")
     with open(src, encoding="utf-8") as f:
         content = f.read()
 
