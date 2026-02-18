@@ -25,14 +25,16 @@ analytics_output/
 # Third-party tools (download separately)
 stockfish/
 
-# Exported models ARE committed (ONNX + analytics only, no checkpoints)
+# Exported models ARE committed (ONNX + analytics + single checkpoint)
 !exported_models/
 !exported_models/**/
 !exported_models/**/*.onnx
 !exported_models/**/*.json
 !exported_models/**/*.png
 !exported_models/**/*.html
-exported_models/*/checkpoints/
+!exported_models/**/*.pt
+# Ignore buffer data inside exported checkpoints
+exported_models/*/checkpoints/buffer/
 
 # IDE
 .vscode/
