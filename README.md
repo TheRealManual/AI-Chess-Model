@@ -1,14 +1,17 @@
 # AI Chess Model
 
-A chess engine trained entirely through self-play using Monte Carlo Tree Search (MCTS) and a residual neural network, inspired by DeepMind's AlphaZero. The trained model exports to ONNX format and serves as a lightweight FastAPI microservice, designed for integration with web backends (e.g. a Node.js chess app on AWS App Runner).
+A chess engine built with a residual neural network and Monte Carlo Tree Search (MCTS), inspired by DeepMind's AlphaZero. The model uses supervised pre-training on strong human games from Lichess, followed by self-play reinforcement learning for fine-tuning. It exports to ONNX format and runs as a lightweight FastAPI microservice, designed for integration with web backends (e.g. a Node.js chess app on AWS App Runner).
 
 ## Overview
 
-- **Self-play training** — the model learns chess from scratch by playing against itself
+- **Two-stage training pipeline** — supervised pre-training on Lichess games, then self-play fine-tuning
+- **History-aware input** — 102-plane board encoding with 8 timesteps of position history
+- **Batched GPU evaluation** — parallel self-play games share GPU batches for faster training
 - **Opening book** — 59 common openings ensure diverse training positions and prevent draw collapse
 - **MCTS + neural network** — combines deep search with learned position evaluation
 - **ONNX inference** — fast, lightweight inference without PyTorch dependency
 - **REST API** — FastAPI server with configurable difficulty levels for concurrent games
+- **Interactive playground** — browser-based chess UI to play against the model
 - **Stockfish benchmarking** — automated ELO estimation against Stockfish at multiple depths
 - **Export snapshots** — full backups of models, checkpoints, and analytics for version tracking
 
@@ -20,41 +23,46 @@ A chess engine trained entirely through self-play using Monte Carlo Tree Search 
 AI-Chess-Model/
 ├── src/
 │   ├── model/
-│   │   ├── network.py       # ResNet (6 blocks x 128ch, ~2.4M params), board encoding, move indexing
-│   │   └── mcts.py          # Monte Carlo Tree Search with PUCT selection
+│   │   ├── network.py        # ResNet (6 blocks x 128ch, ~2.4M params), 102-plane board encoding
+│   │   └── mcts.py           # Monte Carlo Tree Search with PUCT selection
 │   ├── training/
-│   │   ├── config.py         # All hyperparameters in one dataclass
-│   │   ├── self_play.py      # Self-play game generation with parallel threading
-│   │   ├── trainer.py        # Training loop, checkpoints, history tracking
-│   │   └── replay_buffer.py  # Circular buffer for training positions
+│   │   ├── config.py          # All hyperparameters in one dataclass
+│   │   ├── self_play.py       # Self-play game generation with batched GPU eval
+│   │   ├── trainer.py         # Training loop, checkpoints, history tracking
+│   │   └── replay_buffer.py   # Circular buffer for training positions
 │   ├── data/
-│   │   └── openings.py       # 60-opening book (Italian, Sicilian, French, QGD, KID, etc.)
+│   │   ├── openings.py        # 59-opening book (Italian, Sicilian, French, QGD, KID, etc.)
+│   │   └── lichess_dataset.py # PGN streaming parser for supervised pre-training
 │   ├── benchmark/
 │   │   └── stockfish_bench.py # Play model vs Stockfish, estimate ELO
 │   ├── analytics/
-│   │   └── plots.py          # Loss curves, self-play stats, dashboard generation
+│   │   └── plots.py           # Loss curves, self-play stats, dashboard generation
 │   ├── api/
-│   │   ├── main.py           # FastAPI app with CORS, lifespan management
-│   │   ├── engine.py         # ONNX Runtime inference + MCTS wrapper
-│   │   └── schemas.py        # Pydantic request/response models
-│   └── export.py             # PyTorch → ONNX conversion with BatchNorm folding
+│   │   ├── main.py            # FastAPI app with CORS, playground serving
+│   │   ├── engine.py          # ONNX Runtime inference + MCTS wrapper
+│   │   └── schemas.py         # Pydantic request/response models
+│   └── export.py              # PyTorch → ONNX conversion with BatchNorm folding
 ├── scripts/
-│   ├── train.py              # Main training entry point
-│   ├── benchmark.py          # Standalone Stockfish benchmarking
-│   ├── export.py             # Export model + create backup snapshot
-│   ├── serve.py              # Start the API server
-│   ├── watch.py              # Live ASCII board viewer for self-play
-│   └── status.py             # Check training progress from terminal
+│   ├── pretrain.py            # Supervised pre-training on Lichess PGN databases
+│   ├── train.py               # Self-play training entry point
+│   ├── benchmark.py           # Standalone Stockfish benchmarking
+│   ├── export.py              # Export model + create backup snapshot
+│   ├── serve.py               # Start the API server
+│   ├── analyze.py             # Deep training analytics and diagnostics
+│   ├── watch.py               # Live ASCII board viewer for self-play
+│   └── status.py              # Check training progress from terminal
+├── playground/
+│   └── index.html             # Browser-based chess UI (served at /playground/)
 ├── tests/
-│   ├── test_model.py         # Network, encoding, move indexing tests (8 tests)
-│   ├── test_mcts.py          # MCTS search and move selection tests (5 tests)
-│   ├── test_training.py      # Replay buffer tests (4 tests)
-│   └── test_api.py           # API endpoint tests (5 tests)
-├── exported_models/           # Versioned model snapshots (committed to git)
-├── Dockerfile                 # Production container for the API
-├── docker-compose.yml         # Docker Compose for local deployment
-├── pyproject.toml             # Dependencies and project metadata
-├── AI_USE_STATEMENT.md        # AI assistance disclosure
+│   ├── test_model.py          # Network, encoding, move indexing tests (8 tests)
+│   ├── test_mcts.py           # MCTS search and move selection tests (5 tests)
+│   ├── test_training.py       # Replay buffer tests (4 tests)
+│   └── test_api.py            # API endpoint tests (5 tests)
+├── exported_models/            # Versioned model snapshots (committed to git)
+├── Dockerfile                  # Production container for the API
+├── docker-compose.yml          # Docker Compose for local deployment
+├── pyproject.toml              # Dependencies and project metadata
+├── AI_USE_STATEMENT.md         # AI assistance disclosure
 └── README.md
 ```
 
@@ -81,6 +89,9 @@ source .venv/bin/activate
 
 # Install dependencies
 pip install -e ".[dev]"
+
+# For pre-training on .pgn.zst files (Lichess databases)
+pip install zstandard
 ```
 
 ### PyTorch with CUDA (recommended)
@@ -115,17 +126,50 @@ export STOCKFISH_PATH=/path/to/stockfish
 | Blocks | 6 residual blocks |
 | Channels | 128 per layer |
 | Parameters | ~2,400,000 |
-| Input | 18 planes × 8×8 (12 piece + 4 castling + 1 en passant + 1 side-to-move) |
+| Input | 102 planes × 8×8 (see Board Encoding below) |
 | Policy head | 4672-dim output (AlphaZero move encoding: 8×8×73) |
 | Value head | Single scalar (-1 to +1) |
 | ONNX size | ~3–9 MB |
+
+### Board Encoding (102 Input Planes)
+
+The network sees 8 timesteps of board history, giving it awareness of piece trajectories, repetitions, and tempo:
+
+| Planes | Content |
+|--------|---------|
+| 0–11 | Current position: 6 piece types × 2 colors |
+| 12–23 | Position 1 move ago |
+| 24–35 | Position 2 moves ago |
+| ... | ... |
+| 84–95 | Position 7 moves ago |
+| 96 | White kingside castling rights |
+| 97 | White queenside castling rights |
+| 98 | Black kingside castling rights |
+| 99 | Black queenside castling rights |
+| 100 | En passant square |
+| 101 | Side to move (all 1s = white, all 0s = black) |
+
+The board is always flipped so the current player sees from their own perspective (row 0 = their back rank).
 
 ### MCTS
 
 - **PUCT selection** with cpuct=2.0
 - **Dirichlet noise** (α=0.3, ε=0.25) at root for exploration
-- **Temperature scheduling** — τ=1.0 for first 30 moves, then τ=0.1
+- **Temperature scheduling** — τ=1.0 for the first 60 moves, then τ=0.3
+- **Batched GPU evaluation** — parallel self-play games pool positions into GPU batches (batch size 16) for efficient inference
 - Configurable simulation count per difficulty level
+
+### Training Stabilization
+
+Several parameters prevent common training pathologies:
+
+| Parameter | Value | Purpose |
+|-----------|-------|---------|
+| `value_loss_weight` | 4.0 | Upweights value head to prevent collapse |
+| `draw_penalty` | 0.1 | Draws score as -0.1 for both sides, discouraging draw-seeking |
+| `temperature_moves` | 60 | Keeps exploration high for more of each game |
+| `temperature_final` | 0.3 | Maintains some exploration even in endgames |
+| `resign_threshold` | -0.80 | Resigns lost positions to avoid wasting data |
 
 ### Opening Book
 
@@ -143,14 +187,77 @@ Each self-play game starts from a randomly chosen opening, preventing the model 
 
 ---
 
+## Training Pipeline
+
+The training process has two stages:
+
+### Stage 1: Supervised Pre-Training
+
+Bootstrap the neural network with chess knowledge from strong human games. This is dramatically more effective than training from random weights.
+
+1. Download a Lichess database from https://database.lichess.org/ (`.pgn.zst` format)
+2. Run the pre-training script:
+
+```bash
+pip install zstandard
+python scripts/pretrain.py --pgn lichess_db_standard_rated_2024-01.pgn.zst --min-elo 1800
+```
+
+This streams positions from the PGN file, filters by ELO, and trains the network to predict both human moves (policy) and game outcomes (value). It saves a `gen_0000.pt` checkpoint compatible with the self-play trainer.
+
+### Stage 2: Self-Play Fine-Tuning
+
+Once pre-trained, the model improves further through self-play:
+
+```bash
+python scripts/train.py --checkpoint-dir checkpoints_pretrained --iterations 50 --games-per-iter 50 --sims 200
+```
+
+---
+
 ## Scripts
 
-### `scripts/train.py` — Train the Model
+### `scripts/pretrain.py` — Supervised Pre-Training
+
+Pre-trains the neural network on human games from a Lichess PGN database. Streams positions directly from compressed `.pgn.zst` files without loading the entire dataset into memory.
+
+```bash
+python scripts/pretrain.py --pgn lichess_db_standard_rated_2024-01.pgn.zst --min-elo 1800
+```
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `--pgn` | (required) | Path to PGN file (`.pgn` or `.pgn.zst`) |
+| `--min-elo` | 1800 | Minimum ELO for both players (lower-rated games are skipped) |
+| `--batch-size` | 512 | Training batch size |
+| `--lr` | 0.001 | Peak learning rate (Adam optimizer) |
+| `--target-positions` | 5000000 | Target positions for cosine LR schedule |
+| `--max-games` | all | Max number of games to process |
+| `--skip-draws` | — | Skip drawn games |
+| `--value-weight` | 4.0 | Weight for value loss component |
+| `--num-blocks` | 6 | Residual blocks in network |
+| `--channels` | 128 | Channels per layer |
+| `--checkpoint-dir` | checkpoints_pretrained | Where to save checkpoints |
+| `--resume` | — | Path to pretrain checkpoint to resume from |
+| `--save-every` | 200 | Save checkpoint every N batches |
+| `--no-amp` | — | Disable mixed precision training |
+
+**Features:**
+- Adam optimizer with cosine LR schedule and linear warmup (500 steps)
+- Gradient clipping (max norm 1.0) for stability
+- Mixed precision (AMP) for fast GPU training
+- Resume support — pick up where you left off with `--resume`
+- Graceful Ctrl+C — saves checkpoint before exiting
+- Saves `gen_0000.pt` compatible with the self-play trainer
+
+---
+
+### `scripts/train.py` — Self-Play Training
 
 Runs the full self-play training loop: generate games → train network → save checkpoint → repeat.
 
 ```bash
-python scripts/train.py --iterations 30 --games-per-iter 30 --sims 50 --training-steps 500 --parallel-games 8 --watch
+python scripts/train.py --iterations 50 --games-per-iter 50 --sims 200 --training-steps 500 --watch
 ```
 
 | Parameter | Default | Description |
@@ -162,7 +269,7 @@ python scripts/train.py --iterations 30 --games-per-iter 30 --sims 50 --training
 | `--parallel-games` | auto | Concurrent self-play threads (auto-detects CPU cores on GPU, 1 on CPU) |
 | `--batch-size` | 256 | Training batch size |
 | `--lr` | 0.01 | Learning rate (cosine annealing with warmup) |
-| `--buffer-size` | 200000 | Replay buffer capacity (positions) |
+| `--buffer-size` | 100000 | Replay buffer capacity (positions) |
 | `--benchmark-every` | 10 | Run Stockfish benchmark every N generations (0 to disable) |
 | `--benchmark-games` | 50 | Games per benchmark run |
 | `--no-amp` | — | Disable mixed precision training |
@@ -172,7 +279,8 @@ python scripts/train.py --iterations 30 --games-per-iter 30 --sims 50 --training
 | `--analytics-dir` | analytics_output | Directory for plots and history |
 
 **Features:**
-- Auto-resumes from the latest checkpoint
+- Auto-resumes from the latest checkpoint (handles architecture mismatches gracefully)
+- Batched GPU evaluation across parallel self-play games
 - Graceful shutdown: first Ctrl+C finishes current games, second force-quits
 - Generates loss curve plots and dashboard after each generation
 - Saves rich training history (per-generation losses, game stats, timings)
@@ -205,7 +313,7 @@ Results are saved to `analytics_output/benchmark_results.json` with per-game rec
 Exports the model to ONNX and creates a full backup of the current training state.
 
 ```bash
-python scripts/export.py --name "v1_opening_book"
+python scripts/export.py --name "v1_pretrained"
 ```
 
 | Parameter | Default | Description |
@@ -220,7 +328,7 @@ Creates a timestamped folder in `exported_models/`:
 
 ```
 exported_models/
-  gen0030_v1_opening_book_20260207_150000/
+  gen0030_v1_pretrained_20260207_150000/
     chess_model.onnx        # ONNX model ready for deployment
     export_info.json        # Metadata (generation, losses, benchmark results)
     checkpoints/            # All .pt checkpoint files + replay buffer
@@ -255,6 +363,16 @@ docker run -p 8000:8000 chess-api
 
 ---
 
+### `scripts/analyze.py` — Deep Training Analytics
+
+Reads `analytics_output/training_history.json` and prints detailed per-generation diagnostics: policy/value losses, win/loss/draw rates, decisive game percentages, game lengths, and buffer utilization.
+
+```bash
+python scripts/analyze.py
+```
+
+---
+
 ### `scripts/watch.py` — Live Game Viewer
 
 Opens an ASCII chess board display showing self-play games in real-time during training.
@@ -285,6 +403,27 @@ No parameters — reads directly from `analytics_output/training_history.json`. 
 - Per-generation policy/value loss
 - Self-play results (W/L/D) and average game length
 - Time per generation and ETA for completion
+
+---
+
+## Playground
+
+A browser-based chess UI for playing against the model. Uses inline SVG pieces (no external image dependencies), dark theme, and auto-detects the API URL.
+
+To use the playground:
+
+1. Start the API server: `python scripts/serve.py`
+2. Open in your browser: http://localhost:8000/playground/
+
+Features:
+- Play as white or black
+- Four difficulty levels (easy / medium / hard / max)
+- Real-time evaluation bar showing the model's assessment
+- Move history panel
+- Undo support
+- New game button
+
+The playground is served directly by FastAPI's StaticFiles middleware — no separate web server needed.
 
 ---
 
@@ -436,26 +575,35 @@ The API is stateless and lightweight — a single instance handles multiple conc
 # 1. Install
 pip install -e ".[dev]"
 pip install torch --index-url https://download.pytorch.org/whl/cu124  # GPU
+pip install zstandard  # for .pgn.zst support
 
-# 2. Train (moderate run, ~3.5 hours on RTX 3080)
-python scripts/train.py --iterations 30 --games-per-iter 30 --sims 50 --training-steps 500 --parallel-games 8 --watch
+# 2. Download a Lichess database for pre-training
+#    Browse https://database.lichess.org/ and pick a monthly database
+#    Example (January 2024, ~25 GB compressed):
+#    wget https://database.lichess.org/standard/lichess_db_standard_rated_2024-01.pgn.zst
 
-# 3. Check progress
+# 3. Pre-train on human games
+python scripts/pretrain.py --pgn lichess_db_standard_rated_2024-01.pgn.zst --min-elo 1800
+
+# 4. Fine-tune with self-play
+python scripts/train.py --checkpoint-dir checkpoints_pretrained --iterations 50 --games-per-iter 50 --sims 200 --watch
+
+# 5. Check progress
 python scripts/status.py
 
-# 4. Benchmark against Stockfish
+# 6. Benchmark against Stockfish
 $env:STOCKFISH_PATH = "stockfish\stockfish-windows-x86-64-avx2.exe"
 python scripts/benchmark.py --games 20 --depths 1 3 5 --sims 200
 
-# 5. Export model + backup
-python scripts/export.py --name "v1_trained"
+# 7. Export model + backup
+python scripts/export.py --name "v1_pretrained" --checkpoint-dir checkpoints_pretrained
 
-# 6. Start API server
+# 8. Start API server
 python scripts/serve.py --model exported_models/<your_export>/chess_model.onnx
 
-# 7. Test it
-curl -X POST http://localhost:8000/api/move -H "Content-Type: application/json" -d '{"fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1", "difficulty": "medium"}'
+# 9. Play against it in the browser
+#    Open http://localhost:8000/playground/
 
-# 8. Run tests
+# 10. Run tests
 pytest tests/ -v
 ```

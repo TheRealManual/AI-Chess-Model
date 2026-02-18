@@ -111,7 +111,12 @@ class Trainer:
                 return False
             raise
 
-        self.optimizer.load_state_dict(ckpt['optimizer_state'])
+        # Load optimizer state if available (may be empty for pre-trained checkpoints)
+        opt_state = ckpt.get('optimizer_state', {})
+        if opt_state and 'param_groups' in opt_state:
+            self.optimizer.load_state_dict(opt_state)
+        else:
+            print(f"  No optimizer state found — using fresh optimizer (normal for pre-trained models)")
         self.generation = ckpt['generation']
         self.total_training_steps = ckpt['total_training_steps']
         self.history = ckpt['history']
