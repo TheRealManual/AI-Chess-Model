@@ -103,7 +103,7 @@ pip install torch --index-url https://download.pytorch.org/whl/cu124
 
 ### Stockfish (for benchmarking)
 
-Download Stockfish from https://stockfishchess.org/download/ and set the path:
+Stockfish is **not included** in this repo (it's a ~30 MB binary). Download it yourself from https://stockfishchess.org/download/, place it in a `stockfish/` folder at the project root, and set the path:
 
 ```bash
 # Windows PowerShell:
