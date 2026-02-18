@@ -12,7 +12,7 @@ venv/
 # Training artifacts (working dirs — not committed)
 checkpoints/
 checkpoints_pretrained/
-data/
+/data/
 analytics_output/
 
 # Large binary files

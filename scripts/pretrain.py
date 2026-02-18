@@ -1,16 +1,8 @@
-"""Supervised pre-training on human chess games from a Lichess PGN database.
-
-This bootstraps the neural network with chess knowledge from strong human games
-before self-play fine-tuning. Dramatically improves early model strength compared
-to training from random weights.
+"""Supervised pre-training on Lichess PGN games.
 
 Usage:
-    1. Download a Lichess database from https://database.lichess.org/
-       (e.g. lichess_db_standard_rated_2024-01.pgn.zst)
-    2. Run this script:
-       python scripts/pretrain.py --pgn path/to/games.pgn.zst
-    3. Then continue with self-play:
-       python scripts/train.py --checkpoint-dir checkpoints_pretrained
+    python scripts/pretrain.py --pgn path/to/games.pgn.zst
+    python scripts/train.py --checkpoint-dir checkpoints_pretrained
 """
 
 import sys

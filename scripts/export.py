@@ -27,11 +27,7 @@ def find_latest_checkpoint(checkpoint_dir):
 
 
 def create_export_folder(name, generation):
-    """Create a uniquely named folder inside exported_models/.
-
-    Naming scheme: gen{N}_{name}_{timestamp}
-    e.g.  gen16_opening_book_20260207_143022
-    """
+    """Create a uniquely named folder inside exported_models/."""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     safe_name = name.replace(' ', '_').replace('/', '_')
     folder_name = f"gen{generation:04d}_{safe_name}_{timestamp}"
@@ -40,28 +36,9 @@ def create_export_folder(name, generation):
     return folder_path
 
 
-def copy_directory(src, dst_parent, dir_name):
-    """Copy a directory into dst_parent/dir_name. Skips if src doesn't exist."""
-    if not os.path.isdir(src):
-        print(f"  Skipping {src} (not found)")
-        return
-    dst = os.path.join(dst_parent, dir_name)
-    shutil.copytree(src, dst)
-    count = sum(len(files) for _, _, files in os.walk(dst))
-    print(f"  Copied {src}/ -> {dir_name}/ ({count} files)")
-
-
-def copy_file(src, dst_dir, filename=None):
-    """Copy a single file into dst_dir. Skips if src doesn't exist."""
-    if not os.path.isfile(src):
-        return
-    fname = filename or os.path.basename(src)
-    shutil.copy2(src, os.path.join(dst_dir, fname))
-
-
 def main():
     parser = argparse.ArgumentParser(
-        description="Export model to ONNX and create a full backup snapshot"
+        description="Export model to ONNX and create a backup snapshot"
     )
     parser.add_argument("--checkpoint", type=str, default=None,
                         help="Path to checkpoint. Uses latest if not provided.")
@@ -100,15 +77,18 @@ def main():
 
     # ── copy the exported checkpoint ────────────────────────────────
     print("Saving exported checkpoint...")
-    copy_file(ckpt_path, export_folder)
-    print(f"  Copied {os.path.basename(ckpt_path)} -> {os.path.basename(export_folder)}/")
+    shutil.copy2(ckpt_path, export_folder)
+    print(f"  Copied {os.path.basename(ckpt_path)}")
 
     # ── copy analytics ───────────────────────────────────────────────
     print("Backing up analytics...")
-    copy_directory(args.analytics_dir, export_folder, "analytics_output")
+    if os.path.isdir(args.analytics_dir):
+        shutil.copytree(args.analytics_dir, os.path.join(export_folder, "analytics_output"))
+        print(f"  Copied {args.analytics_dir}/")
 
     # ── copy training history from root if it exists ─────────────────
-    copy_file("training_history.json", export_folder)
+    if os.path.isfile("training_history.json"):
+        shutil.copy2("training_history.json", export_folder)
 
     # ── write export metadata ────────────────────────────────────────
     metadata = {

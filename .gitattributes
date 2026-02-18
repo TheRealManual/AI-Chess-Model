@@ -1,4 +1,3 @@
 # Binary files
 *.onnx binary
 *.png binary
-*.onnx !text !filter !merge !diff

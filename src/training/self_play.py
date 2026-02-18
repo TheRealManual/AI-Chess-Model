@@ -1,27 +1,15 @@
-import os
-import time
-import json
 import queue
 import threading
 import numpy as np
 import chess
 import torch
-import torch.multiprocessing as mp
 from tqdm import tqdm
 
-from src.model.network import ChessNet, encode_board, POLICY_SIZE
+from src.model.network import encode_board, POLICY_SIZE
 from src.model.mcts import MCTS
 from src.training.config import TrainingConfig
 from src.data.openings import get_random_opening, apply_opening
 
-
-# shared state for live game broadcasting
-_live_games_path = None
-_live_lock = threading.Lock()
-_active_games = {}
-_completed_count = 0
-
-# global stop flag for clean shutdown
 _stop_requested = False
 
 
@@ -33,39 +21,6 @@ def request_stop():
 def reset_stop():
     global _stop_requested
     _stop_requested = False
-
-
-def set_live_broadcast_path(path):
-    global _live_games_path
-    _live_games_path = path
-
-
-def _broadcast_game_state(game_id, board, move_num, result=None):
-    """Write current game state to the live broadcast file."""
-    if _live_games_path is None:
-        return
-    global _completed_count
-    with _live_lock:
-        if result is not None:
-            _active_games.pop(str(game_id), None)
-            _completed_count += 1
-        else:
-            _active_games[str(game_id)] = {
-                'fen': board.fen(),
-                'move_num': move_num,
-                'last_move': board.peek().uci() if board.move_stack else None,
-                'turn': 'white' if board.turn == chess.WHITE else 'black',
-            }
-        snapshot = {
-            'timestamp': time.time(),
-            'active_games': dict(_active_games),
-            'completed': _completed_count,
-        }
-        try:
-            with open(_live_games_path, 'w') as f:
-                json.dump(snapshot, f)
-        except:
-            pass
 
 
 class GameRecord:
@@ -196,12 +151,10 @@ def play_single_game(model, device, config: TrainingConfig, game_id=0, batch_eva
             else:
                 record.set_result('1-0')
             board.push(move)
-            _broadcast_game_state(game_id, board, move_num, result=record.result)
             break
 
         board.push(move)
         move_num += 1
-        _broadcast_game_state(game_id, board, move_num)
 
         # safety cap at 512 moves
         if move_num >= 512:
@@ -211,7 +164,6 @@ def play_single_game(model, device, config: TrainingConfig, game_id=0, batch_eva
         result = board.result(claim_draw=True)
         record.set_result(result, draw_penalty=config.draw_penalty)
 
-    _broadcast_game_state(game_id, board, move_num, result=record.result)
     return record
 
 
@@ -287,10 +239,6 @@ def _game_worker(game_id, model, device, config, results_list, lock, pbar=None, 
 
 def run_self_play(model, device, config: TrainingConfig, num_games=None):
     """Run self-play games. Uses threading for parallel games on GPU."""
-    global _completed_count, _active_games
-    _completed_count = 0
-    _active_games = {}
-
     if num_games is None:
         num_games = config.games_per_iter
 

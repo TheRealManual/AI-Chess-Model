@@ -5,12 +5,10 @@ import chess
 import numpy as np
 
 # --- Board Encoding ---
-# 18 input planes: 12 piece types (6 per color), 4 castling, 1 en passant, 1 side to move
-# Board is always flipped so the current player sees from their own perspective.
 
-HISTORY_LENGTH = 8  # number of past board positions to include in the input
-NUM_PLANES = 12 * HISTORY_LENGTH + 6  # 12 piece planes per timestep + 6 meta planes = 102
-META_OFFSET = 12 * HISTORY_LENGTH  # index where meta planes begin
+HISTORY_LENGTH = 8
+NUM_PLANES = 12 * HISTORY_LENGTH + 6  # 12 piece planes per timestep + 6 meta planes
+META_OFFSET = 12 * HISTORY_LENGTH
 POLICY_SIZE = 4672  # 8x8 source squares * 73 move types
 
 PIECE_INDICES = {
@@ -18,14 +16,9 @@ PIECE_INDICES = {
     chess.ROOK: 3, chess.QUEEN: 4, chess.KING: 5,
 }
 
-# move encoding: 73 planes per source square
-# 0-55: queen-style moves (8 directions * 7 distances)
-# 56-63: knight moves (8 directions)
-# 64-72: underpromotions (3 directions * 3 piece types: N, B, R)
-
-# 8 directions for queen-style: N, NE, E, SE, S, SW, W, NW
+# Move encoding: 73 planes per source square
+# 0-55: queen-style (8 dirs * 7 dists), 56-63: knight, 64-72: underpromotions
 QUEEN_DIRS = [(-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)]
-# 8 knight move offsets
 KNIGHT_MOVES = [(-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1)]
 
 _move_to_idx = {}
@@ -103,13 +96,7 @@ def _encode_pieces(planes, offset, board, perspective, flip):
 
 
 def encode_board(board: chess.Board) -> np.ndarray:
-    """Encode a board position with move history into a (NUM_PLANES x 8 x 8) tensor.
-
-    Layout: 12 piece planes x HISTORY_LENGTH timesteps, then 6 meta planes.
-    Timestep 0 = current position, higher timesteps = older positions.
-    All timesteps are encoded from the current player's perspective.
-    Positions without enough history get zero-filled planes.
-    """
+    """Encode a board position with history into a (NUM_PLANES x 8 x 8) tensor."""
     planes = np.zeros((NUM_PLANES, 8, 8), dtype=np.float32)
     perspective = board.turn
     flip = perspective == chess.BLACK

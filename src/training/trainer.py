@@ -11,7 +11,7 @@ from tqdm import tqdm
 from src.model.network import ChessNet
 from src.training.config import TrainingConfig
 from src.training.replay_buffer import ReplayBuffer
-from src.training.self_play import run_self_play, set_live_broadcast_path
+from src.training.self_play import run_self_play
 
 
 class Trainer:
@@ -52,10 +52,6 @@ class Trainer:
 
         os.makedirs(config.checkpoint_dir, exist_ok=True)
         os.makedirs(config.analytics_dir, exist_ok=True)
-
-        # enable live game broadcasting
-        live_path = os.path.join(config.analytics_dir, 'live_games.json')
-        set_live_broadcast_path(live_path)
 
     def save_checkpoint(self):
         path = os.path.join(self.config.checkpoint_dir, f'gen_{self.generation:04d}.pt')
@@ -228,33 +224,10 @@ class Trainer:
         return self.config.lr
 
     def _config_snapshot(self):
-        c = self.config
-        return {
-            'num_blocks': c.num_blocks,
-            'channels': c.channels,
-            'history_length': c.history_length,
-            'num_sims': c.num_sims,
-            'cpuct': c.cpuct,
-            'dirichlet_alpha': c.dirichlet_alpha,
-            'dirichlet_weight': c.dirichlet_weight,
-            'games_per_iter': c.games_per_iter,
-            'parallel_games': c.parallel_games,
-            'temperature_moves': c.temperature_moves,
-            'temperature_final': c.temperature_final,
-            'resign_threshold': c.resign_threshold,
-            'draw_penalty': c.draw_penalty,
-            'training_steps_per_iter': c.training_steps_per_iter,
-            'batch_size': c.batch_size,
-            'lr': c.lr,
-            'momentum': c.momentum,
-            'weight_decay': c.weight_decay,
-            'value_loss_weight': c.value_loss_weight,
-            'lr_schedule': c.lr_schedule,
-            'warmup_steps': c.warmup_steps,
-            'use_amp': c.use_amp,
-            'buffer_capacity': c.buffer_capacity,
-            'device': c.device,
-        }
+        from dataclasses import asdict
+        d = asdict(self.config)
+        d['device'] = self.config.device
+        return d
 
     def run_iteration(self, iteration):
         """One full cycle: self-play -> add to buffer -> train."""

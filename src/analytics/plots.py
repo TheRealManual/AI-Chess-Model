@@ -14,14 +14,6 @@ def load_history(analytics_dir):
         return json.load(f)
 
 
-def load_benchmarks(analytics_dir):
-    path = os.path.join(analytics_dir, 'benchmark_results.json')
-    if not os.path.exists(path):
-        return None
-    with open(path, 'r') as f:
-        return json.load(f)
-
-
 def plot_training_losses(history, out_dir):
     """Plot policy loss, value loss, and total loss over generations."""
     gens = history['generations']
@@ -38,19 +30,7 @@ def plot_training_losses(history, out_dir):
     ax.legend()
     ax.grid(True, alpha=0.3)
 
-    description = (
-        "Policy Loss: cross-entropy between the model's move predictions and MCTS visit distributions.\n"
-        "Lower = the model better predicts what MCTS would choose. Look for a steady downward trend.\n"
-        "Value Loss: MSE between the model's board evaluation and actual game outcomes (+1/0/-1).\n"
-        "Low but nonzero is ideal; near-zero means the model may be predicting all draws.\n"
-        "If value loss flatlines at ~0, the model isn't learning to distinguish wins from losses."
-    )
-    fig.text(0.5, -0.02, description, ha='center', va='top', fontsize=8,
-             style='italic', wrap=True,
-             bbox=dict(boxstyle='round,pad=0.4', facecolor='#f0f0f0', alpha=0.8))
-
     plt.tight_layout()
-    fig.subplots_adjust(bottom=0.22)
     plt.savefig(os.path.join(out_dir, 'loss_curves.png'), dpi=150, bbox_inches='tight')
     plt.close()
 
@@ -94,19 +74,7 @@ def plot_self_play_stats(history, out_dir):
     ax2.set_title('Average Game Length')
     ax2.grid(True, alpha=0.3)
 
-    description = (
-        "Game Outcomes: shows what proportion of self-play games end in white wins, draws, or black wins.\n"
-        "A healthy model should have 30-60% decisive games (colored regions). If draws (grey) dominate >80%,\n"
-        "the model is stuck in a 'draw death spiral' — it predicts everything as a draw and stops improving.\n"
-        "Game Length: average number of moves per game. Very short games (<30) may indicate resignation.\n"
-        "Very long games (>150) suggest the model can't find checkmates. 60-120 moves is typical for learning."
-    )
-    fig.text(0.5, -0.02, description, ha='center', va='top', fontsize=8,
-             style='italic', wrap=True,
-             bbox=dict(boxstyle='round,pad=0.4', facecolor='#f0f0f0', alpha=0.8))
-
     plt.tight_layout()
-    fig.subplots_adjust(bottom=0.20)
     plt.savefig(os.path.join(out_dir, 'self_play_stats.png'), dpi=150, bbox_inches='tight')
     plt.close()
 
@@ -133,19 +101,7 @@ def plot_policy_entropy(history, out_dir):
     ax.set_title('Policy Entropy')
     ax.grid(True, alpha=0.3)
 
-    description = (
-        "Policy Entropy: measures how spread out the model's move probability distribution is.\n"
-        "High entropy = the model considers many moves roughly equally (more exploration).\n"
-        "Low entropy = the model is very confident in a few moves (more exploitation).\n"
-        "A healthy trend starts high and gradually decreases as the model learns stronger preferences.\n"
-        "If entropy drops to near-zero too fast, the model may be overfitting to a narrow set of moves."
-    )
-    fig.text(0.5, -0.02, description, ha='center', va='top', fontsize=8,
-             style='italic', wrap=True,
-             bbox=dict(boxstyle='round,pad=0.4', facecolor='#f0f0f0', alpha=0.8))
-
     plt.tight_layout()
-    fig.subplots_adjust(bottom=0.22)
     plt.savefig(os.path.join(out_dir, 'policy_entropy.png'), dpi=150, bbox_inches='tight')
     plt.close()
 

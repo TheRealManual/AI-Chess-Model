@@ -3,18 +3,22 @@ from typing import Optional
 import chess
 
 
+def _check_fen(v):
+    try:
+        chess.Board(v)
+    except ValueError:
+        raise ValueError(f"Invalid FEN: {v}")
+    return v
+
+
 class MoveRequest(BaseModel):
     fen: str
-    difficulty: str = "medium"  # easy, medium, hard, max
+    difficulty: str = "medium"
 
     @field_validator('fen')
     @classmethod
     def validate_fen(cls, v):
-        try:
-            board = chess.Board(v)
-        except ValueError:
-            raise ValueError(f"Invalid FEN: {v}")
-        return v
+        return _check_fen(v)
 
     @field_validator('difficulty')
     @classmethod
@@ -37,11 +41,7 @@ class EvalRequest(BaseModel):
     @field_validator('fen')
     @classmethod
     def validate_fen(cls, v):
-        try:
-            chess.Board(v)
-        except ValueError:
-            raise ValueError(f"Invalid FEN: {v}")
-        return v
+        return _check_fen(v)
 
 
 class MoveScore(BaseModel):
@@ -62,11 +62,7 @@ class AnalyzeRequest(BaseModel):
     @field_validator('fen')
     @classmethod
     def validate_fen(cls, v):
-        try:
-            chess.Board(v)
-        except ValueError:
-            raise ValueError(f"Invalid FEN: {v}")
-        return v
+        return _check_fen(v)
 
 
 class AnalyzeResponse(BaseModel):

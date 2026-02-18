@@ -1,12 +1,4 @@
-"""Package an exported model into a standalone shareable folder.
-
-Creates a self-contained directory that anyone can run with Python to
-play against the chess AI in their browser. No GPU or training code needed.
-
-Usage:
-    python scripts/package.py exported_models/gen0048_v3_pretrained_gen48_20260217_223312
-    python scripts/package.py exported_models/gen0048_... --output ~/Desktop/chess-ai
-"""
+"""Package an exported model into a standalone shareable folder."""
 
 import sys
 import os

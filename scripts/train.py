@@ -2,7 +2,6 @@ import sys
 import os
 import signal
 import argparse
-import subprocess
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -26,20 +25,6 @@ def handle_interrupt(sig, frame):
     request_stop()
 
 
-def launch_watcher(analytics_dir, python_exe):
-    script = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'watch.py')
-    live_file = os.path.join(analytics_dir, 'live_games.json')
-
-    if os.name == 'nt':
-        cmd = f'start "Chess Live Viewer" "{python_exe}" "{script}" --file "{live_file}"'
-        subprocess.Popen(cmd, shell=True)
-    else:
-        subprocess.Popen(
-            ['x-terminal-emulator', '-e', python_exe, script, '--file', live_file],
-            start_new_session=True,
-        )
-
-
 def main():
     parser = argparse.ArgumentParser(description="Train the chess model via self-play")
     parser.add_argument("--iterations", type=int, default=100)
@@ -57,7 +42,6 @@ def main():
     parser.add_argument("--checkpoint-dir", type=str, default="checkpoints")
     parser.add_argument("--analytics-dir", type=str, default="analytics_output")
     parser.add_argument("--no-opening-book", action="store_true", help="Disable random opening book")
-    parser.add_argument("--watch", action="store_true", help="Open a live game viewer in a new terminal")
     args = parser.parse_args()
 
     config = TrainingConfig(
@@ -79,10 +63,6 @@ def main():
     config.print_summary()
 
     signal.signal(signal.SIGINT, handle_interrupt)
-
-    if args.watch:
-        launch_watcher(config.analytics_dir, sys.executable)
-        print("Launched live game viewer in a new terminal.\n")
 
     trainer = Trainer(config)
     trainer.load_latest_checkpoint()
