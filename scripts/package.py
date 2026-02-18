@@ -13,6 +13,7 @@ import os
 import shutil
 import json
 import argparse
+import subprocess
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -106,6 +107,10 @@ def main():
     _write_requirements(out_dir)
     print("  Created requirements.txt")
 
+    # --- bundle dependencies into lib/ ---
+    _install_deps(out_dir)
+    print("  Bundled dependencies into lib/")
+
     # --- write README ---
     gen = export_info.get("generation", "?")
     _write_readme(out_dir, package_name, gen, export_info)
@@ -124,7 +129,7 @@ def main():
     print(f"Package ready: {out_dir}")
     print(f"Files: {file_count}  |  Size: {size_mb:.1f} MB")
     print(f"\nTo share: zip the folder and send it.")
-    print(f"To run:   cd {os.path.basename(out_dir)} && pip install -r requirements.txt && python run.py")
+    print(f"To run:   cd {os.path.basename(out_dir)} && python run.py")
     print(f"{'='*60}")
 
 
@@ -188,6 +193,29 @@ def _write_index_html(out_dir):
         f.write(content)
 
 
+def _install_deps(out_dir):
+    """Install all runtime dependencies into a lib/ folder inside the package."""
+    lib_dir = os.path.join(out_dir, "lib")
+    req_file = os.path.join(out_dir, "requirements.txt")
+    print("  Installing dependencies (this may take a minute)...")
+    result = subprocess.run(
+        [sys.executable, "-m", "pip", "install",
+         "--target", lib_dir,
+         "-r", req_file,
+         "--quiet", "--disable-pip-version-check"],
+        capture_output=True, text=True
+    )
+    if result.returncode != 0:
+        print(f"  WARNING: pip install failed:\n{result.stderr}")
+        print("  The package will still work if the user runs: pip install -r requirements.txt")
+    else:
+        # clean up __pycache__ and .dist-info to save space
+        for root, dirs, files in os.walk(lib_dir):
+            for d in dirs:
+                if d == "__pycache__" or d.endswith(".dist-info"):
+                    shutil.rmtree(os.path.join(root, d))
+
+
 def _write_run_script(out_dir):
     content = '''"""Run the Chess AI server and open the browser to play."""
 
@@ -211,7 +239,10 @@ def main():
 
     os.environ["MODEL_PATH"] = model_path
 
-    # add the package root to the Python path so src/ imports work
+    # add bundled dependencies and package root to Python path
+    lib_dir = os.path.join(script_dir, "lib")
+    if os.path.isdir(lib_dir):
+        sys.path.insert(0, lib_dir)
     sys.path.insert(0, script_dir)
 
     print(f"Starting Chess AI server on http://{host}:{port}")
@@ -276,11 +307,11 @@ Value Loss:  {value_loss}
 How to Run
 ----------
 1. Install Python 3.10+ if you don't have it
-2. Install dependencies:
-       pip install -r requirements.txt
-3. Run the server:
+2. Run the server:
        python run.py
-4. Your browser will open automatically to play!
+3. Your browser will open automatically to play!
+
+All dependencies are bundled in the lib/ folder — no pip install needed.
 
 The AI server runs on http://127.0.0.1:8000.
 Press Ctrl+C to stop the server.
