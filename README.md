@@ -11,7 +11,7 @@ A chess engine built with a residual neural network and Monte Carlo Tree Search 
 - **MCTS + neural network** — combines deep search with learned position evaluation
 - **ONNX inference** — fast, lightweight inference without PyTorch dependency
 - **REST API** — FastAPI server with configurable difficulty levels for concurrent games
-- **Interactive playground** — browser-based chess UI to play against the model
+- **Shareable packages** — bundle any exported model into a standalone folder anyone can run and play
 - **Stockfish benchmarking** — automated ELO estimation against Stockfish at multiple depths
 - **Export snapshots** — full backups of models, checkpoints, and analytics for version tracking
 
@@ -38,7 +38,7 @@ AI-Chess-Model/
 │   ├── analytics/
 │   │   └── plots.py           # Loss curves, self-play stats chart generation
 │   ├── api/
-│   │   ├── main.py            # FastAPI app with CORS, playground serving
+│   │   ├── main.py            # FastAPI app with CORS
 │   │   ├── engine.py          # ONNX Runtime inference + MCTS wrapper
 │   │   └── schemas.py         # Pydantic request/response models
 │   └── export.py              # PyTorch → ONNX conversion with BatchNorm folding
@@ -48,11 +48,10 @@ AI-Chess-Model/
 │   ├── benchmark.py           # Standalone Stockfish benchmarking
 │   ├── export.py              # Export model + create backup snapshot
 │   ├── serve.py               # Start the API server
+│   ├── package.py             # Bundle exported model into shareable package
 │   ├── analyze.py             # Deep training analytics and diagnostics
 │   ├── watch.py               # Live ASCII board viewer for self-play
 │   └── status.py              # Check training progress from terminal
-├── playground/
-│   └── index.html             # Browser-based chess UI (served at /playground/)
 ├── tests/
 │   ├── test_model.py          # Network, encoding, move indexing tests (8 tests)
 │   ├── test_mcts.py           # MCTS search and move selection tests (5 tests)
@@ -341,7 +340,7 @@ The `exported_models/` directory is tracked by git, so each export is a permanen
 
 ### `scripts/serve.py` — Start the API Server
 
-Launches the FastAPI inference server using an exported ONNX model.
+Launches the FastAPI inference server using an exported ONNX model (API only, no UI).
 
 ```bash
 python scripts/serve.py --model chess_model.onnx --port 8000
@@ -353,6 +352,34 @@ python scripts/serve.py --model chess_model.onnx --port 8000
 | `--host` | 0.0.0.0 | Bind address |
 | `--port` | 8000 | Port number |
 | `--workers` | 1 | Number of Uvicorn workers |
+
+---
+
+### `scripts/package.py` — Bundle a Shareable Package
+
+Creates a standalone folder with everything needed to play against the model: ONNX model, inference server, browser UI, and a one-command run script.
+
+```bash
+python scripts/package.py exported_models/gen0048_v3_pretrained_gen48
+```
+
+The output lands in `packages/<export-name>_<timestamp>/` and contains:
+
+| File | Purpose |
+|------|---------|
+| `run.py` | Starts the server and opens the browser |
+| `chess_model.onnx` | The exported model |
+| `index.html` | Browser-based chess UI |
+| `src/` | Inference code (API + MCTS + encoding) |
+| `requirements.txt` | Python dependencies |
+| `README.txt` | Quick-start instructions |
+
+**Sharing:** zip the package folder and send it to anyone. They just need Python 3.10+ installed:
+
+```bash
+pip install -r requirements.txt
+python run.py
+```
 
 Or with Docker:
 
@@ -406,16 +433,16 @@ No parameters — reads directly from `analytics_output/training_history.json`. 
 
 ---
 
-## Playground
+## Play Against the AI
 
-A browser-based chess UI for playing against the model. Uses inline SVG pieces (no external image dependencies), dark theme, and auto-detects the API URL.
+Bundle any exported model into a shareable package and play it in your browser:
 
-To use the playground:
+```bash
+python scripts/package.py exported_models/gen0048_v3_pretrained_gen48
+python packages/<generated-folder>/run.py
+```
 
-1. Start the API server: `python scripts/serve.py`
-2. Open in your browser: http://localhost:8000/playground/
-
-Features:
+This opens a browser-based chess UI with:
 - Play as white or black
 - Four difficulty levels (easy / medium / hard / max)
 - Real-time evaluation bar showing the model's assessment
@@ -423,7 +450,7 @@ Features:
 - Undo support
 - New game button
 
-The playground is served directly by FastAPI's StaticFiles middleware — no separate web server needed.
+The package is fully standalone — zip it and share with anyone who has Python 3.10+.
 
 ---
 
@@ -596,12 +623,10 @@ python scripts/benchmark.py --games 20 --depths 1 3 5 --sims 200
 # 7. Export model + backup
 python scripts/export.py --name "v1_pretrained" --checkpoint-dir checkpoints_pretrained
 
-# 8. Start API server
-python scripts/serve.py --model exported_models/<your_export>/chess_model.onnx
+# 8. Package and play against the model
+python scripts/package.py exported_models/<your_export>
+python packages/<generated-folder>/run.py
 
-# 9. Play against it in the browser
-#    Open http://localhost:8000/playground/
-
-# 10. Run tests
+# 9. Run tests
 pytest tests/ -v
 ```
