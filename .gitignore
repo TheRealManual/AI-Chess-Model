@@ -33,8 +33,6 @@ stockfish/
 !exported_models/**/*.png
 !exported_models/**/*.html
 !exported_models/**/*.pt
-# Ignore buffer data inside exported checkpoints
-exported_models/*/checkpoints/buffer/
 
 # IDE
 .vscode/

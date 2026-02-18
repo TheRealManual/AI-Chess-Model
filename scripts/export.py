@@ -98,9 +98,10 @@ def main():
     export_to_onnx(ckpt_path, onnx_path, verify=not args.no_verify)
     print()
 
-    # ── copy checkpoints ─────────────────────────────────────────────
-    print("Backing up checkpoints...")
-    copy_directory(args.checkpoint_dir, export_folder, "checkpoints")
+    # ── copy the exported checkpoint ────────────────────────────────
+    print("Saving exported checkpoint...")
+    copy_file(ckpt_path, export_folder)
+    print(f"  Copied {os.path.basename(ckpt_path)} -> {os.path.basename(export_folder)}/")
 
     # ── copy analytics ───────────────────────────────────────────────
     print("Backing up analytics...")
