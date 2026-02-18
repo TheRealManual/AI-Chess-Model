@@ -195,6 +195,7 @@ The training process has two stages:
 Bootstrap the neural network with chess knowledge from strong human games. This is dramatically more effective than training from random weights.
 
 1. Download a Lichess database from https://database.lichess.org/ (`.pgn.zst` format)
+   > **Note:** Lichess PGN files are **not included** in this repo — they are multi-GB compressed archives of rated games. Download the month/year you want directly from the Lichess database page and place the `.pgn.zst` file in the project root or a `data/` folder.
 2. Run the pre-training script:
 
 ```bash
