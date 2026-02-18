@@ -36,7 +36,7 @@ AI-Chess-Model/
 │   ├── benchmark/
 │   │   └── stockfish_bench.py # Play model vs Stockfish, estimate ELO
 │   ├── analytics/
-│   │   └── plots.py           # Loss curves, self-play stats, dashboard generation
+│   │   └── plots.py           # Loss curves, self-play stats chart generation
 │   ├── api/
 │   │   ├── main.py            # FastAPI app with CORS, playground serving
 │   │   ├── engine.py          # ONNX Runtime inference + MCTS wrapper
@@ -520,10 +520,8 @@ Training generates several outputs in `analytics_output/`:
 |------|----------|
 | `training_history.json` | Full training log — config snapshot, per-generation losses, self-play stats, timings |
 | `benchmark_results.json` | Stockfish benchmark results — per-game records, W/L/D, estimated ELO |
-| `loss_curves.png` | Policy and value loss over generations |
-| `policy_entropy.png` | Policy entropy over time |
-| `self_play_stats.png` | Game length and outcome distributions |
-| `dashboard.html` | Interactive Plotly dashboard |
+| `loss_curves.png` | Policy and value loss over generations (with interpretation guide) |
+| `self_play_stats.png` | Game outcome ratios and average game length (with interpretation guide) |
 | `live_games.json` | Real-time game state for the live viewer |
 
 ---

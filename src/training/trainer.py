@@ -195,6 +195,8 @@ class Trainer:
             probs = torch.softmax(policy_logits, dim=-1)
             log_probs = torch.log(probs + 1e-8)
             entropy = -(probs * log_probs).sum(dim=-1).mean().item()
+            if math.isnan(entropy) or math.isinf(entropy):
+                entropy = 0.0
 
         stats = {
             'policy_loss': avg_policy,
