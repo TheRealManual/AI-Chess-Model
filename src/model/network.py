@@ -1,9 +1,7 @@
 import chess
 import numpy as np
 
-# Lazy torch imports — only needed for training (ChessNet, ResBlock).
-# The inference-only API path (encode_board, move_to_index, MCTS) does
-# not require torch, which keeps the App Runner deployment lightweight.
+# lazy torch import so the serving code doesn't need torch installed
 torch = None
 nn = None
 F = None
@@ -213,10 +211,7 @@ def get_legal_move_mask(board: chess.Board) -> np.ndarray:
     return mask
 
 
-# --- Neural Network (requires torch — only used for training, not ONNX inference) ---
-
 def _define_nn_classes():
-    """Define ResBlock and ChessNet. Called lazily so torch is only needed for training."""
     _ensure_torch()
 
     class _ResBlock(nn.Module):
@@ -235,8 +230,6 @@ def _define_nn_classes():
             return out
 
     class _ChessNet(nn.Module):
-        """Small residual network for chess. Outputs policy logits and a scalar value."""
-
         def __init__(self, num_blocks=6, channels=128, input_planes=NUM_PLANES):
             super().__init__()
             self.input_conv = nn.Conv2d(input_planes, channels, 3, padding=1, bias=False)
@@ -276,19 +269,18 @@ def _define_nn_classes():
     return _ResBlock, _ChessNet
 
 
-# Public accessors — these lazily create the classes on first use.
 _ResBlock = None
 _ChessNet = None
 
 
-def ResBlock(channels):       # noqa: N802 — keep original name for backward compat
+def ResBlock(channels):
     global _ResBlock
     if _ResBlock is None:
         _ResBlock, _ = _define_nn_classes()
     return _ResBlock(channels)
 
 
-def ChessNet(*args, **kwargs):  # noqa: N802
+def ChessNet(*args, **kwargs):
     global _ChessNet
     if _ChessNet is None:
         _, _ChessNet = _define_nn_classes()

@@ -1,4 +1,3 @@
-# Requirements for App Runner deployment (inference only — no torch, no stockfish)
 python-chess>=1.9
 onnxruntime>=1.15
 fastapi>=0.100
