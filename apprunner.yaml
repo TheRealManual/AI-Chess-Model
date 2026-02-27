@@ -4,11 +4,13 @@ build:
   commands:
     build:
       - pip3 install --upgrade pip
-      - pip3 install -r requirements-serve.txt
+      - pip3 install -r requirements-serve.txt --target /app/deps
 run:
-  command: python scripts/serve.py --host 0.0.0.0 --port 8000 --model exported_models/gen0048_v3_pretrained_gen48_20260217_223312/chess_model.onnx
+  command: python3 scripts/serve.py --host 0.0.0.0 --port 8000 --model exported_models/gen0048_v3_pretrained_gen48_20260217_223312/chess_model.onnx
   network:
     port: 8000
   env:
+    - name: PYTHONPATH
+      value: "/app/deps"
     - name: MODEL_PATH
       value: "exported_models/gen0048_v3_pretrained_gen48_20260217_223312/chess_model.onnx"
