@@ -1,8 +1,23 @@
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
 import chess
 import numpy as np
+
+# Lazy torch imports — only needed for training (ChessNet, ResBlock).
+# The inference-only API path (encode_board, move_to_index, MCTS) does
+# not require torch, which keeps the App Runner deployment lightweight.
+torch = None
+nn = None
+F = None
+
+
+def _ensure_torch():
+    global torch, nn, F
+    if torch is None:
+        import torch as _torch
+        import torch.nn as _nn
+        import torch.nn.functional as _F
+        torch = _torch
+        nn = _nn
+        F = _F
 
 # --- Board Encoding ---
 
@@ -198,59 +213,83 @@ def get_legal_move_mask(board: chess.Board) -> np.ndarray:
     return mask
 
 
-# --- Neural Network ---
+# --- Neural Network (requires torch — only used for training, not ONNX inference) ---
 
-class ResBlock(nn.Module):
-    def __init__(self, channels):
-        super().__init__()
-        self.conv1 = nn.Conv2d(channels, channels, 3, padding=1, bias=False)
-        self.bn1 = nn.BatchNorm2d(channels)
-        self.conv2 = nn.Conv2d(channels, channels, 3, padding=1, bias=False)
-        self.bn2 = nn.BatchNorm2d(channels)
+def _define_nn_classes():
+    """Define ResBlock and ChessNet. Called lazily so torch is only needed for training."""
+    _ensure_torch()
 
-    def forward(self, x):
-        residual = x
-        out = F.relu(self.bn1(self.conv1(x)))
-        out = self.bn2(self.conv2(out))
-        out = F.relu(out + residual)
-        return out
+    class _ResBlock(nn.Module):
+        def __init__(self, channels):
+            super().__init__()
+            self.conv1 = nn.Conv2d(channels, channels, 3, padding=1, bias=False)
+            self.bn1 = nn.BatchNorm2d(channels)
+            self.conv2 = nn.Conv2d(channels, channels, 3, padding=1, bias=False)
+            self.bn2 = nn.BatchNorm2d(channels)
+
+        def forward(self, x):
+            residual = x
+            out = F.relu(self.bn1(self.conv1(x)))
+            out = self.bn2(self.conv2(out))
+            out = F.relu(out + residual)
+            return out
+
+    class _ChessNet(nn.Module):
+        """Small residual network for chess. Outputs policy logits and a scalar value."""
+
+        def __init__(self, num_blocks=6, channels=128, input_planes=NUM_PLANES):
+            super().__init__()
+            self.input_conv = nn.Conv2d(input_planes, channels, 3, padding=1, bias=False)
+            self.input_bn = nn.BatchNorm2d(channels)
+
+            self.res_blocks = nn.ModuleList([_ResBlock(channels) for _ in range(num_blocks)])
+
+            # policy head
+            self.policy_conv = nn.Conv2d(channels, 2, 1)
+            self.policy_bn = nn.BatchNorm2d(2)
+            self.policy_fc = nn.Linear(2 * 8 * 8, POLICY_SIZE)
+
+            # value head
+            self.value_conv = nn.Conv2d(channels, 1, 1)
+            self.value_bn = nn.BatchNorm2d(1)
+            self.value_fc1 = nn.Linear(8 * 8, 64)
+            self.value_fc2 = nn.Linear(64, 1)
+
+        def forward(self, x):
+            x = F.relu(self.input_bn(self.input_conv(x)))
+            for block in self.res_blocks:
+                x = block(x)
+
+            # policy
+            p = F.relu(self.policy_bn(self.policy_conv(x)))
+            p = p.view(p.size(0), -1)
+            p = self.policy_fc(p)
+
+            # value
+            v = F.relu(self.value_bn(self.value_conv(x)))
+            v = v.view(v.size(0), -1)
+            v = F.relu(self.value_fc1(v))
+            v = torch.tanh(self.value_fc2(v))
+
+            return p, v.squeeze(-1)
+
+    return _ResBlock, _ChessNet
 
 
-class ChessNet(nn.Module):
-    """Small residual network for chess. Outputs policy logits and a scalar value."""
+# Public accessors — these lazily create the classes on first use.
+_ResBlock = None
+_ChessNet = None
 
-    def __init__(self, num_blocks=6, channels=128, input_planes=NUM_PLANES):
-        super().__init__()
-        self.input_conv = nn.Conv2d(input_planes, channels, 3, padding=1, bias=False)
-        self.input_bn = nn.BatchNorm2d(channels)
 
-        self.res_blocks = nn.ModuleList([ResBlock(channels) for _ in range(num_blocks)])
+def ResBlock(channels):       # noqa: N802 — keep original name for backward compat
+    global _ResBlock
+    if _ResBlock is None:
+        _ResBlock, _ = _define_nn_classes()
+    return _ResBlock(channels)
 
-        # policy head
-        self.policy_conv = nn.Conv2d(channels, 2, 1)
-        self.policy_bn = nn.BatchNorm2d(2)
-        self.policy_fc = nn.Linear(2 * 8 * 8, POLICY_SIZE)
 
-        # value head
-        self.value_conv = nn.Conv2d(channels, 1, 1)
-        self.value_bn = nn.BatchNorm2d(1)
-        self.value_fc1 = nn.Linear(8 * 8, 64)
-        self.value_fc2 = nn.Linear(64, 1)
-
-    def forward(self, x):
-        x = F.relu(self.input_bn(self.input_conv(x)))
-        for block in self.res_blocks:
-            x = block(x)
-
-        # policy
-        p = F.relu(self.policy_bn(self.policy_conv(x)))
-        p = p.view(p.size(0), -1)
-        p = self.policy_fc(p)
-
-        # value
-        v = F.relu(self.value_bn(self.value_conv(x)))
-        v = v.view(v.size(0), -1)
-        v = F.relu(self.value_fc1(v))
-        v = torch.tanh(self.value_fc2(v))
-
-        return p, v.squeeze(-1)
+def ChessNet(*args, **kwargs):  # noqa: N802
+    global _ChessNet
+    if _ChessNet is None:
+        _, _ChessNet = _define_nn_classes()
+    return _ChessNet(*args, **kwargs)
