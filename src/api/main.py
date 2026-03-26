@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 import psutil
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 
 from src.api.engine import ChessEngine
 from src.api.schemas import (
@@ -18,6 +18,9 @@ from src.api.schemas import (
     EvalRequest, EvalResponse,
     AnalyzeRequest, AnalyzeResponse,
     MoveScore,
+    TrainingAnalyzeMoveRequest, TrainingAnalyzeMoveResponse,
+    TrainingSuggestRequest, TrainingSuggestResponse,
+    PieceInfoRequest, PieceInfoResponse, LegalDestination,
 )
 
 # ---------------------------------------------------------------------------
@@ -192,6 +195,16 @@ async def dashboard():
     return _DASHBOARD_HTML
 
 
+@app.get("/play", response_class=HTMLResponse)
+async def play():
+    """Serve the chess UI for playing against the AI."""
+    _project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    _chess_ui = os.path.join(_project_root, "scripts", "chess_ui.html")
+    if os.path.isfile(_chess_ui):
+        return FileResponse(_chess_ui, media_type="text/html")
+    raise HTTPException(status_code=404, detail="Chess UI not found")
+
+
 @app.get("/api/metrics")
 async def get_metrics():
     """Raw JSON metrics for programmatic access."""
@@ -269,6 +282,92 @@ async def analyze(req: AnalyzeRequest):
             for m in all_moves
         ],
         total_simulations=total_sims,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Training mode endpoints
+# ---------------------------------------------------------------------------
+
+
+@app.post("/api/training/analyze-move", response_model=TrainingAnalyzeMoveResponse)
+async def training_analyze_move(req: TrainingAnalyzeMoveRequest):
+    """Analyze a player's move: rate it, explain why, and suggest a better one."""
+    if engine is None:
+        raise HTTPException(status_code=503, detail="Model not loaded")
+
+    loop = asyncio.get_event_loop()
+    try:
+        result = await loop.run_in_executor(
+            None, engine.analyze_player_move, req.fen, req.player_move
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return TrainingAnalyzeMoveResponse(
+        player_move=result['player_move'],
+        player_move_rank=result['player_move_rank'],
+        player_move_score=round(result['player_move_score'], 4),
+        best_move=result['best_move'],
+        best_move_score=round(result['best_move_score'], 4),
+        rating=result['rating'],
+        explanation=result['explanation'],
+        suggestion=result['suggestion'],
+        value_before=round(result['value_before'], 4),
+        value_after=round(result['value_after'], 4),
+        top_moves=[
+            MoveScore(
+                move=m['move'], visits=m['visits'],
+                score=round(m['score'], 4),
+            )
+            for m in result['top_moves']
+        ],
+    )
+
+
+@app.post("/api/training/suggest", response_model=TrainingSuggestResponse)
+async def training_suggest(req: TrainingSuggestRequest):
+    """Suggest the best move for the player with an explanation."""
+    if engine is None:
+        raise HTTPException(status_code=503, detail="Model not loaded")
+
+    loop = asyncio.get_event_loop()
+    result = await loop.run_in_executor(
+        None, engine.suggest_move, req.fen
+    )
+
+    return TrainingSuggestResponse(
+        suggested_move=result['suggested_move'],
+        explanation=result['explanation'],
+        confidence=round(result['confidence'], 4),
+        value=round(result['value'], 4),
+        alternatives=[
+            MoveScore(
+                move=m['move'], visits=m['visits'],
+                score=round(m['score'], 4),
+            )
+            for m in result['alternatives']
+        ],
+    )
+
+
+@app.post("/api/training/piece-info", response_model=PieceInfoResponse)
+async def training_piece_info(req: PieceInfoRequest):
+    """Get piece info and legal destination squares for a selected piece."""
+    try:
+        result = ChessEngine.get_piece_info(req.fen, req.square)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return PieceInfoResponse(
+        piece_name=result['piece_name'],
+        piece_color=result['piece_color'],
+        square=result['square'],
+        movement_rules=result['movement_rules'],
+        legal_destinations=[
+            LegalDestination(square=d['square'], is_capture=d['is_capture'])
+            for d in result['legal_destinations']
+        ],
     )
 
 

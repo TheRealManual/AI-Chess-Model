@@ -10,5 +10,7 @@ Portions of this project were developed with assistance from GitHub Copilot (Cla
 - FastAPI inference API structure
 - Stockfish benchmarking integration
 - Unit test scaffolding
+- Training mode API design (move analysis, suggestions, piece info endpoints)
+- Move rating logic and natural-language explanation generation
 
 All AI-generated code was reviewed, modified, and tested by the developer.

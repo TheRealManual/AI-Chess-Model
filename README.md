@@ -10,6 +10,7 @@ Chess engine that learns to play using a neural network and Monte Carlo Tree Sea
 - 59 opening book entries to keep training games diverse
 - Exports to ONNX for fast CPU inference
 - REST API with four difficulty levels
+- **Training mode** with move analysis, suggestions, and piece info
 - Can be packaged into a standalone folder anyone can run and play in their browser
 - Benchmarks against Stockfish to estimate ELO
 
@@ -47,7 +48,7 @@ AI-Chess-Model/
 │   ├── export.py               # Export + backup snapshot
 │   ├── serve.py                # Start API server
 │   └── package.py              # Bundle into shareable package
-├── tests/                      # 22 tests (model, MCTS, training, API)
+├── tests/                      # Tests (model, MCTS, training, API, training mode)
 ├── exported_models/            # Versioned model snapshots (tracked in git)
 ├── pyproject.toml
 ├── AI_USE_STATEMENT.md
@@ -255,6 +256,63 @@ The package is self-contained — all dependencies bundled in `lib/`.
 {"status": "ok", "model_loaded": true}
 ```
 
+### Training Mode Endpoints
+
+#### `POST /api/training/analyze-move`
+Analyzes a player's move after they make it — rates the move, explains why, and suggests a better alternative.
+```json
+// request
+{"fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1", "player_move": "e7e5"}
+// response
+{
+  "player_move": "e7e5",
+  "player_move_rank": 1,
+  "player_move_score": 0.45,
+  "best_move": "e7e5",
+  "best_move_score": 0.45,
+  "rating": "excellent",
+  "explanation": "e5 is the top choice! The AI's analysis agrees this is the strongest move in this position.",
+  "suggestion": "Great move! Keep playing like this.",
+  "value_before": 0.12,
+  "value_after": 0.10,
+  "top_moves": [{"move": "e7e5", "visits": 180, "score": 0.45}]
+}
+```
+Move ratings: `excellent`, `good`, `okay`, `inaccuracy`, `mistake`, `blunder`
+
+#### `POST /api/training/suggest`
+Suggests the best move before the player moves, with a natural-language explanation.
+```json
+// request
+{"fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1"}
+// response
+{
+  "suggested_move": "e7e5",
+  "explanation": "The AI suggests e5. This develops a pawn toward the center for better activity.",
+  "confidence": 0.45,
+  "value": 0.12,
+  "alternatives": [{"move": "d7d5", "visits": 80, "score": 0.20}]
+}
+```
+
+#### `POST /api/training/piece-info`
+Returns piece name, movement rules, and legal destination squares for a selected piece.
+```json
+// request
+{"fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "square": "e2"}
+// response
+{
+  "piece_name": "Pawn",
+  "piece_color": "white",
+  "square": "e2",
+  "movement_rules": "Pawns move forward one square, or two squares from their starting rank...",
+  "legal_destinations": [
+    {"square": "e3", "is_capture": false},
+    {"square": "e4", "is_capture": false}
+  ]
+}
+```
+
 ### Difficulty Levels
 
 | Level | Sims | Temp | |
@@ -272,7 +330,7 @@ The package is self-contained — all dependencies bundled in `lib/`.
 pytest tests/ -v
 ```
 
-22 tests covering the network, encoding, MCTS, replay buffer, and API endpoints.
+Tests covering the network, encoding, MCTS, replay buffer, API endpoints, and training mode features.
 
 ---
 

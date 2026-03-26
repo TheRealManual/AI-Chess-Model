@@ -39,7 +39,7 @@
             display: flex;
             gap: 24px;
             padding: 0 20px 40px;
-            max-width: 900px;
+            max-width: 1200px;
             width: 100%;
             flex-wrap: wrap;
             justify-content: center;
@@ -114,6 +114,17 @@
         .btn-secondary.active {
             background: #e94560;
             color: #fff;
+        }
+
+        .btn-training {
+            background: #0d7377;
+            color: #fff;
+            flex: 1;
+        }
+        .btn-training:hover { background: #14a3a8; }
+        .btn-training.active {
+            background: #14a3a8;
+            box-shadow: 0 0 8px rgba(20, 163, 168, 0.5);
         }
 
         select {
@@ -215,6 +226,126 @@
         @media (max-width: 800px) {
             .board-wrapper { width: 100%; }
             .sidebar { width: 100%; }
+            .left-sidebar { width: 100%; }
+        }
+
+        /* Training mode styles */
+        .training-panel { display: none; }
+        .training-panel.visible { display: block; }
+
+        .adviser-box {
+            background: #0a1628;
+            border: 1px solid #1a4a7a;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            min-height: 60px;
+            color: #c0d0e0;
+        }
+
+        .adviser-box .piece-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #58a6ff;
+            margin-bottom: 4px;
+        }
+
+        .adviser-box .movement-rules {
+            color: #8b949e;
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+
+        .adviser-box .rating-excellent { color: #3fb950; }
+        .adviser-box .rating-good { color: #58a6ff; }
+        .adviser-box .rating-okay { color: #d29922; }
+        .adviser-box .rating-inaccuracy { color: #db6d28; }
+        .adviser-box .rating-mistake { color: #f85149; }
+        .adviser-box .rating-blunder { color: #ff3333; font-weight: 700; }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            color: #888;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+        }
+
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #333;
+            border-radius: 22px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider:before {
+            content: "";
+            position: absolute;
+            height: 16px; width: 16px;
+            left: 3px; bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle-switch input:checked + .toggle-slider { background: #0d7377; }
+        .toggle-switch input:checked + .toggle-slider:before { transform: translateX(18px); }
+
+        .highlight-legal {
+            background: radial-gradient(circle, rgba(20,163,168,0.5) 25%, transparent 25%) !important;
+        }
+        .highlight-capture {
+            background: radial-gradient(circle, rgba(233,69,96,0.6) 25%, transparent 25%) !important;
+        }
+
+        .left-sidebar {
+            width: 280px;
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .left-sidebar.visible {
+            display: flex;
+        }
+
+        .adviser-tooltip {
+            position: fixed;
+            z-index: 10000;
+            background: #16213e;
+            border: 1px solid #58a6ff;
+            border-radius: 10px;
+            padding: 12px 14px;
+            max-width: 300px;
+            min-width: 200px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+            pointer-events: none;
+            display: none;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #c0d0e0;
+        }
+        .adviser-tooltip.visible { display: block; }
+        .adviser-tooltip .piece-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #58a6ff;
+            margin-bottom: 4px;
+        }
+        .adviser-tooltip .movement-rules {
+            color: #8b949e;
+            font-size: 0.8rem;
+            margin-top: 4px;
         }
     </style>
 </head>
@@ -225,7 +356,35 @@
     <p>Play against the self-play trained neural network</p>
 </header>
 
+<div id="adviser-tooltip" class="adviser-tooltip"></div>
+
 <div class="game-container">
+    <div id="left-sidebar" class="left-sidebar">
+        <div class="panel">
+            <h3>Training Tools</h3>
+            <div class="controls">
+                <button class="btn-training" onclick="getSuggestion()" style="width:100%;">
+                    💡 Get Suggestion
+                </button>
+                <div id="suggestion-box" class="adviser-box" style="display:none;"></div>
+                <div class="toggle-row">
+                    <span>Hide suggestions (learn mode)</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="hide-suggestions" onchange="toggleHideSuggestions()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>Move Analysis</h3>
+            <div id="feedback-box" class="adviser-box">
+                <span style="color:#555;">Make a move to see AI analysis.</span>
+            </div>
+        </div>
+    </div>
+
     <div class="board-wrapper">
         <div id="board"></div>
         <div id="status" class="status-bar your-turn">Your turn ΓÇö play as White</div>
@@ -242,6 +401,10 @@
                 <div class="btn-row">
                     <button id="btn-white" class="btn-secondary active" onclick="playAs('white')">Play White</button>
                     <button id="btn-black" class="btn-secondary" onclick="playAs('black')">Play Black</button>
+                </div>
+                <div class="btn-row">
+                    <button id="btn-normal" class="btn-secondary active" onclick="setGameMode('normal')">Normal</button>
+                    <button id="btn-training" class="btn-training" onclick="setGameMode('training')">Training</button>
                 </div>
                 <div>
                     <label style="font-size:0.8rem; color:#888;">AI Difficulty</label>
@@ -327,6 +490,78 @@ let board = null;
 let game = new Chess();
 let playerColor = 'white';
 let aiThinking = false;
+let gameMode = 'normal';       // 'normal' or 'training'
+let hideSuggestions = false;
+let lastPlayerMoveUci = null;  // track for post-move analysis
+let lastFenBeforeMove = null;
+let lastMouseX = 0, lastMouseY = 0;
+let tooltipActive = false;
+let isDragging = false;
+let tooltipSourceSquare = null;
+let tooltipHideTimer = null;
+
+document.addEventListener('mousemove', function(e) {
+    lastMouseX = e.clientX;
+    lastMouseY = e.clientY;
+    if (tooltipActive) {
+        positionTooltip(e.clientX, e.clientY);
+
+        // Check if mouse has left the source square
+        if (tooltipSourceSquare) {
+            const sqEl = document.querySelector('.square-' + tooltipSourceSquare);
+            if (sqEl) {
+                const rect = sqEl.getBoundingClientRect();
+                const inSquare = e.clientX >= rect.left && e.clientX <= rect.right &&
+                                 e.clientY >= rect.top && e.clientY <= rect.bottom;
+                if (!inSquare && !tooltipHideTimer) {
+                    hideTooltip();
+                } else if (inSquare && tooltipHideTimer) {
+                    clearTimeout(tooltipHideTimer);
+                    tooltipHideTimer = null;
+                }
+            }
+        }
+    }
+});
+
+document.addEventListener('mouseup', function() {
+    if (isDragging) {
+        isDragging = false;
+        // Don't hide yet — let the mousemove handler hide when mouse leaves the square
+    }
+});
+
+function positionTooltip(x, y) {
+    const tip = document.getElementById('adviser-tooltip');
+    let left = x + 20;
+    let top = y - 10;
+    // Keep within viewport
+    if (left + 310 > window.innerWidth) left = x - 320;
+    if (top < 10) top = 10;
+    const tipHeight = tip.offsetHeight || 120;
+    if (top + tipHeight > window.innerHeight - 10) top = window.innerHeight - tipHeight - 10;
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+}
+
+function showTooltip(html) {
+    const tip = document.getElementById('adviser-tooltip');
+    tip.innerHTML = html;
+    tip.classList.add('visible');
+    tooltipActive = true;
+    positionTooltip(lastMouseX, lastMouseY);
+}
+
+function hideTooltip() {
+    const tip = document.getElementById('adviser-tooltip');
+    tip.classList.remove('visible');
+    tooltipActive = false;
+    tooltipSourceSquare = null;
+    if (tooltipHideTimer) {
+        clearTimeout(tooltipHideTimer);
+        tooltipHideTimer = null;
+    }
+}
 
 // --- UI helpers ---
 
@@ -445,16 +680,42 @@ function onDragStart(source, piece) {
     if (playerColor === 'black' && piece.search(/^w/) !== -1) return false;
     if (playerColor === 'white' && game.turn() !== 'w') return false;
     if (playerColor === 'black' && game.turn() !== 'b') return false;
+
+    // Training mode: show piece info and highlight legal squares
+    if (gameMode === 'training') {
+        isDragging = true;
+        tooltipSourceSquare = source;
+        showPieceInfo(source);
+    }
+
     return true;
 }
 
 function onDrop(source, target) {
+    // Capture FEN before the move for analysis
+    const fenBefore = game.fen();
+
     const move = game.move({ from: source, to: target, promotion: 'q' });
     if (move === null) return 'snapback';
 
+    // Build UCI move string
+    lastFenBeforeMove = fenBefore;
+    lastPlayerMoveUci = source + target;
+    if (move.flags.includes('p')) lastPlayerMoveUci += 'q';  // promotion
+
+    // Clear square highlights but tooltip stays until mouse leaves
+    clearSquareHighlights();
+
     updateMoveDisplay();
     if (!checkGameOver()) {
-        setTimeout(makeAIMove, 100);
+        // Training mode: analyze the player's move before AI responds
+        if (gameMode === 'training') {
+            analyzePlayerMove(fenBefore, lastPlayerMoveUci).then(() => {
+                setTimeout(makeAIMove, 100);
+            });
+        } else {
+            setTimeout(makeAIMove, 100);
+        }
     }
 }
 
@@ -471,6 +732,12 @@ function newGame() {
     updateMoveDisplay();
     updateEval(0, null, null);
     aiThinking = false;
+    clearHighlights();
+    lastPlayerMoveUci = null;
+    lastFenBeforeMove = null;
+    document.getElementById('feedback-box').innerHTML =
+        '<span style="color:#555;">Make a move to see AI analysis.</span>';
+    document.getElementById('suggestion-box').style.display = 'none';
     setStatus('Your turn \u2014 play as ' + (playerColor === 'white' ? 'White' : 'Black'), 'your-turn');
     if (playerColor === 'black') {
         setTimeout(makeAIMove, 300);
@@ -490,7 +757,158 @@ function undoMove() {
     game.undo();   // undo player move
     board.position(game.fen(), false);
     updateMoveDisplay();
+    clearHighlights();
     setStatus('Your turn', 'your-turn');
+}
+
+// --- Training Mode ---
+
+function setGameMode(mode) {
+    gameMode = mode;
+    document.getElementById('btn-normal').classList.toggle('active', mode === 'normal');
+    document.getElementById('btn-training').classList.toggle('active', mode === 'training');
+
+    document.getElementById('left-sidebar').classList.toggle('visible', mode === 'training');
+
+    if (mode !== 'training') {
+        clearHighlights();
+        document.getElementById('feedback-box').innerHTML =
+            '<span style="color:#555;">Make a move to see AI analysis.</span>';
+        document.getElementById('suggestion-box').style.display = 'none';
+    }
+}
+
+function toggleHideSuggestions() {
+    hideSuggestions = document.getElementById('hide-suggestions').checked;
+    if (hideSuggestions) {
+        document.getElementById('suggestion-box').style.display = 'none';
+    }
+}
+
+function clearHighlights() {
+    hideTooltip();
+    clearSquareHighlights();
+}
+
+function clearSquareHighlights() {
+    document.querySelectorAll('.highlight-legal, .highlight-capture').forEach(el => {
+        el.classList.remove('highlight-legal', 'highlight-capture');
+    });
+}
+
+function highlightSquares(destinations) {
+    clearSquareHighlights();
+    destinations.forEach(d => {
+        const sq = document.querySelector('.square-' + d.square);
+        if (sq) {
+            sq.classList.add(d.is_capture ? 'highlight-capture' : 'highlight-legal');
+        }
+    });
+}
+
+async function showPieceInfo(square) {
+    try {
+        const resp = await fetch(API_BASE + '/api/training/piece-info', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fen: game.fen(), square: square }),
+        });
+        if (!resp.ok) return;
+        const data = await resp.json();
+
+        const html =
+            '<div class="piece-title">' + data.piece_name + ' (' + data.piece_color + ') on ' + data.square + '</div>' +
+            '<div class="movement-rules">' + data.movement_rules + '</div>' +
+            '<div style="margin-top:6px; font-size:0.8rem; color:#58a6ff;">' +
+            data.legal_destinations.length + ' legal move' +
+            (data.legal_destinations.length !== 1 ? 's' : '') + ' available</div>';
+        showTooltip(html);
+
+        // Highlight legal destination squares on the board
+        highlightSquares(data.legal_destinations);
+    } catch (err) {
+        console.error('Piece info error:', err);
+    }
+}
+
+async function analyzePlayerMove(fen, moveUci) {
+    if (hideSuggestions) return;
+
+    const feedbackEl = document.getElementById('feedback-box');
+    feedbackEl.innerHTML = '<span class="spinner" style="margin-right:6px;"></span> Analyzing your move...';
+
+    try {
+        const resp = await fetch(API_BASE + '/api/training/analyze-move', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fen: fen, player_move: moveUci }),
+        });
+        if (!resp.ok) throw new Error('API returned ' + resp.status);
+        const data = await resp.json();
+
+        const ratingClass = 'rating-' + data.rating;
+        const ratingEmoji = {
+            excellent: '🌟', good: '✅', okay: '👍',
+            inaccuracy: '⚠️', mistake: '❌', blunder: '💀'
+        }[data.rating] || '';
+
+        let html = '<div class="piece-title">' + ratingEmoji + ' ' +
+            '<span class="' + ratingClass + '">' +
+            data.rating.charAt(0).toUpperCase() + data.rating.slice(1) +
+            '</span></div>';
+        html += '<div style="margin:4px 0;">' + data.explanation + '</div>';
+        if (data.rating !== 'excellent') {
+            html += '<div style="margin-top:6px; color:#58a6ff;">' + data.suggestion + '</div>';
+        }
+        html += '<div style="margin-top:6px; font-size:0.75rem; color:#555;">' +
+            'Best: ' + data.best_move + ' | Your rank: #' + data.player_move_rank + '</div>';
+
+        feedbackEl.innerHTML = html;
+    } catch (err) {
+        console.error('Analyze move error:', err);
+        feedbackEl.innerHTML = '<span style="color:#f85149;">Could not analyze move.</span>';
+    }
+}
+
+async function getSuggestion() {
+    if (game.game_over() || aiThinking) return;
+    if (game.turn() !== (playerColor === 'white' ? 'w' : 'b')) return;
+
+    const suggBox = document.getElementById('suggestion-box');
+
+    if (hideSuggestions) {
+        suggBox.style.display = 'block';
+        suggBox.innerHTML = '<span style="color:#888;">Suggestions are hidden. Uncheck "Hide suggestions" to see them.</span>';
+        return;
+    }
+
+    suggBox.style.display = 'block';
+    suggBox.innerHTML = '<span class="spinner" style="margin-right:6px;"></span> Thinking...';
+
+    try {
+        const resp = await fetch(API_BASE + '/api/training/suggest', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fen: game.fen() }),
+        });
+        if (!resp.ok) throw new Error('API returned ' + resp.status);
+        const data = await resp.json();
+
+        let html = '<div class="piece-title">💡 Suggested: ' + data.suggested_move + '</div>';
+        html += '<div style="margin:4px 0;">' + data.explanation + '</div>';
+        html += '<div style="font-size:0.75rem; color:#555; margin-top:4px;">Confidence: ' +
+            (data.confidence * 100).toFixed(0) + '%</div>';
+
+        if (data.alternatives && data.alternatives.length > 0) {
+            html += '<div style="font-size:0.75rem; color:#555; margin-top:2px;">Also consider: ' +
+                data.alternatives.map(a => a.move).join(', ') + '</div>';
+        }
+
+        suggBox.innerHTML = html;
+    } catch (err) {
+        console.error('Suggest error:', err);
+        suggBox.innerHTML = '<span style="color:#f85149;">Could not get suggestion.</span>';
+    }
 }
 
 // --- Init ---
